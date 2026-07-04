@@ -1,0 +1,501 @@
+call_id,caller_number,callee_number,duration_sec,is_spoofed,transcript_snippet,timestamp
+ef051a0d-60df-4161-a136-89761d8d49ca,8282997216,+918938105845,423,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-23T11:27:59
+d22fe0f3-9602-40e8-9108-6eb1f7dac68f,00533753000,2915750308,2192,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-06T11:53:11
+a126d7ae-735a-452e-857f-367db6d04742,+913969166627,+917123682254,236,False,Happy Birthday! Hope you have a great day.,2026-07-01T03:33:53
+ec3c67fb-4ebe-480d-a517-dbae164c38fb,+916511361582,1759955350,187,True,Your package is held at customs. Click the link to pay the fee.,2026-06-23T14:02:57
+2bb66549-dd1e-4931-9316-af718d094032,3114289025,+917234398167,1829,False,Can you pick up some groceries on your way home?,2026-06-08T00:01:25
+ff25baca-f2c6-4fd9-b1d2-4b687fcb8f74,+910354675482,+913027564476,2819,False,Can you pick up some groceries on your way home?,2026-06-22T05:01:33
+db4a22c2-07e2-47cb-951d-fc64056521b4,+912363083814,09586015370,894,False,Happy Birthday! Hope you have a great day.,2026-06-21T17:12:28
+4138fc8c-8d75-4f7c-ad8b-c578d13043ad,+914156367657,6778294775,2309,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-11T20:34:02
+cf84ccad-4c6e-426f-ba83-b894aa955ad2,+913026150729,5990887161,195,True,Your package is held at customs. Click the link to pay the fee.,2026-06-29T04:56:14
+8492d878-bf32-4414-984c-a501038e2c98,4046531559,+914984703965,2666,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-08T16:45:04
+07af4c3f-b210-4068-b0a2-4a96abf539b5,06384926322,6223699743,2601,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-09T20:26:53
+0443db59-a412-4029-a904-a06d235c38ba,+913542254107,+917397441652,843,False,Can you pick up some groceries on your way home?,2026-06-12T18:46:28
+85464313-651a-4f88-8175-244583a7ba1c,+913353510513,9494606872,1536,False,Happy Birthday! Hope you have a great day.,2026-06-07T02:49:37
+a33f0488-bb04-4fd5-b725-6415daa66aad,7637053140,01875041379,1549,False,Happy Birthday! Hope you have a great day.,2026-06-14T10:18:38
+9bd04c63-2427-4724-8bb6-098399edf082,+917380393897,+915611777188,2570,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-17T09:31:22
+af732ec7-30ad-4490-ade2-e60c29f5174a,01203452744,1135021313,13,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-25T10:06:37
+31740b7f-e3e5-4253-8759-f003e9628cd3,2555082766,4065475583,2948,False,"Hey, what time are we meeting for dinner?",2026-06-08T02:38:33
+4e8fcf67-19e2-4a31-9245-d29f9c735ef2,06721851524,+915769505737,1486,False,The weather is supposed to be nice this weekend.,2026-06-15T18:53:21
+b3bcb6a8-8720-4b2b-bf9a-58633e10d42a,+910909869973,01992961957,3062,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-07T17:25:29
+065d10f2-2bc4-45cd-b0c6-3f62d7457ed1,02884211799,0123146974,428,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-11T23:18:57
+c75a1f69-cbf6-4acc-901a-dd724ff4b7ba,8327364103,8259934396,454,False,The weather is supposed to be nice this weekend.,2026-06-08T22:29:23
+515d1135-1d79-4a30-a108-fe65c4dbc127,04148331485,1851733705,110,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-10T16:49:47
+46786b95-64b8-48be-a149-45f16d08413b,08706972742,01283987263,278,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-22T17:37:07
+7954cfc3-6715-4179-9114-b4022e1bac8b,1163595758,+910043988560,2067,False,Happy Birthday! Hope you have a great day.,2026-06-05T03:38:44
+9f340cb0-9b20-4199-8ea8-f123341ebd8a,8908268212,4305142710,3194,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-21T06:04:21
+928843c4-6454-4884-9e54-f782cd9460d4,+915710602426,+911088027165,2140,False,Did you get the email I sent earlier?,2026-07-02T12:53:34
+6f519fc7-18c2-4462-b137-5ad9ecf9309c,+912220678022,04581004289,2397,False,Happy Birthday! Hope you have a great day.,2026-06-24T08:33:50
+703dc84a-3fdb-4286-bbc8-2b969e343dbe,01682313632,3821679905,1119,False,Did you get the email I sent earlier?,2026-06-16T14:23:29
+1dbce010-73d7-4dfb-af75-0a9c9b02d1e9,+919066661712,0601736187,747,False,"Hey, what time are we meeting for dinner?",2026-06-30T08:23:25
+d3435f7a-4446-4985-9355-28a313069706,+918599899676,05616782640,674,False,Can you pick up some groceries on your way home?,2026-06-05T12:26:14
+853e72c1-639e-4dfd-9f95-97a933509269,00404310223,8370797614,2373,False,"Hey, what time are we meeting for dinner?",2026-06-25T08:24:33
+91fb65d7-8508-4f83-ab29-ab217580e3eb,4578840679,5321951019,3164,False,Can you pick up some groceries on your way home?,2026-06-21T12:21:03
+ce494430-6835-4535-8495-f2fab385d3f2,5107922983,03711328828,62,True,Your bank account will be frozen in 2 hours due to suspicious activity.,2026-06-13T00:31:04
+e556ad84-c712-4eb2-9fd9-566c0ddb237e,+913991391083,+916427565312,545,False,The weather is supposed to be nice this weekend.,2026-06-17T12:39:18
+995cd0dc-824e-4de2-a8ee-9f6d09a8ff1d,5914897919,09245248027,35,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-14T00:20:34
+f242e247-f80a-4fc5-acf4-a1d71f4cb24e,00139642077,04771478015,2841,False,"Hey, what time are we meeting for dinner?",2026-06-07T01:57:47
+f361bee5-1717-4ccd-9416-92505f8d2642,4063244356,+914797741481,17,True,Your bank account will be frozen in 2 hours due to suspicious activity.,2026-06-12T20:19:28
+ef4415cb-b1e1-42d5-992e-f1483b74a1b6,+911698015767,7216335429,56,False,Happy Birthday! Hope you have a great day.,2026-06-24T01:12:19
+59e53db4-ec6e-49e6-8ba0-3ab28892d75f,05815897387,+910082667009,2035,False,"Hey, what time are we meeting for dinner?",2026-06-26T21:14:08
+c8e27903-d480-4780-8287-a24f6282cf83,+911947670118,01501282070,2485,False,"Hey, what time are we meeting for dinner?",2026-06-12T17:23:01
+1713955a-86d8-41c4-9f14-e1f7c299d52c,4059368603,6620960566,271,False,"Hey, what time are we meeting for dinner?",2026-06-21T05:05:13
+1c72aa43-de54-4469-b311-d27595192f0c,+913451906808,03243371973,2586,False,Happy Birthday! Hope you have a great day.,2026-06-26T19:36:51
+b5d791a3-207d-44cd-aa65-5f5540d0678d,06613452514,05311542135,2116,False,The weather is supposed to be nice this weekend.,2026-06-24T10:08:09
+e117c813-4461-4b43-a289-ef537260c3a2,01918348965,+915740339354,167,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-17T20:09:27
+f1a516ee-95aa-4ddd-ab8d-3a437e990fa2,07176701712,+912546761659,2206,False,"Hey, what time are we meeting for dinner?",2026-06-29T23:55:42
+5b1298ef-4816-47d5-b084-7260b7384305,4693062825,01995499622,1187,False,Can you pick up some groceries on your way home?,2026-06-14T20:19:51
+923e9e0f-0df8-4109-9ff5-bbed8ef0d58d,+915927500104,+911832305599,1624,False,Happy Birthday! Hope you have a great day.,2026-07-02T09:10:56
+417b819d-9995-4570-9cad-517886c68152,+915359680160,+914107777270,3364,False,Did you get the email I sent earlier?,2026-06-08T12:00:02
+4f1a3391-5abe-455e-a900-87eb7bacc957,1973101659,0611298097,2364,False,Happy Birthday! Hope you have a great day.,2026-06-11T18:37:51
+90d43b1f-cca5-4112-adda-3319b94567ab,3583146101,+918120186326,1386,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-12T16:36:31
+54f48645-8374-47aa-92df-8b5efb47f4b9,05608225714,03639641564,1553,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T12:54:57
+7371ce34-5508-4fb3-a078-d6bc29e14315,+913106561239,+914889149826,104,True,"This is the police department, there is a warrant for your arrest.",2026-06-13T03:20:03
+04149939-5cfd-4caf-8587-9aa1bd17c700,+916067214808,1228023337,1433,False,Can you pick up some groceries on your way home?,2026-06-12T21:15:04
+b43b5bbf-ca27-4182-aaf1-b6edd5059bee,9118568714,+912885306731,231,False,Happy Birthday! Hope you have a great day.,2026-06-25T11:30:37
+642c19f9-c02c-4ef4-bc44-eba27405bc89,09363577327,+919816475251,2652,False,Did you get the email I sent earlier?,2026-06-11T12:26:45
+7752113e-4f5d-4252-b03d-a2e2610d8366,+914663915866,04837631564,2387,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-07-03T13:09:27
+28a23091-23fd-4016-a4b4-b0061322a509,02455833926,07311889143,107,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-18T16:47:55
+1e41a95c-4d33-4b5a-87b9-707073dd919b,+918530300943,06421488387,1581,False,Can you pick up some groceries on your way home?,2026-06-18T22:27:39
+ed6e3ec5-7917-4f51-bce9-e254caee3c75,00841080586,03320333303,1710,False,Happy Birthday! Hope you have a great day.,2026-06-07T12:33:27
+0e7b4392-121d-498a-8f08-5fb2632f70ab,0998215122,02249369946,2261,False,Did you get the email I sent earlier?,2026-06-19T12:33:17
+80ab140b-005b-4a08-944f-ea1fa49c7978,+914368647011,4477881321,2763,False,Happy Birthday! Hope you have a great day.,2026-07-01T19:36:53
+5044eb11-4f7d-4f0e-a616-cfe3f1adfadf,1192607132,6626652372,281,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-07-01T09:56:12
+5d634cb3-4cbc-40b8-9abb-91b4cd778173,+910709567476,4959013344,66,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-23T07:56:34
+b140c92d-3134-4b65-8af5-8899e52e6970,0936854293,1478577132,198,True,Your bank account will be frozen in 2 hours due to suspicious activity.,2026-06-10T11:55:50
+908d7e0f-eb54-4900-99c3-683e359d1597,+919145712317,4316942970,1144,False,"Hey, what time are we meeting for dinner?",2026-06-27T19:38:13
+6a87d51e-8c26-4587-bf3b-8534d1370473,05240881209,02861174618,29,True,Your bank account will be frozen in 2 hours due to suspicious activity.,2026-06-24T03:15:01
+c6243ddf-fbc5-49fb-85d6-3ebfc10e86fa,8655875090,04962473771,1051,False,Can you pick up some groceries on your way home?,2026-06-06T16:14:22
+8a86c7da-2c7e-412c-8de5-c960b692a36f,02131725327,8594825012,1136,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-16T00:30:13
+f80a262c-defb-41ae-88da-e75d32c48200,05099930037,8234142997,3595,False,"Hey, what time are we meeting for dinner?",2026-07-03T13:25:18
+9089d06f-c3ce-4a40-b5e5-fb1b6405f664,00914705842,8077864320,2723,False,Did you get the email I sent earlier?,2026-06-16T12:39:58
+449d14f1-59c1-4812-98b8-135fbe828bdd,04802007867,+914218451708,700,False,"Hey, what time are we meeting for dinner?",2026-06-20T10:29:26
+d1bafceb-6abd-43dd-8622-cc7377d86ce8,01813695242,3502505194,128,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T20:15:29
+f76031e7-ab40-403a-9fb4-cf698ae5a8d7,+916838824233,06775102063,65,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-07-04T03:19:05
+f4f369dc-6f71-49c8-9b90-1b1a68fd88ad,09226558002,8812131441,1425,False,"Hey, what time are we meeting for dinner?",2026-06-25T04:04:01
+3264b3b9-ff6c-4898-a426-95faf6be146e,5637325319,+912665839578,241,True,"This is the police department, there is a warrant for your arrest.",2026-06-29T16:19:07
+dba1a80f-53e3-4729-b05b-eec09056c21d,05845182691,+915621605233,2703,False,Did you get the email I sent earlier?,2026-06-06T01:28:53
+ec0aca17-a02e-45f6-b958-bfe292cfcd28,5209765759,+919723263378,228,True,Your package is held at customs. Click the link to pay the fee.,2026-06-23T23:38:14
+0dcc6c44-f463-4903-a6d2-cbae80f33263,+917258118588,+913295269543,742,False,Can you pick up some groceries on your way home?,2026-06-25T20:17:23
+9b09287e-93ce-43df-9361-b97d2c89ba88,08422015779,4976002601,2507,False,The weather is supposed to be nice this weekend.,2026-06-07T13:19:22
+13415783-d40b-4324-93da-d966ffa918c5,+915633822634,09162855034,309,False,The weather is supposed to be nice this weekend.,2026-06-25T19:04:27
+19ed999f-1684-445c-ae3b-34f9750c3a4c,8117221126,03059128049,3589,False,The weather is supposed to be nice this weekend.,2026-06-15T08:48:33
+f4c9339c-132b-40ba-bf39-69f22cf108a6,00918060547,+914275057349,2654,False,The weather is supposed to be nice this weekend.,2026-06-07T13:27:46
+822ba734-b2f2-4ff7-923c-674f3bd16bcb,03445672462,9549577623,403,False,"Hey, what time are we meeting for dinner?",2026-06-06T00:55:11
+1aa21253-eecd-44cb-ab4f-17abcd18f96d,02188683198,03870374096,17,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-25T23:47:03
+28448648-2962-46fe-bae5-015d59eda0dd,+910724878892,+911464653101,145,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-15T12:45:56
+d29d4e65-1634-4c78-8aa4-0e09d10809a6,+913424583406,8430407157,3081,False,Happy Birthday! Hope you have a great day.,2026-06-09T06:31:05
+911f4197-72aa-46b6-8467-c4ccd02efdfa,1808856360,07215885154,2455,False,"Hey, what time are we meeting for dinner?",2026-06-28T22:49:49
+4b35a686-a761-4561-a6fd-a4d437010e60,+912229926371,9993469702,243,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-13T11:18:36
+135b75a1-73ab-4b20-96ff-1583ca753fb9,+913768405025,05444384725,176,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-24T17:31:05
+f5605943-a6c8-4ba2-82fe-6493f141ad71,+916756447872,4271458456,754,False,Can you pick up some groceries on your way home?,2026-06-08T06:25:07
+9a3899ae-0d34-459f-9033-7dca71ae960a,+915039565929,05590545156,2448,False,Happy Birthday! Hope you have a great day.,2026-06-22T07:14:26
+cace158d-c8d3-4a04-a835-65703ef56b84,06628250859,0596332331,2572,False,The weather is supposed to be nice this weekend.,2026-06-05T03:01:28
+dc7be8e5-92bd-4dab-9088-1c8e48309a15,1306008962,08163060041,1074,False,Happy Birthday! Hope you have a great day.,2026-06-29T17:39:51
+21789fe0-00b9-4d6f-9c1d-8f5fef76300e,8178246980,+918048034336,437,False,"Hey, what time are we meeting for dinner?",2026-06-07T19:08:48
+fd656396-628d-4344-8c02-7da893b12d2a,5947885951,+916107175608,2801,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-21T10:55:31
+120e060d-9eda-4fd1-b118-8de9a23c6921,1619641947,0788912162,1892,False,Happy Birthday! Hope you have a great day.,2026-07-03T12:36:27
+61945939-1d7f-45aa-9590-25842955e032,+917391583534,+915091621828,3294,False,Can you pick up some groceries on your way home?,2026-06-27T12:35:30
+1d61e79a-3ac1-4254-ab69-ba379d01c14f,02893466269,+912464815546,3378,False,Did you get the email I sent earlier?,2026-06-26T01:56:59
+3e140fd8-e9f7-4d00-bc29-6250cd6b5427,06987060127,1588216854,721,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-06T08:55:41
+81f6ac9a-2ed0-4631-9a36-7e4c5f1d24e1,09049497786,02469830804,2923,False,"Hey, what time are we meeting for dinner?",2026-07-01T21:36:28
+9d0d0de0-77b9-4bba-9730-f6f0578f4140,+913608686395,3381321669,2046,False,The weather is supposed to be nice this weekend.,2026-06-29T15:38:06
+d25c093f-1fe7-4437-87bc-281d64093614,+918373150343,+915492489372,1927,False,Did you get the email I sent earlier?,2026-07-03T11:45:20
+d1c079c3-42d1-4990-a085-045e2ecb4f7f,05627410963,0053253017,112,True,Your bank account will be frozen in 2 hours due to suspicious activity.,2026-06-17T00:34:05
+024062a6-e6b3-41ac-a476-9b04b9bdd3b4,+910970996194,+919031154600,3372,False,The weather is supposed to be nice this weekend.,2026-06-14T15:16:10
+3ba34b73-f154-4507-86df-19b4eaf37da0,6512689286,03460089888,284,False,"Hey, what time are we meeting for dinner?",2026-06-07T09:29:24
+52f077dd-9511-4bb9-8fdc-35088622c5c7,08497236170,07430557562,1380,False,The weather is supposed to be nice this weekend.,2026-06-13T05:41:20
+af63ba00-da45-4dee-a830-e1edda91e55b,04996427883,03837230382,369,False,Can you pick up some groceries on your way home?,2026-06-14T02:13:58
+1df221fc-fdbc-48e6-9147-8074934b1079,+917253276639,8979892069,366,False,Can you pick up some groceries on your way home?,2026-06-08T15:59:12
+8251a295-3ac5-4896-941c-b9190df9dc10,7098368934,2726013053,945,False,Did you get the email I sent earlier?,2026-06-20T17:32:30
+2b6d32dd-5ebe-42e1-ac59-046ddeb1e430,06775083839,+913216361983,3471,False,The weather is supposed to be nice this weekend.,2026-06-17T03:25:29
+cec7d548-c4ef-4a60-9146-508bebf141b0,+915285424962,+911598260165,240,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-24T04:55:59
+7074927b-3433-4664-b630-35abb62d93e0,+914852610810,05641629169,2679,False,Did you get the email I sent earlier?,2026-06-28T03:44:26
+574e1913-255b-429f-be4b-063f0843c02f,+914049187608,+919841355091,2028,False,Did you get the email I sent earlier?,2026-06-04T11:23:20
+92853fce-c513-4d0f-8dd6-2783ed33a6ab,9155570716,5463183681,73,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-30T07:52:28
+30f183ea-0811-407a-af3f-eb24a3e1a5d6,3867008083,+917838163864,2436,False,"Hey, what time are we meeting for dinner?",2026-06-11T04:18:17
+8e83c227-3553-4b8e-ab0f-690e02e6efb4,+915098591278,07461642492,94,True,Your package is held at customs. Click the link to pay the fee.,2026-06-10T01:51:49
+b334b65f-f968-41c3-8366-013d090989e2,+914443275236,+916706893608,2634,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-12T09:11:45
+337f242a-df12-414f-b9b4-d09fd760a96e,08370231955,9939725950,96,True,Your package is held at customs. Click the link to pay the fee.,2026-06-17T15:09:50
+36444298-1612-46a0-a467-1ba24d6f743d,+916499760607,+912386283943,2978,False,"Hey, what time are we meeting for dinner?",2026-06-26T11:01:16
+cb729130-6b7d-4e5f-82b4-0f461597f6cf,+910199516764,09529303970,1588,False,"Hey, what time are we meeting for dinner?",2026-06-22T19:30:12
+419a54da-8f22-4306-8181-a878dff264a2,5921163295,+911466090421,1859,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-20T18:43:20
+3877eeda-74a2-49fc-af24-1797901a8666,08993013128,+912991405489,173,True,"This is the police department, there is a warrant for your arrest.",2026-06-16T02:53:29
+25146a6d-319b-4ad7-8896-ff139f9fdd46,01514861193,7788590557,3237,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-28T14:36:39
+e66e9181-3896-457e-a210-ee2b57e6d069,07086248629,+917532099354,140,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-18T13:58:20
+e28dd804-50eb-4ab9-926a-a3c6adbe3464,8965443704,1170730019,2307,False,Did you get the email I sent earlier?,2026-06-18T21:07:42
+dee65f53-1990-4b04-800c-899e86b20bea,7463928051,+914863168523,168,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-07-01T07:05:25
+fa9b91ae-fcd8-4496-904f-56528700eb45,+918609378780,+917944902241,2028,False,"Hey, what time are we meeting for dinner?",2026-06-13T18:21:28
+e4f6d73e-40b1-439e-88d7-4bfa9754f49d,6165263858,04577179428,880,False,"Hey, what time are we meeting for dinner?",2026-06-05T00:59:44
+82f0014e-b22c-448f-970b-3365637571db,3597897290,09066145269,186,True,Your package is held at customs. Click the link to pay the fee.,2026-06-11T06:38:54
+61b4575d-73f0-4388-9338-353b959e245e,+912772660535,9878380343,2530,False,Can you pick up some groceries on your way home?,2026-06-09T06:08:43
+2289c31e-878b-4f8d-9c13-950955a23183,+913541286120,07255091627,555,False,"Hey, what time are we meeting for dinner?",2026-06-07T04:15:43
+e47363ab-a619-4680-a1eb-da7c6e3a9fe0,02867229842,3942494825,2404,False,The weather is supposed to be nice this weekend.,2026-06-18T06:38:50
+4fac8604-e1c4-4ca8-80fb-54297316ac66,+916366265516,01935477079,3442,False,Can you pick up some groceries on your way home?,2026-06-14T17:33:59
+9893fa04-87fa-4ae5-9b89-051317d59b9e,+914727277768,8221544626,2966,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-22T06:49:06
+d32af8b6-35a3-4543-bf54-7cb1ee23ec49,4137684696,05163887184,475,False,Happy Birthday! Hope you have a great day.,2026-06-24T23:39:20
+fa812473-f406-474c-bf3f-f2052bfb1655,+916208210946,9711741907,132,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-26T00:47:40
+a41a4921-4812-44d0-aea5-f43da1fd8746,5005935585,7581901877,281,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-21T10:50:20
+ee4295a3-fcc3-4114-b461-248786834a30,08200030873,+911464392717,536,False,Can you pick up some groceries on your way home?,2026-06-06T13:21:43
+ec41a4a7-9e55-4dfc-8774-74071b0352f3,+911063668684,+915106410200,1849,False,The weather is supposed to be nice this weekend.,2026-06-15T12:59:09
+b1b6608e-0ca3-401a-855c-2ff1490cf0e4,5186834251,08867325372,3328,False,The weather is supposed to be nice this weekend.,2026-06-11T16:40:27
+5a9fbb79-940a-4a77-8c96-f42e566aa790,+917152935757,09178071819,3058,False,Did you get the email I sent earlier?,2026-06-16T09:01:28
+d47e7d3c-4254-43bd-8dd7-f2daba700445,+915980676912,07625736943,514,False,Can you pick up some groceries on your way home?,2026-06-06T21:27:52
+b337f60e-9458-47d2-883f-a12e3d6b9a6b,4748695441,08241588038,3457,False,Happy Birthday! Hope you have a great day.,2026-07-01T03:25:22
+43a08224-037f-4729-90a3-dd7c727d802b,08173109528,3653795869,418,False,"Hey, what time are we meeting for dinner?",2026-06-20T07:37:57
+54281f54-9e20-4235-944b-a6991521b5b6,+912847523068,07904894132,1979,False,The weather is supposed to be nice this weekend.,2026-07-02T05:52:59
+58d145d9-9650-45a6-8aa9-e9440c61dc60,7337699109,2714078725,2812,False,"Hey, what time are we meeting for dinner?",2026-06-10T00:17:39
+5ab9d1a3-6b98-4aef-a89a-1ca4fd73f816,+910235521502,03288498600,1439,False,The weather is supposed to be nice this weekend.,2026-07-01T07:49:57
+d7a1902b-2809-4bc7-8e1d-7f522c7d4434,8384875705,06573262525,2714,False,Did you get the email I sent earlier?,2026-07-03T11:48:36
+3182384e-e02d-4624-bb1f-4f9f454f49e1,+914521157508,+911471132303,78,False,Can you pick up some groceries on your way home?,2026-06-25T15:21:46
+faf7ab33-4ecc-4a98-8d47-211d4d59d938,8445181236,+914855722101,1977,False,Did you get the email I sent earlier?,2026-06-10T19:11:47
+b57e3a15-61b2-44c7-8845-5f90bbeef6d5,07458961121,+917472633847,574,False,Can you pick up some groceries on your way home?,2026-06-08T01:48:18
+968566d6-d363-4bf9-a430-b777d2f511a2,+918938929691,+913356087937,164,False,"Hey, what time are we meeting for dinner?",2026-06-26T07:52:45
+e2237529-91ae-4b4c-9a85-139903ed615f,03495648590,01267418998,350,False,"Hey, what time are we meeting for dinner?",2026-07-03T03:45:52
+42857c38-11bf-46e2-a330-bdc6ac790dca,9459919702,+912566214181,3299,False,Can you pick up some groceries on your way home?,2026-06-13T10:24:28
+5b722014-6512-4ec0-a46e-27643b3d1f57,5561466480,+912280337043,635,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-11T01:05:08
+dade31f5-cffc-4585-8dfd-1a81ddedd285,+915950588496,09113426036,2979,False,The weather is supposed to be nice this weekend.,2026-06-10T03:11:49
+0c5210fc-bc74-47ad-8205-e1c1b2e4fe5b,07331741725,+911774280734,2586,False,The weather is supposed to be nice this weekend.,2026-07-03T03:55:42
+e11c5014-92ec-45fd-923d-4887f3118ab5,07706785199,00800940849,839,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-20T20:06:38
+2d083679-fc48-4b85-955f-a723536d61ff,4392201179,6010344525,1253,False,Happy Birthday! Hope you have a great day.,2026-06-10T09:49:01
+2db8f449-c483-4e63-a31f-deda167cdff6,7500760756,+910617299138,3270,False,Did you get the email I sent earlier?,2026-06-20T06:53:47
+d691d538-8ebd-4593-946c-7681189dce0b,04972370761,+918311051357,2934,False,Did you get the email I sent earlier?,2026-06-09T09:51:02
+e9fc7ad7-e0b5-40a0-8ae5-680e10196015,+910455778288,+919282798434,51,True,Your package is held at customs. Click the link to pay the fee.,2026-06-21T21:25:43
+0eab76ef-cad1-4d97-8fe2-620dc184aee2,02682208391,6703819958,789,False,Can you pick up some groceries on your way home?,2026-06-20T00:29:56
+e26c8916-e038-4488-bd61-a57c6a1f759c,8319877656,+911286711033,59,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-17T21:59:04
+e3c29329-e58f-47f6-a5ae-ac19c98de4e5,+919228955283,8644638191,103,True,Your bank account will be frozen in 2 hours due to suspicious activity.,2026-07-01T04:22:13
+c515cd0f-7a72-4301-8e3b-1affe9e7a75e,01508575068,08127080750,2733,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-24T14:54:14
+567a5472-900e-4240-a46a-1563c2ae31c2,1199203335,08486533807,191,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-07-01T20:38:47
+18b89353-78a4-40e8-9012-d76a33b9ab9e,03605460112,0317375380,2235,False,The weather is supposed to be nice this weekend.,2026-06-10T12:09:47
+cad5ff58-02b7-4fed-9829-26a342f2d8ab,06639023835,+917383399722,3287,False,Did you get the email I sent earlier?,2026-06-23T08:55:55
+9fafcc67-03d5-4831-bdb2-f6111a669fa3,02673670573,04391092471,2173,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-04T23:56:34
+cea9301b-9486-4705-aa45-183cfb50dc62,5004321006,01451277655,2130,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-20T04:47:17
+5ab459c5-5b69-4143-8e5c-260e3033c1f0,9173450974,05962614609,2115,False,Did you get the email I sent earlier?,2026-06-16T22:47:55
+26b73ef0-cb47-474a-b5b8-adace5bc0246,+913094994517,+916710501803,3122,False,The weather is supposed to be nice this weekend.,2026-06-19T14:02:24
+a659b0ee-d49a-40cc-961c-450200be1a66,+918934958887,+917440846189,1899,False,Can you pick up some groceries on your way home?,2026-06-05T08:49:50
+ada94973-01e2-4a6c-9bb8-00e59f67be9f,02712061133,0301448591,155,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-07T01:21:39
+98bbc17a-261a-468a-a0e3-da324200fe93,0244502465,+919380178880,173,True,"This is the police department, there is a warrant for your arrest.",2026-06-18T19:35:04
+e9b12fc7-c4d5-4a50-99cc-7993ea7be6e5,06377729209,02730712680,191,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-19T13:17:53
+60b685ce-ea74-4e27-bc4c-3e15129e9b54,+919190686742,02353447901,3597,False,Did you get the email I sent earlier?,2026-07-02T10:11:32
+e274467d-d285-4dcc-b78f-e2fdd5ce49cb,2869134742,2519891903,164,True,Your bank account will be frozen in 2 hours due to suspicious activity.,2026-06-29T04:46:55
+4e05ff9b-e7cb-4694-9700-7525acf7a4c9,+911319276357,+910165348001,185,True,"Your tax penalty is pending, please press 1 to resolve.",2026-07-02T12:49:36
+06f0deef-daf7-4929-a0ac-ab831fe8bbf4,5688148777,6633121387,3587,False,The weather is supposed to be nice this weekend.,2026-06-16T09:59:45
+9d09608e-6c2c-443e-a396-b4786bfe9456,+917215103597,+916942516914,2236,False,"Hey, what time are we meeting for dinner?",2026-06-08T06:37:38
+10878afc-b6b0-45cd-be57-12a515a5cf43,03362074268,+910518697848,52,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-27T03:26:12
+92f3dc08-1599-412a-ac8b-74b826190908,07799386164,5528493151,786,False,"Hey, what time are we meeting for dinner?",2026-06-09T16:17:50
+85855841-bdc4-4304-9c17-7f6012ba6f12,+915775355669,04324426806,2783,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T12:49:32
+365e9c1c-9b19-4b25-b2a2-a91ad19d4fab,9541007514,+913029584571,172,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-08T15:16:59
+4634fae5-fb40-4724-b222-650b2d93beee,7386805296,8957710762,1784,False,Can you pick up some groceries on your way home?,2026-06-07T13:23:02
+1a957037-1d48-4012-bba4-3fd7ddd0a534,5063415610,1224468611,1040,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-09T19:10:22
+a7ab7e55-a0e6-4d6e-b7c7-50e4a49ad9d8,+916309362611,08908887301,2179,False,Happy Birthday! Hope you have a great day.,2026-07-01T14:57:19
+875de034-ce28-4765-a45d-544eb9d9f076,3762887042,3146876875,3107,False,"Hey, what time are we meeting for dinner?",2026-06-20T07:25:29
+7f42f5a7-c38a-4e45-99a5-88d835d04a25,8540722218,05773926196,2294,False,Did you get the email I sent earlier?,2026-07-04T04:58:25
+a5ea9f53-b6d6-4d27-b838-893c520fd1c4,5233658814,+914315079853,2705,False,The weather is supposed to be nice this weekend.,2026-06-25T16:06:06
+d06ed0cf-6b88-400c-8c3f-a6bbf40e6607,04828956293,+910083720737,948,False,The weather is supposed to be nice this weekend.,2026-06-04T09:53:41
+8e649b05-4bc6-4bbd-9277-9aa1ad322eae,+912097660077,5975151309,1390,False,The weather is supposed to be nice this weekend.,2026-06-12T17:08:44
+b8737828-a5da-4da4-be4f-21ae06995383,4320822763,8960399515,394,False,Can you pick up some groceries on your way home?,2026-06-30T19:05:04
+630c1f30-645f-4837-bca7-b5dd782d9485,+912165054289,+916512196818,2497,False,Can you pick up some groceries on your way home?,2026-06-13T08:41:20
+0b6da310-2e34-47f8-9fd1-7a15c168ad7e,3435303115,1727818260,2452,False,The weather is supposed to be nice this weekend.,2026-07-02T07:26:44
+407948c6-9e42-432c-9a92-841bd97ac906,02868684819,07778821307,1429,False,Can you pick up some groceries on your way home?,2026-06-15T17:11:20
+9f1b554b-f2fc-4b05-a6a0-4dd4adbcc369,+915721511604,+916730960685,2465,False,"Hey, what time are we meeting for dinner?",2026-06-22T11:15:33
+80416719-99d0-4fdc-aae5-fe37ada7d585,09242935294,05384520761,2365,False,The weather is supposed to be nice this weekend.,2026-07-02T06:15:38
+bb5efd86-4f3e-4dff-a7c4-248200c2c94d,+915184746638,02393499820,3242,False,Did you get the email I sent earlier?,2026-06-04T15:05:30
+2b742450-a7a0-4c5c-989c-88695e911f51,3185151431,04902516732,1374,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-30T07:42:31
+275f9524-50ef-474b-aa64-4fc9aad40520,+912783486000,+918994390019,2054,False,Did you get the email I sent earlier?,2026-06-12T05:54:55
+619467e5-9fbf-4b3c-bbc2-fc77c06c68db,+912443364425,+913153106394,781,False,Happy Birthday! Hope you have a great day.,2026-06-15T08:20:19
+f95da40d-cdd6-4549-9c9f-969a0224ae43,+910856923479,+919584081829,2693,False,Can you pick up some groceries on your way home?,2026-06-10T20:12:57
+8eb7a6fe-7119-4ab6-9557-a70ad2129deb,+912533523705,7613471587,2828,False,"Hey, what time are we meeting for dinner?",2026-06-25T04:28:36
+1a98cec6-6da5-45a3-82b4-e89613aa6182,+913142130858,+913609498460,2294,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-07-01T07:40:42
+71876f87-b65d-4d92-99d7-315391130f1b,6117450874,3597564462,2746,False,The weather is supposed to be nice this weekend.,2026-06-14T14:55:47
+f997c62e-2fc3-4958-9a28-0d7767f194a9,9775312427,+913490251335,2957,False,Happy Birthday! Hope you have a great day.,2026-06-21T08:56:25
+1c779c65-ac90-4d0c-95e7-ee32baaa6d32,8906693174,0385237990,1848,False,Happy Birthday! Hope you have a great day.,2026-06-20T05:37:13
+4188b6c3-9be7-4768-8b6e-9963e17e0f91,06490046484,+919782930026,1880,False,Happy Birthday! Hope you have a great day.,2026-06-09T17:39:43
+aa19ebec-838b-4cdd-b8ef-0877c8862cd4,+915381888107,+918790564756,957,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-12T11:38:24
+88257439-4653-49c1-bfbd-e832f707d63e,02302460964,8126882086,2488,False,Happy Birthday! Hope you have a great day.,2026-06-13T11:52:29
+4bdc874d-bbd4-4ea2-9711-7cd627a3c66c,03380672708,01655364891,2503,False,The weather is supposed to be nice this weekend.,2026-06-15T18:47:12
+6cdb18d6-328b-43a2-816e-d6ebb3b9aaf1,02791602969,0403425853,163,False,Happy Birthday! Hope you have a great day.,2026-06-21T21:41:06
+7aca935b-acff-4de7-8fcd-830df940eabd,+911698700667,04580953095,2543,False,Can you pick up some groceries on your way home?,2026-06-12T12:55:28
+641ba7ff-229e-4765-84cf-9a37354c377c,0078095708,6040664723,492,False,"Hey, what time are we meeting for dinner?",2026-06-21T19:22:01
+eb4596aa-7eb6-43c2-814d-c62f5000faae,02674153063,+919417010652,1655,False,Did you get the email I sent earlier?,2026-06-08T10:39:09
+379c87de-244e-4cb7-bd13-64002de13126,05056912893,+912620431909,3451,False,Did you get the email I sent earlier?,2026-06-20T17:56:37
+81ebbb4a-e959-4ea5-bcb6-d93d7e773b1e,+915349730781,+911710718806,1191,False,Happy Birthday! Hope you have a great day.,2026-06-05T02:46:57
+fc21fbd9-5873-42de-9c6a-c3490b347a54,00363844023,03992617067,64,False,Can you pick up some groceries on your way home?,2026-06-22T10:09:36
+2fa60769-ebe7-430b-8fa8-4d7e300640af,+910753794531,+916237694301,620,False,Can you pick up some groceries on your way home?,2026-07-03T19:35:56
+10ef22cf-5f99-4611-aec5-93f893fac02a,00195435710,00446379209,2773,False,Did you get the email I sent earlier?,2026-06-17T16:01:56
+122d0e56-0554-446e-8f8a-3df5a2b67f8d,8411935115,+918660721284,2224,False,Happy Birthday! Hope you have a great day.,2026-06-11T04:48:58
+49625efa-8aa1-4fe1-b254-7e8cb516bf6a,+917954038089,8613550232,3269,False,Did you get the email I sent earlier?,2026-06-05T00:29:14
+6c2da265-521c-4e42-a906-5120c9e0881e,09047394337,00650268930,752,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-06T00:34:53
+ac7d79ae-4a97-410b-ad59-9afcbf257176,03161390510,8836523383,3109,False,Did you get the email I sent earlier?,2026-06-22T21:44:50
+d3a61999-ee62-4fee-a0e7-c081351665f4,5449589719,02375991298,297,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-27T03:10:02
+963317a6-4597-42ef-b336-5227f5efe5f3,+917855511516,00235381151,1174,False,Happy Birthday! Hope you have a great day.,2026-06-04T18:56:22
+a11f4eff-46e6-4207-92b9-8e7eb11a0a0d,+919420223093,0348438268,2923,False,Did you get the email I sent earlier?,2026-06-23T22:35:51
+1860e7b3-feef-48c9-8f58-fd170dd21795,+915098261047,+910589269959,2278,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-19T13:35:43
+5901c0a9-099b-457c-97aa-d4201b9111e3,+911437318905,4247950101,2954,False,The weather is supposed to be nice this weekend.,2026-06-19T11:30:23
+71cd3632-2dbf-4173-b167-e97aa2e62cdc,1061610620,8869342445,2815,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-12T05:37:18
+8f1b75dc-84a9-4446-8f53-b618e627f770,+918778278096,7850902844,1520,False,"Hey, what time are we meeting for dinner?",2026-06-09T09:13:45
+197ae87e-0e8d-41be-9c72-9b3f6f645e95,00941625800,0677567912,2429,False,Did you get the email I sent earlier?,2026-06-19T01:45:48
+d113950c-0863-4598-a05c-76743536060e,5907414098,01493858664,3153,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-13T14:38:36
+a2b2e2e7-8f63-4674-8746-bf8ec7684abf,05042556255,+911367458544,2865,False,Happy Birthday! Hope you have a great day.,2026-06-16T14:06:20
+b118145f-6fcb-4960-aaa0-6cfa8b5437bf,+912940801063,01696288903,1460,False,Did you get the email I sent earlier?,2026-06-17T18:07:40
+2885d3c0-c302-4611-bd95-48cd934c881b,7845730517,0881028715,2707,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-30T07:12:05
+c2010da2-dfa0-4bce-a696-a8ba6bfed7b6,03833147611,+914212531929,405,False,The weather is supposed to be nice this weekend.,2026-06-14T20:12:19
+a537a62c-38f1-4b69-8f03-364f84200907,6333819194,03443631727,1335,False,Did you get the email I sent earlier?,2026-06-11T12:36:09
+475b40a2-25c5-4f71-872d-1d0b83b6e3ea,+916705170712,7075872081,3510,False,Happy Birthday! Hope you have a great day.,2026-06-17T10:40:15
+30753093-3445-4f37-8734-de3da0a5a530,04833497613,2053401315,1657,False,Happy Birthday! Hope you have a great day.,2026-07-01T12:33:53
+c98d6577-ae3a-4324-9c86-05e129d32fc3,09727266503,9615928050,2059,False,"Hey, what time are we meeting for dinner?",2026-07-02T12:13:35
+4119f9f9-923e-4094-8c40-a68076edbc07,09747176489,+916947384278,1079,False,The weather is supposed to be nice this weekend.,2026-06-15T20:37:49
+53361714-365d-48ce-94e4-8aca78154b67,1687776626,01613383324,202,True,"This is the police department, there is a warrant for your arrest.",2026-06-17T19:27:49
+259018f6-0149-409f-9a2b-6bdcc44357fa,02096616394,08374195810,2244,False,The weather is supposed to be nice this weekend.,2026-06-13T20:01:15
+657aad10-82e8-47fd-b631-67c84271ee72,+918910651985,01345548256,3270,False,Can you pick up some groceries on your way home?,2026-06-05T08:10:18
+3e69a64b-15ac-4bd9-bf57-32ae3f4d775d,9687589044,02494280309,1231,False,Did you get the email I sent earlier?,2026-07-02T14:17:11
+91a235ab-702d-4f35-8867-6a68eef9ed67,3197919067,+919793506177,1166,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T17:40:05
+786dd4f0-0e2c-496c-8c6a-44703dddc98c,00153742925,3719807724,2896,False,Can you pick up some groceries on your way home?,2026-07-03T03:19:03
+bd5f7071-cde2-48fd-a1d9-abaa0f11df32,+918985866504,+919162449939,147,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-15T22:35:53
+be5bea08-81cc-45c0-8d7f-12b8b41fb3bd,+910878169991,01647003941,240,True,"This is the police department, there is a warrant for your arrest.",2026-06-23T09:21:48
+95f60fc2-c777-41e9-a96d-6abafba1ea26,+911818727092,+912176376269,3361,False,Happy Birthday! Hope you have a great day.,2026-06-07T02:27:29
+82bc92a5-617c-4075-ab44-f2142633154a,6511717621,5604351098,28,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-07T03:35:49
+a4399cd9-0521-444b-9e04-94bc858d5966,+919740545629,+916826562659,3380,False,Happy Birthday! Hope you have a great day.,2026-06-13T20:59:00
+07d118e8-a576-461b-b949-cef21cf70a3c,3386779472,02102523844,1703,False,Happy Birthday! Hope you have a great day.,2026-06-24T12:44:18
+ac7a1c37-db27-4bc3-8b78-d5ded837d7fd,7199155070,+915354208232,703,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-06T14:46:41
+89f9fd15-6882-453c-a827-8aaf66539b57,7652112443,+913079275591,238,False,Did you get the email I sent earlier?,2026-06-08T13:07:02
+760432ee-07be-46e2-8610-a99f763d0467,04796772837,+919392323376,2148,False,Did you get the email I sent earlier?,2026-06-10T04:29:23
+f6867899-b17d-4896-bd5a-db3150465a92,+913138097079,5511333933,1788,False,Can you pick up some groceries on your way home?,2026-06-26T22:47:36
+59cbc20a-68f7-494d-b807-9ca4890d7b02,8617275900,0603022355,1639,False,Can you pick up some groceries on your way home?,2026-07-01T08:01:46
+0085f862-1033-4bb2-b102-f579ddf3f27f,07799548429,4362938444,55,False,Happy Birthday! Hope you have a great day.,2026-07-03T07:58:12
+53184fee-bcac-4b8a-83f2-b978a430f7f5,08872181743,+917892712618,3143,False,Happy Birthday! Hope you have a great day.,2026-06-13T12:59:03
+98718755-8759-45d6-b394-f050474fe171,2619016494,1310963983,2054,False,Did you get the email I sent earlier?,2026-07-03T08:02:19
+a3c91f83-1a11-4d63-895d-93e4943029ad,+918865347511,7428531978,2148,False,Can you pick up some groceries on your way home?,2026-06-12T21:05:21
+38fae420-4c94-497b-bb80-895db8111dfc,3607392767,1235159271,624,False,Did you get the email I sent earlier?,2026-06-19T02:41:21
+37d5a9eb-8e68-46d8-927a-a50c21d4e3b1,7797239070,+918027874258,585,False,The weather is supposed to be nice this weekend.,2026-06-24T12:14:21
+c90df456-7e81-4dee-ab5d-8947d52e4811,7940472811,0663756203,1028,False,"Hey, what time are we meeting for dinner?",2026-06-27T20:48:31
+5a30f723-fe7a-44f6-a5d6-19d2692fa643,3805519533,03480241906,2409,False,The weather is supposed to be nice this weekend.,2026-06-05T00:23:36
+cf74e7b4-f11f-4d73-a29c-8262e68a7bc7,06873112152,03479342458,3551,False,"Hey, what time are we meeting for dinner?",2026-06-28T03:17:40
+bc9b2e90-50ec-421d-a5f1-1d93786b44bd,+916137423138,2519587320,1883,False,Did you get the email I sent earlier?,2026-06-29T08:18:31
+47379527-3b25-4744-a165-b28864c1c544,+919130035989,08508072883,3534,False,Can you pick up some groceries on your way home?,2026-06-06T20:03:27
+6a51259c-130e-478c-bd63-bc2e78f39658,+915335342052,+917360280734,1964,False,Did you get the email I sent earlier?,2026-06-26T12:47:02
+e3d52697-97f3-4aef-aa44-f70d65aa6aa1,0381750250,07580432927,1331,False,Happy Birthday! Hope you have a great day.,2026-06-21T00:32:21
+8b1a3a7c-8cc9-4699-ad05-48aea21ef12f,2211393164,7215758396,2553,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-28T16:18:35
+261e7630-57dc-4fb1-93c3-ebb7ecb3edb5,1910294613,2471691726,567,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-20T01:17:46
+3e3970a2-eb14-4c4f-b2ec-cf5920469a94,+910302224892,+918016425703,393,False,"Hey, what time are we meeting for dinner?",2026-06-04T22:47:11
+3b696542-316c-45c2-817c-6ee3ba04b5b1,+913115139090,+913668087238,268,True,"This is the police department, there is a warrant for your arrest.",2026-06-26T10:09:36
+7818e5be-7dbe-4414-b3a1-e330d4b97882,07103554871,05638861387,955,False,The weather is supposed to be nice this weekend.,2026-06-09T22:30:01
+d912359e-e36d-4ce4-a831-5be45c65431c,2790643010,05570815241,1725,False,The weather is supposed to be nice this weekend.,2026-06-12T09:06:11
+6af77957-6aaf-49f2-8c40-946d16041afc,+913762635557,5017342771,1315,False,Can you pick up some groceries on your way home?,2026-06-18T08:25:44
+7ba0d902-4765-4236-91c1-d6219f4187b8,05240082462,5559858753,1293,False,Can you pick up some groceries on your way home?,2026-06-23T09:11:55
+7af70e32-ecd2-4dc6-bd0a-02d09dd2b58e,06615620870,+910910524028,1871,False,"Hey, what time are we meeting for dinner?",2026-07-01T19:49:45
+88e60100-3584-433c-aeef-0e87606bc5f6,4763643761,+916779855883,2347,False,The weather is supposed to be nice this weekend.,2026-06-16T08:26:50
+4433680f-9edd-442b-aff2-7383f8d24900,02077274777,01601663915,782,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-07-02T10:38:40
+9816d9e7-a214-4962-9f67-d03f7193fb63,7251859457,08042556395,1004,False,Can you pick up some groceries on your way home?,2026-06-20T08:48:29
+6f9e16e1-4598-4a50-866d-a432b94684c3,06386628117,04167561078,3386,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T14:39:33
+068d5d02-af4f-4c88-8a9f-aa0ff1638624,1877950531,8874738641,3421,False,Did you get the email I sent earlier?,2026-06-24T08:14:08
+ef23780c-ac2f-4ec1-8730-84b674d56cac,7270968206,7843883173,2722,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-18T00:52:00
+265f46ae-06d3-49e1-a2d9-d913fac8addb,09710727821,02825334657,665,False,The weather is supposed to be nice this weekend.,2026-07-03T23:01:46
+1cacc3a3-4ed4-4cf6-b797-1aac38375bda,04685352803,07077868596,2242,False,Did you get the email I sent earlier?,2026-06-09T00:25:56
+9f78b801-4bb4-4c93-87bc-c4e83b7a7f59,9955883890,8256044832,1943,False,The weather is supposed to be nice this weekend.,2026-06-17T18:10:09
+79053822-ea7e-4907-8ae8-1c4e6e0f820b,+912427499176,+919181035555,3513,False,The weather is supposed to be nice this weekend.,2026-06-22T15:31:30
+9366dc31-37db-4c47-839d-f0511667c544,08896757773,8465570403,1520,False,"Hey, what time are we meeting for dinner?",2026-06-17T02:05:00
+28f7f932-40a5-46b7-9a5d-aee194eb99b5,+914544321206,05590901993,3284,False,The weather is supposed to be nice this weekend.,2026-06-10T11:07:43
+525458db-f51a-40d6-922a-96044749f5b6,+916196285883,+910892711603,2281,False,Did you get the email I sent earlier?,2026-06-15T03:54:00
+b446696e-43fc-45cd-8514-91f90b14203e,+913528503522,+919831435273,2615,False,Can you pick up some groceries on your way home?,2026-06-19T02:28:20
+5d92755a-2d83-4d54-b251-564e02d6b59e,+911687824129,3450636353,1754,False,The weather is supposed to be nice this weekend.,2026-06-22T12:11:56
+35c571af-b8f0-4d92-a8e8-cad2b9d6f141,01415411978,0176183594,3015,False,Can you pick up some groceries on your way home?,2026-06-23T08:33:02
+b509635b-f1f7-4710-9aa5-72d91915653c,+916935303581,06278803717,2728,False,Did you get the email I sent earlier?,2026-06-30T21:17:26
+1f0a9fb8-29d6-4bb9-b210-c6ae297d3ecf,7443558730,+915713153812,3446,False,"Hey, what time are we meeting for dinner?",2026-06-25T21:50:52
+d79bf78b-8bd1-47b3-84c0-ea3ab946589d,1011091896,8558483813,1260,False,Happy Birthday! Hope you have a great day.,2026-07-01T16:12:12
+dd027e3e-b9cf-4788-b15a-fc668187079a,04267850934,01061567146,1869,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-04T14:14:51
+3b851d02-e133-4f46-9314-be79610e7d2b,4855604859,01166305677,1423,False,Did you get the email I sent earlier?,2026-06-22T12:02:10
+bc4d5df7-40eb-42d4-bb6e-65b02a29da8a,+914402821150,4210629740,2291,False,The weather is supposed to be nice this weekend.,2026-06-26T23:23:11
+c10b910f-011c-48cc-98dd-d3b6446d7dc3,2403523705,+918120709441,3489,False,Can you pick up some groceries on your way home?,2026-06-06T16:56:11
+97b15fd1-19d5-4902-bea3-0952697f3bbe,+910171761877,+914435262973,225,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-08T02:21:12
+3d3e9ca8-69f5-4ae3-a57b-4e75348a968b,0659935994,+919066830592,490,False,Can you pick up some groceries on your way home?,2026-06-19T00:52:56
+8ad40bb1-3bf9-4a83-a596-9d0baeb28ce6,4306524367,00820119263,2901,False,Happy Birthday! Hope you have a great day.,2026-07-01T07:13:21
+8ab0fb7c-0e6a-4c0d-af46-1ca86092b161,+914888595258,5842544945,3320,False,Can you pick up some groceries on your way home?,2026-06-27T07:24:36
+f2d7f75a-0ce5-4ffb-85f0-e927647a7bb4,01659221073,02170217063,3468,False,Did you get the email I sent earlier?,2026-06-18T16:46:50
+433e52a6-576f-4bd5-b22b-816b3a654e41,7116118820,09150018862,1422,False,"Hey, what time are we meeting for dinner?",2026-06-16T05:09:16
+71accc5b-b8da-434e-a226-57270a34f15a,+912331991994,0767629769,490,False,The weather is supposed to be nice this weekend.,2026-06-20T09:56:15
+fa7b5bb5-5bb7-4e5a-84da-386decb2aa1a,04941280700,1711291651,2190,False,Did you get the email I sent earlier?,2026-06-30T01:40:01
+be052c87-f0a8-443b-9c4b-e994e34dbe0f,+912182872262,+918696650305,3471,False,Did you get the email I sent earlier?,2026-06-22T23:20:20
+4d5317e7-b502-4d28-aef5-aa9390f83738,4288364687,+914164035762,238,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-27T12:19:17
+92fc7d51-0923-4254-be4d-496dcf8a5165,7981098770,6308196389,812,False,Did you get the email I sent earlier?,2026-06-15T23:27:03
+d6f43027-8a8c-41fa-bfd6-719bbae1cbf6,+917346434971,+919141750503,3536,False,Happy Birthday! Hope you have a great day.,2026-06-08T22:03:25
+fe0dbd42-3dda-4269-993e-e3a3bb098496,02809115155,0391016291,2746,False,Happy Birthday! Hope you have a great day.,2026-06-21T02:01:55
+0a4b1bd1-d491-4e56-a6a7-0beafdf48e62,03539399471,+911250915879,99,True,Your package is held at customs. Click the link to pay the fee.,2026-06-25T06:05:20
+a3521f39-c70d-4736-8167-558872d9c7b4,9246034658,+918956370259,30,False,"Hey, what time are we meeting for dinner?",2026-06-12T03:14:15
+ebc769de-6ba8-46bb-9a7b-b2e24a36dac5,01556044785,+919381423915,1333,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T06:52:19
+f814667b-749d-4e66-bfe4-6d77fff06dcf,+919053520851,8439838161,2022,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-18T09:50:01
+ed79cfc1-1b97-4a62-b76e-16a3200427dd,03811238906,02734124032,2374,False,"Hey, what time are we meeting for dinner?",2026-06-27T06:05:40
+ffc95123-e9da-4e32-8b09-0b7a7f18a9c1,8952053481,+910419144603,3578,False,Can you pick up some groceries on your way home?,2026-06-16T07:20:00
+cbce3721-1738-4192-95e4-2d0e7fdf18d6,08883197250,+912490905330,2778,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-23T02:51:15
+50f623a6-8f92-475c-be28-567e601772e8,06888813116,7906688699,438,False,Happy Birthday! Hope you have a great day.,2026-06-10T17:48:30
+ab73cd07-a14d-46ba-a46b-dfbacfae82b8,3357420611,03919635455,2767,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-07T14:18:44
+fb77c424-01fa-4315-97ea-5634fd1615ac,2209102769,03805419126,2852,False,The weather is supposed to be nice this weekend.,2026-06-08T10:48:09
+9a478141-18dc-4250-89ee-5149c26cd594,1609009537,06518397903,473,False,"Hey, what time are we meeting for dinner?",2026-06-16T10:24:52
+fe19dd62-33e4-4f15-a31e-49d46e2b91fc,09009154983,+918274964170,467,False,The weather is supposed to be nice this weekend.,2026-06-13T10:52:01
+33e122d3-c24e-4f5e-9853-5d7fa2b9ec19,05934860384,+916221851735,765,False,Happy Birthday! Hope you have a great day.,2026-06-09T10:58:28
+b877b57f-e6f4-40ca-8b93-accb8560c06d,+912108067033,04317118635,1994,False,Can you pick up some groceries on your way home?,2026-07-03T21:51:00
+404d3e58-3ec2-48db-b6ac-bc823e18082c,8807857047,+915019521835,2730,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-22T14:09:03
+2b2302bb-b800-4a21-8f04-68b39f29fcf5,08786626985,6880526821,865,False,Happy Birthday! Hope you have a great day.,2026-06-23T10:15:10
+0d8f22fc-d64a-4f8c-b25f-6c43aed321f1,3516199730,07625521601,1418,False,Can you pick up some groceries on your way home?,2026-06-07T06:25:15
+00321905-b65d-4777-bcc1-1b9b36050ef6,9285963783,+912314063092,3432,False,Happy Birthday! Hope you have a great day.,2026-06-27T08:19:28
+20cbbc1b-3105-4f33-a606-1fb7f2d49104,+919957572226,09734387448,42,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-08T06:21:22
+9eb6c25f-93ad-4b31-bbde-3b6067cd560e,05788903721,4903198556,2712,False,Did you get the email I sent earlier?,2026-06-27T00:11:44
+51eaf21b-26bd-4134-8c29-8e9bbec28cc0,+910293943127,+912872260576,1966,False,Did you get the email I sent earlier?,2026-06-09T12:24:37
+68ce882e-8048-479f-8831-633dace9ecc3,+914996680738,+915492650129,2187,False,Did you get the email I sent earlier?,2026-07-03T21:28:49
+df6554f6-92dd-4ab6-950d-16e6eeb6ef2a,9319433527,05770327390,28,True,Your package is held at customs. Click the link to pay the fee.,2026-06-10T20:54:44
+d93c6187-2f8e-485e-b99b-8f809ae3066a,+917886266897,3121120194,3509,False,"Hey, what time are we meeting for dinner?",2026-06-10T18:20:13
+1bbe8f1f-e8b6-44e6-a0e0-1af02c18ea66,+916333481630,+915979614998,3152,False,Can you pick up some groceries on your way home?,2026-06-27T08:37:35
+89f9d902-c9a3-45f9-8850-e44d2adc29b9,4843807655,04207171152,1996,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T22:21:06
+167838dd-5361-4f6c-98ea-3fb118eb705a,02709260410,4885484409,3563,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T07:09:25
+6feb8fb1-df97-4e8b-ad50-e9f1f330eb32,3958153426,+917516223259,3466,False,Happy Birthday! Hope you have a great day.,2026-06-10T06:41:49
+d2d860a2-1a6f-4638-9229-64e9e05e6f72,09219541727,+912324921470,700,False,"Hey, what time are we meeting for dinner?",2026-06-17T17:32:05
+2adebc65-286c-4469-9fdd-893ec354f372,2519321470,3867484030,262,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-07-01T19:27:06
+256b74a7-c7f1-42eb-bc2f-f847b5873a34,5126830497,+913059055032,76,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-05T11:56:36
+a1f7482a-f628-45f1-a248-e0c74e01eab6,8405377568,2524990530,2787,False,Happy Birthday! Hope you have a great day.,2026-06-10T00:11:59
+970a7952-e497-457a-b1ac-01d3da349b73,+919035007240,05643485673,202,False,The weather is supposed to be nice this weekend.,2026-07-04T03:54:56
+f304e188-481a-40a6-a6a5-79b055a89a3c,+915964201632,03534572897,3229,False,Happy Birthday! Hope you have a great day.,2026-06-06T03:27:36
+26487857-1986-469c-ad05-b9a99003d04f,05019055978,9722737209,24,True,Your package is held at customs. Click the link to pay the fee.,2026-06-07T07:51:34
+e91dc577-734e-4fe0-8209-d3be59f914d4,1791992388,8674957288,89,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-08T06:17:33
+c017b950-19f6-44f2-8254-949a951c5eb8,+911960296786,07355304459,222,False,Can you pick up some groceries on your way home?,2026-06-05T11:20:54
+6a681b34-a621-4878-b215-7de58f0a2852,0295780176,02142664944,1677,False,Did you get the email I sent earlier?,2026-06-20T09:12:33
+1121a4fa-5478-401c-a744-ca5181d82870,+918183646439,+913695161740,1897,False,Did you get the email I sent earlier?,2026-06-05T20:52:01
+3c7100c9-ba69-48d0-a0bd-a63218f5f94f,+917521611674,8578763205,142,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-12T05:38:50
+edd66571-92ad-4505-b52b-a41d4e76435a,02867042157,08497873001,792,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-19T02:28:59
+779062aa-95a4-4b32-a9eb-4ad2ae9ff23f,+918629564071,04416455627,2089,False,Can you pick up some groceries on your way home?,2026-06-13T20:52:30
+8717aaef-69fb-4edf-88fe-1adf23c0782b,03269584822,+917715555608,1079,False,Can you pick up some groceries on your way home?,2026-06-07T06:06:05
+965258c8-127d-4c5b-994b-c9df1cc0c89d,06567159672,3348308125,239,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-07T17:22:11
+4d048549-2acf-4889-9acb-bc1fd94c906c,03458744389,3663472743,1098,False,Did you get the email I sent earlier?,2026-07-02T16:54:36
+7005da6e-daef-49b1-ac39-40144a2cad0b,08560888182,8847342584,297,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-22T13:57:51
+e635d486-dbb4-4237-8122-d6d20e352e4c,8036231977,+914278532293,2046,False,Happy Birthday! Hope you have a great day.,2026-06-18T19:42:58
+cf9abc22-15e5-438b-b237-0feacbf5a0ed,8895071502,07914152277,3065,False,Happy Birthday! Hope you have a great day.,2026-06-30T07:11:38
+1a0b9bc8-9856-478a-ae52-28f98303fd9c,+918728825486,07551382835,1441,False,"Hey, what time are we meeting for dinner?",2026-06-27T13:12:53
+9added90-4a70-40d6-b0a4-50b393f25187,3228152758,08264094428,3399,False,Happy Birthday! Hope you have a great day.,2026-06-25T12:33:11
+820756d2-8b2f-44df-a5ea-dde722ff7da7,+915705419421,+916005569990,1007,False,Happy Birthday! Hope you have a great day.,2026-06-21T22:24:58
+350a4f49-6a65-4f0b-a017-3f2ddd99cca5,+916340199666,05251374696,390,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-23T08:15:48
+ea52f9f6-b973-4275-8845-b7497893bc8a,+910742366245,04865716139,1437,False,Can you pick up some groceries on your way home?,2026-06-06T05:20:34
+14f184b2-cdb1-489c-8949-8ee57c7b2357,+910501096390,+919639785022,2711,False,"Hey, what time are we meeting for dinner?",2026-06-18T20:03:57
+d58fe10b-731f-4e3f-9dff-e0981364d325,+918583213508,+917947460753,209,True,Your package is held at customs. Click the link to pay the fee.,2026-07-02T20:35:01
+e878c9eb-fd9f-4bcb-ac28-b36d90b1c128,02099863408,4579028263,2448,False,Can you pick up some groceries on your way home?,2026-07-02T10:29:12
+57be62de-6f3a-4ac4-bcaf-b237a25627ce,00478814333,07775724043,2545,False,Can you pick up some groceries on your way home?,2026-06-28T14:02:12
+cb5f7ea9-0c09-4573-8b6f-3329784dbf3d,+910408004275,09771879843,2561,False,The weather is supposed to be nice this weekend.,2026-06-26T03:08:39
+da57d4fe-0d2e-4128-87cc-c52784f4e28b,9717087947,00610228816,1938,False,Can you pick up some groceries on your way home?,2026-06-21T20:35:29
+dfb51799-b077-4b31-904a-2445093949d5,01766258953,03112995478,238,True,"This is the police department, there is a warrant for your arrest.",2026-07-01T04:56:05
+1de0e892-3ae2-435d-ab15-0cc41322af6f,7623824730,+915318623578,1426,False,The weather is supposed to be nice this weekend.,2026-06-20T23:10:10
+381947da-3381-4b0b-a8b9-cda94c1dc8d4,+913659790741,04606645044,2428,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T13:29:06
+f891fc5e-9869-4c44-ac70-59eb4cf5978e,03996836341,+915774047644,2990,False,Happy Birthday! Hope you have a great day.,2026-06-21T04:38:49
+c4c0a47b-c3c7-483b-b607-8018506d2aca,08305745143,+918836820320,2151,False,Can you pick up some groceries on your way home?,2026-06-09T15:14:29
+c08a43a8-cef3-4ebd-a58b-d9de7fd240a6,+912664491841,+916759039694,97,True,"This is the police department, there is a warrant for your arrest.",2026-07-03T18:43:41
+24a972de-46b3-4917-b39e-1eb7f33e3e46,09170169659,+913983242048,2383,False,The weather is supposed to be nice this weekend.,2026-06-09T02:25:13
+5997e558-def1-492e-b69c-c205ca01a6f5,+915833536279,02912174514,705,False,"Hey, what time are we meeting for dinner?",2026-06-07T20:44:24
+f4b31b8d-13f6-4419-80a4-5538322d7e5c,+910782291321,05148893482,2349,False,"Hey, what time are we meeting for dinner?",2026-07-03T12:31:13
+28d12b65-e541-48c1-85d6-731f9730916e,03289602827,3609592257,2915,False,Happy Birthday! Hope you have a great day.,2026-06-13T11:18:07
+aaa277ef-8192-4231-a3e8-02aa6941c6ad,1374984532,07437046655,39,True,Your package is held at customs. Click the link to pay the fee.,2026-07-03T05:17:50
+8fa312aa-7fa2-49d2-95b5-1549df993c02,06622307227,+910504908691,2556,False,Can you pick up some groceries on your way home?,2026-06-07T10:43:36
+dec68ac1-d209-49d0-8751-c0c8b59ef205,+916037088774,02010100271,2356,False,Happy Birthday! Hope you have a great day.,2026-07-02T11:14:45
+189fb971-a714-4de3-b1c2-97c6a57cc809,+919634092366,3660489423,2073,False,Can you pick up some groceries on your way home?,2026-07-01T04:59:42
+9458141c-2595-44f4-8275-2fc1d27f89a6,9118526139,09117980847,1988,False,"Hey, what time are we meeting for dinner?",2026-06-27T14:33:02
+03d65b39-a386-45a0-935b-7c700bbe65ac,8609733564,+919229448321,78,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-15T13:17:40
+f79ee868-69c7-4651-bdc0-94b156fe7cb8,08456180586,02411157817,950,False,Happy Birthday! Hope you have a great day.,2026-06-10T02:29:55
+30446092-1897-4401-84f2-b2343b0eb53f,7831738335,+918837400593,195,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-26T04:27:33
+5d992b14-3ef3-4d37-9227-2e5092672c14,06147565955,07021728099,1757,False,Did you get the email I sent earlier?,2026-06-25T09:24:36
+5c9439bc-fda6-4fd6-adc1-e4eed7f03805,07164478316,+915225418806,2153,False,The weather is supposed to be nice this weekend.,2026-06-21T11:24:24
+3d306845-8fe7-4569-ac3f-f1ef8446b3f3,9508730324,1943133064,2689,False,Can you pick up some groceries on your way home?,2026-06-23T19:11:37
+218097e1-d935-4f01-ab4a-1812e650e7eb,2440696580,7090596512,438,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-20T11:03:37
+70ca9b06-0dd7-4dd4-9780-70875428da96,5024474007,3019714624,3139,False,Can you pick up some groceries on your way home?,2026-06-16T14:31:40
+0efc9725-6822-42f6-8595-08beb3e7623a,0074759673,2185502821,1496,False,Did you get the email I sent earlier?,2026-06-10T02:39:47
+3a7bd69a-7f13-417c-872f-61a3ec94662f,07744555298,7560702228,1083,False,Happy Birthday! Hope you have a great day.,2026-06-27T17:31:24
+010cff85-7dbc-4805-8605-4e1aa3df92aa,2128396131,+912530277304,1454,False,The weather is supposed to be nice this weekend.,2026-06-11T11:52:48
+1fd8ad81-9728-42a0-b8a8-87591ba00e3f,3153015943,06120848852,1971,False,"Hey, what time are we meeting for dinner?",2026-07-03T10:10:16
+f4e6916e-25aa-4fc8-ada4-aecc3ea8fe27,6875558193,+910882894061,481,False,The weather is supposed to be nice this weekend.,2026-06-15T09:03:17
+99b526ab-4e34-4fd7-84d3-e40fd26c88db,08529885969,+913335227106,2795,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-22T08:05:33
+8c04f44d-c2c3-45f0-b0b0-737e16ee5f37,04382282313,+910256934339,175,True,Your package is held at customs. Click the link to pay the fee.,2026-06-04T09:49:25
+9c5110d5-8db5-4295-ad33-cbc87223b00c,3425312423,6704371321,3020,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-24T04:47:10
+e3757903-fb15-4e43-9695-92263668686f,8298974258,+919770161268,420,False,Can you pick up some groceries on your way home?,2026-06-17T07:22:19
+00c78ae6-d942-43e1-8642-bd60fb5fc8b8,+916365755146,+910261662749,770,False,"Hey, what time are we meeting for dinner?",2026-06-06T15:21:24
+8dcaaaee-b1db-4000-8360-4da071d2977f,+919238107606,06990757877,558,False,Happy Birthday! Hope you have a great day.,2026-06-25T03:02:40
+59cfa112-7b14-4dd8-a078-ccd4694956ee,+918219792427,3915646751,2849,False,"Hey, what time are we meeting for dinner?",2026-06-07T09:51:33
+d9bc0500-a679-4024-9b25-421a4407254d,06159138463,5366882706,1848,False,"Hey, what time are we meeting for dinner?",2026-06-08T08:27:45
+757f7b71-0951-4a42-b6ce-b9a327e08a66,04807013041,3697285222,1753,False,"Hey, what time are we meeting for dinner?",2026-06-11T07:01:24
+8037611c-cc7c-4ee8-9caa-5a40d41169e2,+915202137606,09344323789,308,False,Can you pick up some groceries on your way home?,2026-06-12T09:00:46
+4e802792-79c3-4bc1-8eee-6f1309fe07cd,8990789897,5738148747,70,False,Can you pick up some groceries on your way home?,2026-06-21T16:54:32
+2876e31e-76af-489f-83d9-e5783bca60ce,+911928711426,6338716975,326,False,Did you get the email I sent earlier?,2026-06-20T21:47:45
+28b67ec3-3696-4b35-8abc-ca44f4326f44,4841135634,+915833673175,3306,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-13T06:04:16
+2eded29b-9577-4542-8709-114c0eb1f97b,9701564783,+918384142624,2952,False,Can you pick up some groceries on your way home?,2026-06-16T23:49:09
+e6551096-2c0e-4766-ad37-bab735265df6,3298238376,+911866964169,21,True,"We noticed unauthorized charges, please read the code we just sent you.",2026-06-08T23:59:11
+8488223b-cfe2-47e2-9db1-57f61098af49,07461693836,+914561616666,2489,False,The weather is supposed to be nice this weekend.,2026-06-07T06:49:06
+14ad69ad-1bad-47b0-a2d6-a1a6cc3ce2f2,04053283977,7804699653,3057,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-11T02:20:20
+cd744a9d-f862-40b1-883b-796a49084e69,3157994828,06224076998,836,False,"Hey, what time are we meeting for dinner?",2026-06-23T08:31:09
+d0f0c98c-4301-43f4-be5a-1b8289e60151,06533372266,+913085541886,691,False,"Hey, what time are we meeting for dinner?",2026-07-04T08:31:52
+9723b6cb-29d7-4d8a-a251-2c6ca3606e3a,8985878246,8462758326,366,False,"Hey, what time are we meeting for dinner?",2026-07-01T06:18:32
+dd82138c-6627-4ab7-b9d0-88794b5b1f1e,9926477151,07957856216,1935,False,Did you get the email I sent earlier?,2026-06-21T22:35:38
+5b1c6114-4835-471a-9ce8-dddfc1d09427,1588694734,+910957806169,29,False,Did you get the email I sent earlier?,2026-06-06T18:39:07
+c3c6c960-0321-406b-b658-3f202ce965c0,00049434664,04987801108,588,False,Did you get the email I sent earlier?,2026-06-26T21:16:28
+67648d6c-d53f-4b45-8e71-82c76705e7be,8292949799,+910513164454,2113,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-27T10:44:42
+6e1f76fa-ef39-4ac6-8073-ae3f1bb36b9a,8547380868,7052664261,3164,False,Can you pick up some groceries on your way home?,2026-06-14T23:47:50
+09c4609e-71e3-4ad3-8630-0eefd1950f36,00571232050,+917350756315,874,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-09T04:05:32
+1d3160f4-25d7-48df-b512-89d016e95b1d,9156293161,02275081018,2598,False,The weather is supposed to be nice this weekend.,2026-06-06T10:44:10
+336b1e82-8d1e-49e7-906e-92c4e4775244,08025183432,+912146258533,13,True,Your package is held at customs. Click the link to pay the fee.,2026-07-02T07:26:16
+96cf7d15-e024-4999-97f1-3d9fd404d5e8,6451135487,+917227425458,2431,False,Can you pick up some groceries on your way home?,2026-07-01T00:57:34
+c85a9c6c-b496-473b-8f19-bb90181170d4,05107325397,09674427056,2203,False,Did you get the email I sent earlier?,2026-06-30T11:06:59
+dce23821-3f30-4ebe-87c1-043aa60bce5f,08132766961,04783043460,3001,False,The weather is supposed to be nice this weekend.,2026-06-13T07:38:42
+5f6e4891-5cc9-4925-b5eb-2b4502adbe79,05013493708,+917074772805,107,True,Your package is held at customs. Click the link to pay the fee.,2026-07-02T22:15:53
+59536da6-e930-4135-901c-1f4e77c7bc05,+911611844243,+913265021429,755,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-08T19:48:47
+8122684c-9d33-4f12-a9ab-fdf772a90be0,+917897953797,7203776846,2993,False,Can you pick up some groceries on your way home?,2026-06-11T11:31:30
+9d92df5d-dcd5-43b9-8379-bee0aa53293a,5864284473,3394944794,2428,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-25T10:42:24
+f8537cfd-6813-416b-a1c4-b55b942da26a,+910483119205,03799554116,138,True,Your package is held at customs. Click the link to pay the fee.,2026-06-24T22:10:41
+bf4c27ec-75ff-448c-9a77-2999d62788b0,+912066744651,+919243360130,1033,False,Can you pick up some groceries on your way home?,2026-07-04T02:53:50
+72fef158-d503-4bde-8dfb-57b58c684751,02574529156,+913094043221,686,False,Did you get the email I sent earlier?,2026-07-03T14:44:39
+5abca269-e4e9-4ad8-92b6-46f45f26589e,07894071990,+913774280176,1102,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-19T01:57:13
+8284b11d-27d1-4f53-9883-f5ba1128b8de,01712073920,4942849146,2823,False,The weather is supposed to be nice this weekend.,2026-07-02T11:43:57
+692f8c7d-2af0-408b-972e-8dfce177ea0e,+911246500257,00728021492,1112,False,Can you pick up some groceries on your way home?,2026-06-29T06:17:33
+1c24480e-322b-4e20-b99c-1037d21492b2,+918557997790,+918015878709,1171,False,"Hey, what time are we meeting for dinner?",2026-06-22T09:36:11
+225bdcfa-8283-443e-a678-7782370eaa2b,+915843610390,05940598706,2241,False,The weather is supposed to be nice this weekend.,2026-06-26T08:21:08
+cd5c9e1b-a49e-472f-a982-5a8f935fea5c,05542369737,07329456726,135,False,Happy Birthday! Hope you have a great day.,2026-06-28T12:32:55
+459f0a96-ed28-4ab6-b1a4-d7aaafe164a0,6863236155,03225195457,264,False,Happy Birthday! Hope you have a great day.,2026-06-20T15:20:40
+dbca94c4-f57b-4437-8bc5-018069ded526,+912860779442,4489830932,2184,False,Happy Birthday! Hope you have a great day.,2026-06-20T08:08:49
+6408e19b-3462-4a5e-ae87-b8c59d43634c,02735630436,+919133167261,254,True,Your bank account will be frozen in 2 hours due to suspicious activity.,2026-07-02T15:29:55
+624f9ffa-af7b-4f71-a558-d2166c991c3d,07590055913,03504017170,3401,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-15T17:43:25
+3ecbbf28-5631-4590-95cc-a441353d0371,+918487498074,03671773198,1342,False,Did you get the email I sent earlier?,2026-06-21T12:51:24
+54d2d296-1988-4f1b-89fd-41ee0aca353e,07131136231,2183588092,1233,False,Can you pick up some groceries on your way home?,2026-06-04T10:10:20
+7e05983e-a6f9-41af-aab9-a2147535ebde,7533509618,4316750152,2649,False,Happy Birthday! Hope you have a great day.,2026-06-06T03:31:14
+023fc424-9b30-410c-b0c8-35c609430087,3902922281,7150548381,2505,False,Did you get the email I sent earlier?,2026-06-13T14:53:34
+2a874d04-c253-4988-8221-13fb596bec40,05532084663,01589468388,1228,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-15T10:14:56
+3357eb2b-6536-41b4-9bd7-7b772fbd747c,04934922809,+910757278078,712,False,Happy Birthday! Hope you have a great day.,2026-07-01T01:31:00
+6b10e36f-24bc-4110-b21c-eb70bb9fc0ab,08177954194,+916863543137,3112,False,Happy Birthday! Hope you have a great day.,2026-06-14T01:06:24
+03ec46ff-9fe7-4ddb-b90a-0586743a63c5,2513194168,1782750010,1333,False,Happy Birthday! Hope you have a great day.,2026-06-12T08:14:14
+4d6fba38-ce19-4e38-84e9-d2a050ad07a7,02108159122,00996093564,175,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-27T16:45:22
+de856ffd-1c93-401c-ba9f-6c2d9fee21fa,03212178625,+911363107144,3129,False,The weather is supposed to be nice this weekend.,2026-06-08T04:22:34
+7c766e96-1c8d-4591-8023-2b3ed7f340a8,09236515450,09111964855,2054,False,The weather is supposed to be nice this weekend.,2026-06-11T07:14:02
+cffa1cfa-2420-4140-8556-c17760db00b4,+917456871459,05560418092,460,False,Happy Birthday! Hope you have a great day.,2026-07-01T06:13:15
+04bf7b74-0d57-456c-ae20-3fd9a0c22f59,05739573822,+913910571728,2390,False,Happy Birthday! Hope you have a great day.,2026-06-12T04:05:24
+829e7ce6-6413-41bc-82da-945b0029d7bd,+914325785472,06592373622,2349,False,"Hey, what time are we meeting for dinner?",2026-06-10T18:08:38
+fdfd0118-9758-4830-a403-7504166f0a84,9565559276,5831433055,3253,False,The weather is supposed to be nice this weekend.,2026-06-08T02:36:05
+802354be-69d4-4205-9817-3b6e24b9ea74,9251454486,04136123666,2982,False,The weather is supposed to be nice this weekend.,2026-06-10T00:56:24
+c28cec14-d7a5-4178-a740-00a5d9400a11,+917720377730,08714324681,628,False,Did you get the email I sent earlier?,2026-06-29T22:12:17
+85ac51a3-56f0-4d05-879a-571dc7edbde6,5365861385,+912849169231,2839,False,"Hey, what time are we meeting for dinner?",2026-06-17T20:48:43
+f233799b-cf25-4a26-8303-38e057a1beab,8762707836,07538630365,3075,False,Can you pick up some groceries on your way home?,2026-06-18T05:24:27
+01e73a7e-92eb-40b4-b9d4-799ef1e6ea1f,09066057755,09402570301,81,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-27T15:47:22
+510fd5f8-3da5-4fb8-a396-5472d4d77422,06650445622,7687578435,1597,False,"Hey, what time are we meeting for dinner?",2026-06-15T23:50:31
+e6b948ab-68dc-4432-a500-78cbb1f517ae,+917864973839,+917730791376,3475,False,Did you get the email I sent earlier?,2026-06-08T10:03:46
+9473ae4c-c0e8-47a8-b9aa-568db88ab24a,8845569817,07778703618,2844,False,Did you get the email I sent earlier?,2026-06-22T16:21:49
+8b17ba52-0293-4210-b44c-5e673bedaedd,0276038254,02113527913,3518,False,Can you pick up some groceries on your way home?,2026-06-04T13:24:46
+4d263d35-6339-4eb2-b252-7b538e9dc612,3876496134,00334893321,1383,False,"Hey, what time are we meeting for dinner?",2026-06-13T16:11:56
+b6233f1c-130d-4a17-be87-de7e29a5994a,06383448313,06132541340,1060,False,Did you get the email I sent earlier?,2026-06-21T16:34:30
+c91f80e2-b42b-40a9-b7e2-a67a6524b51e,2920622434,04635471470,2556,False,The weather is supposed to be nice this weekend.,2026-06-09T11:05:02
+a81c35a0-cc58-4d3f-9df4-a87003de3a1b,01062731826,02114061249,394,False,Happy Birthday! Hope you have a great day.,2026-06-20T06:23:55
+89575919-4cbd-4b38-a0c7-01e314c263fd,8349788692,5755315967,2033,False,Happy Birthday! Hope you have a great day.,2026-06-10T11:28:19
+6eb3b79f-8faf-4b25-9a31-4d03f500779d,02779972195,+911925472586,908,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-17T07:57:38
+8fa1f5e7-c375-4df8-b580-7139d9302432,01232946070,+915233649183,1126,False,Can you pick up some groceries on your way home?,2026-06-28T05:53:08
+43178b12-3126-4ec8-aef8-75d4d53a5ba4,2798813902,+916701823856,2691,False,The weather is supposed to be nice this weekend.,2026-06-09T03:59:59
+5bdc812f-661a-4fb1-93d2-8589bb7aebc0,4138963403,+919484716295,3158,False,Happy Birthday! Hope you have a great day.,2026-06-08T16:50:40
+271cd677-8660-4c5e-984e-e4509d0fd0f6,7500810460,6406126780,281,True,"Your tax penalty is pending, please press 1 to resolve.",2026-06-17T17:24:36
+2ebed64a-2ec6-40bc-9c1d-c4f617eef237,1547695916,3507623348,122,True,You have won a lottery of 50 Lakhs. Pay processing fee to claim.,2026-06-26T10:28:32
+1967820d-2f89-4e76-ab6b-0acedee38456,04788129306,02126672909,1723,False,Can you pick up some groceries on your way home?,2026-06-08T09:11:19
+446e812b-1f3e-4b6a-b830-a4c94add1ab7,08570905511,+917624882618,3431,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-16T09:40:43
+207012c6-d291-4982-b30f-0213282f50dc,09213413857,+917767354095,179,True,"This is the police department, there is a warrant for your arrest.",2026-07-02T00:16:50
+74338c86-96d8-4968-bda8-aec85c5099c8,04529836428,1879458993,2637,False,Did you get the email I sent earlier?,2026-06-25T17:05:37
+2a2f0b3b-51f8-4156-8262-982babae5197,04046398019,02167956460,74,False,Did you get the email I sent earlier?,2026-06-30T05:57:55
+3b8a2708-848d-41de-acee-b3f166cc6b88,9314513608,0136881932,221,False,Happy Birthday! Hope you have a great day.,2026-06-25T06:43:16
+230f8dd2-7925-455f-aa86-7616f47e6e8d,07350452722,02122697793,1491,False,Your appointment is confirmed for tomorrow at 10 AM.,2026-06-20T06:53:51
+8e65c402-4483-44c4-b58e-1158b92a93ff,01779773446,07149774454,2826,False,"Hey, what time are we meeting for dinner?",2026-06-30T23:29:10
+1980f5d8-95ae-44d3-a5aa-52247d0175f0,01829278731,03322861828,2129,False,Happy Birthday! Hope you have a great day.,2026-06-09T20:25:11
+e5e017dc-cd66-46fd-b71a-309d1989fda8,+912229605961,04368121710,1924,False,Happy Birthday! Hope you have a great day.,2026-06-29T05:02:09

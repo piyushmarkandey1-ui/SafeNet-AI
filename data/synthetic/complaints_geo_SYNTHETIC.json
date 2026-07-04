@@ -1,0 +1,122 @@
+[
+  {
+    "id": "hs-SYNTH-2c4b83af",
+    "lat": 28.521504,
+    "lng": 76.905829,
+    "intensity": 0.88,
+    "radius": 1718,
+    "type": "CRITICAL",
+    "complaint_count": 81,
+    "primary_complaint_type": "Job Scam"
+  },
+  {
+    "id": "hs-SYNTH-2f74a734",
+    "lat": 28.551569,
+    "lng": 77.263949,
+    "intensity": 0.59,
+    "radius": 983,
+    "type": "MEDIUM",
+    "complaint_count": 15,
+    "primary_complaint_type": "UPI Fraud"
+  },
+  {
+    "id": "hs-SYNTH-f50f719c",
+    "lat": 28.717642,
+    "lng": 77.119681,
+    "intensity": 0.89,
+    "radius": 1496,
+    "type": "CRITICAL",
+    "complaint_count": 99,
+    "primary_complaint_type": "Vishing"
+  },
+  {
+    "id": "hs-SYNTH-9a7baaf4",
+    "lat": 28.56561,
+    "lng": 77.167581,
+    "intensity": 0.72,
+    "radius": 1148,
+    "type": "HIGH",
+    "complaint_count": 36,
+    "primary_complaint_type": "Job Scam"
+  },
+  {
+    "id": "hs-SYNTH-58fdef2b",
+    "lat": 28.61012,
+    "lng": 77.236253,
+    "intensity": 0.47,
+    "radius": 885,
+    "type": "MEDIUM",
+    "complaint_count": 24,
+    "primary_complaint_type": "Counterfeit Currency"
+  },
+  {
+    "id": "hs-SYNTH-72891248",
+    "lat": 28.574557,
+    "lng": 76.990807,
+    "intensity": 0.65,
+    "radius": 1411,
+    "type": "HIGH",
+    "complaint_count": 40,
+    "primary_complaint_type": "Job Scam"
+  },
+  {
+    "id": "hs-SYNTH-6a437a8e",
+    "lat": 28.715866,
+    "lng": 77.34055,
+    "intensity": 0.5,
+    "radius": 657,
+    "type": "MEDIUM",
+    "complaint_count": 19,
+    "primary_complaint_type": "Vishing"
+  },
+  {
+    "id": "hs-SYNTH-d3a031d7",
+    "lat": 28.758152,
+    "lng": 76.957635,
+    "intensity": 0.4,
+    "radius": 924,
+    "type": "MEDIUM",
+    "complaint_count": 12,
+    "primary_complaint_type": "Counterfeit Currency"
+  },
+  {
+    "id": "hs-SYNTH-0318909a",
+    "lat": 28.46645,
+    "lng": 77.340741,
+    "intensity": 0.61,
+    "radius": 595,
+    "type": "MEDIUM",
+    "complaint_count": 19,
+    "primary_complaint_type": "Vishing"
+  },
+  {
+    "id": "hs-SYNTH-6ac1df58",
+    "lat": 28.532353,
+    "lng": 77.365218,
+    "intensity": 0.68,
+    "radius": 1296,
+    "type": "HIGH",
+    "complaint_count": 36,
+    "primary_complaint_type": "UPI Fraud"
+  },
+  {
+    "id": "hs-SYNTH-f1e1abc3",
+    "lat": 28.547829,
+    "lng": 76.852519,
+    "intensity": 0.11,
+    "radius": 306,
+    "type": "LOW",
+    "complaint_count": 1,
+    "primary_complaint_type": "Job Scam"
+  },
+  {
+    "id": "hs-SYNTH-54a8c8c4",
+    "lat": 28.511816,
+    "lng": 77.346755,
+    "intensity": 0.57,
+    "radius": 843,
+    "type": "MEDIUM",
+    "complaint_count": 14,
+    "primary_complaint_type": "UPI Fraud"
+  }
+]
