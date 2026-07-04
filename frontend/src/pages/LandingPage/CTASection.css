@@ -1,0 +1,45 @@
+/* CTASection */
+.cta-section {
+  background: var(--bg-base);
+  text-align: center;
+  min-height: 60vh !important;
+}
+
+.cta-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.cta-content h2 {
+  font-size: var(--text-h2);
+  margin: 0;
+}
+
+.cta-content p {
+  font-size: var(--text-h4);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: var(--accent-trust);
+  color: var(--bg-base);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-bold);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.cta-button:hover {
+  background: #39e3d3;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--accent-trust-glow);
+  color: var(--bg-base); /* keep text color dark */
+}
