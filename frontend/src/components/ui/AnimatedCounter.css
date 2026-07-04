@@ -1,0 +1,8 @@
+/* AnimatedCounter */
+.animated-counter {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}

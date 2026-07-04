@@ -1,0 +1,54 @@
+/* GlassPanel — Translucent elevated container */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-panel--glow-risk::before {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    var(--accent-risk-glow) 0%,
+    transparent 70%
+  );
+}
+
+.glass-panel--glow-trust::before {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    var(--accent-trust-glow) 0%,
+    transparent 70%
+  );
+}
+
+.glass-panel:hover {
+  border-color: rgba(148, 163, 184, 0.15);
+}
+
+.glass-panel:hover::before {
+  opacity: 1;
+}
+
+.glass-panel > * {
+  position: relative;
+  z-index: 1;
+}
