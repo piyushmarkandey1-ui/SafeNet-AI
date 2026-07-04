@@ -1,0 +1,89 @@
+/* CrimeMap */
+.crime-map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-base);
+  z-index: 1; /* Keep leaflet under other overlays */
+}
+
+/* Customizing Leaflet Dark Theme */
+.leaflet-container {
+  font-family: var(--font-body);
+  background: var(--bg-base) !important;
+}
+
+.dark-popup .leaflet-popup-content-wrapper,
+.dark-popup .leaflet-popup-tip {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-sm);
+}
+
+.dark-popup .leaflet-popup-content {
+  margin: 12px;
+  font-size: var(--text-sm);
+}
+
+/* Marker Animations */
+.breathing-marker {
+  animation: svgBreathe 3s ease-in-out infinite alternate;
+}
+@keyframes svgBreathe {
+  from { opacity: 0.5; stroke-width: 1; }
+  to { opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 8px var(--accent-risk)); }
+}
+
+.pulse-marker {
+  animation: svgPulse 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  transform-origin: center;
+}
+@keyframes svgPulse {
+  0% { stroke-width: 2; opacity: 1; r: 8; }
+  100% { stroke-width: 0; opacity: 0; r: 24; }
+}
+
+/* Overlay Legend */
+.crime-map-overlay {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.map-legend {
+  padding: var(--space-md);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: 200px;
+}
+
+.legend-title {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--weight-semi);
+  margin-bottom: 4px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.legend-dot.critical { background: var(--accent-risk); box-shadow: 0 0 6px var(--accent-risk-glow); }
+.legend-dot.warning { background: var(--accent-warning); }

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hs-001",
+    "lat": 40.7128,
+    "lng": -74.0060,
+    "intensity": 0.9,
+    "radius": 1500,
+    "type": "CRITICAL"
+  },
+  {
+    "id": "hs-002",
+    "lat": 40.7580,
+    "lng": -73.9855,
+    "intensity": 0.75,
+    "radius": 800,
+    "type": "HIGH"
+  },
+  {
+    "id": "hs-003",
+    "lat": 40.7306,
+    "lng": -73.9352,
+    "intensity": 0.5,
+    "radius": 1200,
+    "type": "MEDIUM"
+  },
+  {
+    "id": "hs-004",
+    "lat": 40.6782,
+    "lng": -73.9442,
+    "intensity": 0.3,
+    "radius": 2000,
+    "type": "LOW"
+  },
+  {
+    "id": "hs-005",
+    "lat": 40.8090,
+    "lng": -73.9624,
+    "intensity": 0.8,
+    "radius": 1000,
+    "type": "HIGH"
+  }
+]

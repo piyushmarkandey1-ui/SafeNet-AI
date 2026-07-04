@@ -1,0 +1,28 @@
+[
+  {
+    "id": "msg-1",
+    "sender": "user",
+    "text": "I just got a call from someone saying they are from the IRS and I owe taxes. Is this real?",
+    "timestamp": "2026-07-04T08:20:00Z"
+  },
+  {
+    "id": "msg-2",
+    "sender": "bot",
+    "text": "⚠️ **Likely Scam Detected**\nThe IRS will **never** call you to demand immediate payment, nor will they ask for payment via gift cards, wire transfers, or cryptocurrency. Hang up immediately. Do not provide any personal information.",
+    "timestamp": "2026-07-04T08:20:05Z",
+    "isActionable": true
+  },
+  {
+    "id": "msg-3",
+    "sender": "user",
+    "text": "They left a voicemail with a callback number: 800-555-0199.",
+    "timestamp": "2026-07-04T08:21:10Z"
+  },
+  {
+    "id": "msg-4",
+    "sender": "bot",
+    "text": "I've checked that number against our SafeNet database. It has been reported **42 times** in the last 24 hours for similar tax scams. I have automatically submitted a report to flag this number.",
+    "timestamp": "2026-07-04T08:21:14Z",
+    "isActionable": false
+  }
+]

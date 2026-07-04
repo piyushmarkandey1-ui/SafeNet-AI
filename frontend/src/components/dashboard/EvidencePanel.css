@@ -1,0 +1,189 @@
+/* EvidencePanel */
+.evidence-panel {
+  height: 100%;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.evidence-panel__inner {
+  width: 400px; /* fixed width content to prevent reflow during animation */
+  height: 100%;
+  overflow-y: auto;
+}
+
+.evidence-content {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.ev-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ev-title {
+  font-size: var(--text-h3);
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-md);
+  background: linear-gradient(180deg, var(--bg-overlay) 0%, transparent 100%);
+}
+
+.score-label {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.score-value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 48px;
+}
+
+.score-max {
+  font-size: var(--text-h4);
+  color: var(--text-disabled);
+}
+
+.section-title {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 8px;
+  margin-bottom: var(--space-md);
+}
+
+.ev-summary {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+}
+
+.ev-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.ev-item {
+  display: flex;
+  gap: var(--space-sm);
+  color: var(--text-secondary);
+}
+
+.ev-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ev-item-type {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.ev-item-snippet {
+  font-size: var(--text-sm);
+  font-style: italic;
+  margin: 0;
+}
+
+.ev-item-conf {
+  font-size: 11px;
+  color: var(--accent-trust);
+}
+
+.entities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.entity-chip {
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-caption);
+  font-family: var(--font-display);
+  border: 1px solid var(--border-default);
+  background: var(--bg-base);
+}
+
+.entity--critical { border-color: var(--accent-risk); color: var(--accent-risk); }
+.entity--high { border-color: rgba(224, 90, 51, 0.5); color: var(--accent-risk); }
+.entity--safe { border-color: var(--accent-trust); color: var(--accent-trust); }
+
+.ev-action {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-default);
+}
+
+.action-rec {
+  display: flex;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.btn-report {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--accent-trust-dim);
+  color: var(--accent-trust);
+  border: 1px solid rgba(46, 196, 182, 0.25);
+  border-radius: var(--radius-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-report:hover:not(:disabled) {
+  background: var(--accent-trust);
+  color: var(--text-primary);
+  box-shadow: 0 0 12px var(--accent-trust-glow);
+}
+
+.btn-report.loading {
+  background: var(--bg-overlay);
+  color: var(--text-muted);
+  border-color: var(--border-default);
+  cursor: wait;
+}
+
+.btn-report.success {
+  background: var(--accent-trust);
+  color: var(--bg-base);
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, var(--text-muted) 0%, var(--text-primary) 50%, var(--text-muted) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: skeleton-shimmer 2s linear infinite;
+}

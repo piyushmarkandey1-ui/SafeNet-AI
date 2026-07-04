@@ -1,0 +1,90 @@
+[
+  {
+    "id": "evt-001",
+    "type": "SCAM_CALL",
+    "severity": "critical",
+    "timestamp": "2026-07-04T08:15:00Z",
+    "title": "High-Volume Vishing Campaign",
+    "description": "Pattern matches known social engineering script targeting elderly demographics.",
+    "location": { "lat": 40.7128, "lng": -74.0060, "name": "Financial District, NY" },
+    "entities": ["+1-555-0192", "+1-555-0193"],
+    "score": 94.2
+  },
+  {
+    "id": "evt-002",
+    "type": "COUNTERFEIT",
+    "severity": "high",
+    "timestamp": "2026-07-04T08:05:22Z",
+    "title": "Counterfeit $100 Bill Detected",
+    "description": "Mobile scan flagged missing watermark and incorrect microprinting.",
+    "location": { "lat": 40.7580, "lng": -73.9855, "name": "Times Square Retail" },
+    "entities": ["MERCH-8821"],
+    "score": 88.5
+  },
+  {
+    "id": "evt-003",
+    "type": "FRAUD_NETWORK",
+    "severity": "medium",
+    "timestamp": "2026-07-04T07:42:10Z",
+    "title": "Suspicious Account Linkage",
+    "description": "New account creation shares device fingerprint with 4 known fraudulent accounts.",
+    "location": { "lat": 40.7306, "lng": -73.9352, "name": "Queens, NY" },
+    "entities": ["USR-9942", "DEV-MAC-11"],
+    "score": 76.0
+  },
+  {
+    "id": "evt-004",
+    "type": "SCAM_CALL",
+    "severity": "low",
+    "timestamp": "2026-07-04T07:15:00Z",
+    "title": "Robocall Spam Blocked",
+    "description": "Automated system detected and blocked IRS impersonation robocall.",
+    "location": { "lat": 40.6782, "lng": -73.9442, "name": "Brooklyn, NY" },
+    "entities": ["+1-800-555-0001"],
+    "score": 45.0
+  },
+  {
+    "id": "evt-005",
+    "type": "SAFE_EVENT",
+    "severity": "safe",
+    "timestamp": "2026-07-04T06:30:00Z",
+    "title": "Merchant Verification Passed",
+    "description": "Routine KYC check passed for new small business registration.",
+    "location": { "lat": 40.8090, "lng": -73.9624, "name": "Harlem, NY" },
+    "entities": ["MERCH-9102"],
+    "score": 12.0
+  },
+  {
+    "id": "evt-006",
+    "type": "COUNTERFEIT",
+    "severity": "critical",
+    "timestamp": "2026-07-04T05:45:00Z",
+    "title": "Counterfeit Ring Detected",
+    "description": "Multiple reports of high-quality fake $50 bills clustered in same zip code.",
+    "location": { "lat": 40.7128, "lng": -74.0060, "name": "Financial District, NY" },
+    "entities": ["MERCH-112", "MERCH-443", "MERCH-992"],
+    "score": 96.8
+  },
+  {
+    "id": "evt-007",
+    "type": "FRAUD_NETWORK",
+    "severity": "high",
+    "timestamp": "2026-07-04T04:20:00Z",
+    "title": "Money Mule Activity Suspected",
+    "description": "Rapid succession of small transfers just under reporting thresholds.",
+    "location": { "lat": 40.7580, "lng": -73.9855, "name": "Times Square Area" },
+    "entities": ["ACCT-88432", "ACCT-11299"],
+    "score": 85.5
+  },
+  {
+    "id": "evt-008",
+    "type": "SCAM_CALL",
+    "severity": "medium",
+    "timestamp": "2026-07-04T03:10:00Z",
+    "title": "Tech Support Scam Attempt",
+    "description": "Caller claiming to be from Microsoft requesting remote desktop access.",
+    "location": { "lat": 40.7306, "lng": -73.9352, "name": "Queens, NY" },
+    "entities": ["+1-888-555-1234"],
+    "score": 72.4
+  }
+]
