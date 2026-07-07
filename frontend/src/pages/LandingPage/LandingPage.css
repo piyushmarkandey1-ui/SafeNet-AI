@@ -23,3 +23,35 @@
   position: relative;
   z-index: 10;
 }
+
+.landing-page {
+  width: 100%;
+  position: relative;
+  overflow: hidden; /* Prevent horizontal scroll */
+}
+
+.landing-global-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none; /* Let clicks pass through to content */
+}
+
+/* Make sure the universe background reacts to mouse inside the whole window, so it needs pointer-events auto but the inner content must be higher z-index */
+.landing-global-bg {
+  pointer-events: auto; 
+}
+
+.landing-content {
+  position: relative;
+  z-index: 1;
+  pointer-events: none; /* Container itself shouldn't block */
+}
+
+.landing-content > * {
+  pointer-events: auto; /* Individual sections receive clicks */
+  background: transparent !important; /* Force sections to be transparent */
+}

@@ -46,18 +46,6 @@ export default function HeroSection() {
 
   return (
     <section className="landing-section hero-section" ref={sectionRef}>
-      <div className="hero-bg-canvas">
-        <Galaxy 
-          hueShift={190} /* Cyan/Teal to match --accent-trust */
-          density={1.2}
-          glowIntensity={0.6}
-          saturation={0.8}
-          starSpeed={0.8}
-          mouseRepulsion={true}
-          repulsionStrength={2.5}
-        />
-      </div>
-      
       <div className="section-content hero-content">
         <p className="hero-eyebrow">SafeNet AI</p>
         <h1 className="hero-title">
