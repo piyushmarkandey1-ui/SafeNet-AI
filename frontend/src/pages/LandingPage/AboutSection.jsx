@@ -143,11 +143,11 @@ export default function AboutSection() {
         </div>
 
         <div className="features-guide-carousel hide-scrollbar" style={{ height: '85vh', margin: '0 auto', maxWidth: '800px', overflow: 'hidden' }}>
-          <ScrollStack itemDistance={120} itemScale={0.05} itemStackDistance={40} blurAmount={2}>
+          <ScrollStack itemDistance={150} itemScale={0.03} itemStackDistance={50} blurAmount={1.2}>
             {FEATURES.map((feat) => {
               const Icon = feat.icon;
               return (
-                <ScrollStackItem key={feat.step} itemClassName={`feature-card--${feat.color}`}>
+                <ScrollStackItem key={feat.step} itemClassName={`feature-card feature-card--${feat.color}`}>
                   <div className="feature-card__header">
                     <span className="feature-step">{feat.step}</span>
                     <div className={`feature-icon-wrap icon--${feat.color}`}>
