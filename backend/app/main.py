@@ -13,6 +13,7 @@ from app.fraud_graph.api import router as graph_router
 from app.geospatial.api import router as geo_router
 from app.citizen_shield.api import router as shield_router
 from app.orchestrator.api import router as orchestrator_router
+from app.number_checker.api import router as number_checker_router
 
 app = FastAPI(
     title="SafeNet AI Backend",
@@ -42,6 +43,7 @@ app.include_router(graph_router, prefix="/api")
 app.include_router(geo_router, prefix="/api")
 app.include_router(shield_router, prefix="/api")
 app.include_router(orchestrator_router, prefix="/api")
+app.include_router(number_checker_router, prefix="/api")
 
 
 @app.get("/api/dashboard/feed", summary="Aggregated live risk feed (all modules)")

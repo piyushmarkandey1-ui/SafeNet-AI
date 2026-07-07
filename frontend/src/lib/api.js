@@ -199,3 +199,76 @@ export async function simulateScenario() {
     return { status: 'simulation_started', message: 'Mock scenario (backend offline).', mock: true };
   }
 }
+
+/**
+ * Checks a phone number (and optional pasted message text) for fraud risk.
+ * Queries the fraud graph, runs scam-pattern analysis, and checks the blocklist.
+ * Every reason in the result is traceable to a specific signal source.
+ *
+ * @param {string} phoneNumber  - The number to check (any format)
+ * @param {string} [pastedText] - Optional: text of a suspicious SMS/call transcript
+ * @returns {Promise<{
+ *   phone_number: string,
+ *   risk_level: 'low'|'medium'|'high'|'critical',
+ *   confidence: number,
+ *   reasons: string[],
+ *   recommendation: string,
+ *   text_score: number|null,
+ *   sources_checked: string[],
+ *   graph_case_id: string|null,
+ *   graph_risk_score: number|null,
+ *   graph_primary_threat: string|null,
+ * }>}
+ */
+export async function checkNumber(phoneNumber, pastedText = '') {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/check-number`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phone_number: phoneNumber,
+        pasted_text: pastedText || null,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: res.statusText }));
+      throw new Error(err.detail || 'Number check failed');
+    }
+    return await res.json();
+  } catch (err) {
+    console.warn('Number checker API unavailable:', err.message, '— using mock fallback.');
+    await delay(900);
+    // Realistic mock: if number looks like it might be in our blocklist
+    const knownBad = ['+916511361582', '01203452744', '04148331485'];
+    const isKnown = knownBad.some(n => phoneNumber.includes(n.replace(/\D/g, '').slice(-8)));
+    if (isKnown) {
+      return {
+        phone_number: phoneNumber,
+        risk_level: 'high',
+        confidence: 0.71,
+        reasons: [
+          'Number matches synthetic blocklist entry: Spoofed scam call (synthetic dataset). [MOCK]',
+        ],
+        recommendation: 'Do NOT share OTPs or money. Block this number. [MOCK — backend offline]',
+        text_score: null,
+        sources_checked: ['Synthetic blocklist (mock)'],
+        graph_case_id: null,
+        graph_risk_score: null,
+        graph_primary_threat: null,
+      };
+    }
+    return {
+      phone_number: phoneNumber,
+      risk_level: 'low',
+      confidence: 0.0,
+      reasons: ['No matches found in our data (backend offline — this is a mock response).'],
+      recommendation: 'Backend is offline. In production, a real lookup would be performed. [MOCK]',
+      text_score: null,
+      sources_checked: ['Mock fallback (backend offline)'],
+      graph_case_id: null,
+      graph_risk_score: null,
+      graph_primary_threat: null,
+    };
+  }
+}
+
