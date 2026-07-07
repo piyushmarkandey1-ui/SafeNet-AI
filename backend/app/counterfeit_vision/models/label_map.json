@@ -1,0 +1,15 @@
+{
+  "auth_classes": [
+    "fake",
+    "real"
+  ],
+  "denomination_classes": [
+    "10",
+    "20",
+    "50",
+    "100",
+    "200",
+    "500",
+    "2000"
+  ]
+}

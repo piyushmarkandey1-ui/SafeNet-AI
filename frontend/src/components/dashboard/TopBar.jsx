@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldAlert, Play, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ShieldAlert, Play, Activity, ScanLine } from 'lucide-react';
 import { GlassPanel } from '../ui';
 import './TopBar.css';
 
@@ -13,12 +14,13 @@ const MODULES = [
 ];
 
 export function TopBar({ onSimulate }) {
+  const navigate = useNavigate();
   const [isSimulating, setIsSimulating] = useState(false);
 
   const handleSimulate = () => {
     setIsSimulating(true);
     onSimulate();
-    setTimeout(() => setIsSimulating(false), 5000); // Reset button after simulation sequence starts
+    setTimeout(() => setIsSimulating(false), 5000);
   };
 
   return (
@@ -38,7 +40,15 @@ export function TopBar({ onSimulate }) {
       </div>
 
       <div className="topbar__actions">
-        <button 
+        <button
+          className="btn-note-check"
+          onClick={() => navigate('/note-checker')}
+          title="Open Note Checker"
+        >
+          <ScanLine size={16} />
+          <span>Check Note</span>
+        </button>
+        <button
           className="btn-simulate"
           onClick={handleSimulate}
           disabled={isSimulating}

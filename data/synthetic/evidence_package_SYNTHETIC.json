@@ -1,0 +1,423 @@
+{
+  "package_version": "1.0",
+  "disclaimer": "\u26a0\ufe0f  SYNTHETIC DATA \u2014 This evidence package was generated from artificially constructed data for demonstration purposes only. It does not represent real persons, financial institutions, or criminal incidents. It has NO legal validity and MUST NOT be used in actual legal proceedings.",
+  "generated_at": "2026-07-06T16:58:13.916857+00:00",
+  "data_classification": "SYNTHETIC \u2014 DEMO ONLY",
+  "case_summary": {
+    "case_id": "CASE-FG-12944",
+    "status": "OPEN_INVESTIGATION",
+    "primary_threat": "Money Mule Network",
+    "risk_score": 100.0,
+    "severity": "critical",
+    "summary": "Entity FYIR3034809917585 is connected to 18 other node(s) within 2 graph hops. Detected 9 flagged transaction(s) and 0 spoofed call(s) in the subgraph. Compound risk score: 100.0/100 (CRITICAL).",
+    "recommended_action": "Freeze accounts in cluster and file SAR. 19 entities connected within 2 hops of FYIR3034809917585."
+  },
+  "evidence": {
+    "items": [
+      {
+        "type": "TRANSACTION_GRAPH",
+        "snippet": "9 transaction(s) linked. 9 flagged as mule activity. Amounts range \u20b949,207\u2013\u20b9396,000.",
+        "confidence": 0.99
+      },
+      {
+        "type": "NETWORK_NODE",
+        "snippet": "9 shared device hash(es) link accounts in this ring: 28beeeb526e7e4e7, 243897b4ca89abe6\u2026.",
+        "confidence": 0.88
+      }
+    ],
+    "linked_entities": [
+      {
+        "id": "CTXR4712917705762",
+        "type": "BankAccount",
+        "risk": "critical"
+      },
+      {
+        "id": "FYIR3034809917585",
+        "type": "BankAccount",
+        "risk": "critical"
+      },
+      {
+        "id": "04f7b9c334dbba07",
+        "type": "Device",
+        "risk": "safe"
+      },
+      {
+        "id": "0c234fb55278d8b6",
+        "type": "Device",
+        "risk": "safe"
+      },
+      {
+        "id": "243897b4ca89abe6",
+        "type": "Device",
+        "risk": "safe"
+      },
+      {
+        "id": "28beeeb526e7e4e7",
+        "type": "Device",
+        "risk": "safe"
+      },
+      {
+        "id": "4ae890034cf45042",
+        "type": "Device",
+        "risk": "safe"
+      },
+      {
+        "id": "6e324927f9f7c58b",
+        "type": "Device",
+        "risk": "safe"
+      },
+      {
+        "id": "HGZE7208117430133",
+        "type": "BankAccount",
+        "risk": "safe"
+      },
+      {
+        "id": "HHBS6478043228263",
+        "type": "BankAccount",
+        "risk": "safe"
+      },
+      {
+        "id": "JBTM0745418065353",
+        "type": "BankAccount",
+        "risk": "safe"
+      },
+      {
+        "id": "JIWK8022470361362",
+        "type": "BankAccount",
+        "risk": "safe"
+      },
+      {
+        "id": "PFLK1704127188914",
+        "type": "BankAccount",
+        "risk": "safe"
+      },
+      {
+        "id": "PLVA2822119124160",
+        "type": "BankAccount",
+        "risk": "safe"
+      },
+      {
+        "id": "XILE0715150320311",
+        "type": "BankAccount",
+        "risk": "safe"
+      },
+      {
+        "id": "YRJY3743357072995",
+        "type": "BankAccount",
+        "risk": "safe"
+      },
+      {
+        "id": "c464e04d5bd9ed26",
+        "type": "Device",
+        "risk": "safe"
+      },
+      {
+        "id": "d9be3c65f5d37a4a",
+        "type": "Device",
+        "risk": "safe"
+      },
+      {
+        "id": "ffb9561d7f72e9f5",
+        "type": "Device",
+        "risk": "safe"
+      }
+    ],
+    "raw_edges": [
+      {
+        "from": "FYIR3034809917585",
+        "to": "CTXR4712917705762",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T17:15:16",
+        "amount": 396000.0,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "FYIR3034809917585",
+        "to": "d9be3c65f5d37a4a",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "XILE0715150320311",
+        "to": "FYIR3034809917585",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T15:42:16",
+        "amount": 49817.16,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "XILE0715150320311",
+        "to": "04f7b9c334dbba07",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "HHBS6478043228263",
+        "to": "FYIR3034809917585",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T16:25:16",
+        "amount": 49206.87,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "HHBS6478043228263",
+        "to": "243897b4ca89abe6",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "PLVA2822119124160",
+        "to": "FYIR3034809917585",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T15:21:16",
+        "amount": 49809.65,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "PLVA2822119124160",
+        "to": "4ae890034cf45042",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "JBTM0745418065353",
+        "to": "FYIR3034809917585",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T16:05:16",
+        "amount": 49763.29,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "JBTM0745418065353",
+        "to": "0c234fb55278d8b6",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "JIWK8022470361362",
+        "to": "FYIR3034809917585",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T16:09:16",
+        "amount": 49562.38,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "JIWK8022470361362",
+        "to": "c464e04d5bd9ed26",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "PFLK1704127188914",
+        "to": "FYIR3034809917585",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T15:24:16",
+        "amount": 49698.56,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "PFLK1704127188914",
+        "to": "6e324927f9f7c58b",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "YRJY3743357072995",
+        "to": "FYIR3034809917585",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T16:42:16",
+        "amount": 49937.69,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "YRJY3743357072995",
+        "to": "ffb9561d7f72e9f5",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "HGZE7208117430133",
+        "to": "FYIR3034809917585",
+        "edge_type": "TRANSFERRED_TO",
+        "timestamp": "2026-06-30T16:18:16",
+        "amount": 49325.05,
+        "is_spoofed": null,
+        "flagged_mule": true,
+        "duration_sec": null,
+        "transcript_snippet": null
+      },
+      {
+        "from": "HGZE7208117430133",
+        "to": "28beeeb526e7e4e7",
+        "edge_type": "SHARED_DEVICE",
+        "timestamp": "",
+        "amount": null,
+        "is_spoofed": null,
+        "flagged_mule": null,
+        "duration_sec": null,
+        "transcript_snippet": null
+      }
+    ],
+    "hop_depth": 2,
+    "connected_node_count": 19,
+    "entity_id": "FYIR3034809917585"
+  },
+  "ring_context": {
+    "total_communities_detected": 804,
+    "top_communities": [
+      {
+        "cluster_id": "RING-01-27",
+        "size": 27,
+        "risk_score": 14.3,
+        "top_entities": [
+          "RNHR0600858897533",
+          "FZGE8493752534015",
+          "SLUC9654605491487"
+        ],
+        "node_types": {
+          "Device": 13,
+          "BankAccount": 14
+        }
+      },
+      {
+        "cluster_id": "RING-02-21",
+        "size": 21,
+        "risk_score": 18.2,
+        "top_entities": [
+          "KWBT3728088868643",
+          "GLVM2776514102972",
+          "TSZD9774960832268"
+        ],
+        "node_types": {
+          "BankAccount": 11,
+          "Device": 10
+        }
+      },
+      {
+        "cluster_id": "RING-03-19",
+        "size": 19,
+        "risk_score": 20.0,
+        "top_entities": [
+          "FYIR3034809917585",
+          "PLVA2822119124160",
+          "JBTM0745418065353"
+        ],
+        "node_types": {
+          "Device": 9,
+          "BankAccount": 10
+        }
+      }
+    ],
+    "top_mule_accounts": [
+      {
+        "node_id": "FYIR3034809917585",
+        "mule_score": 100.0,
+        "fan_in": 8,
+        "flagged_by_generator": true,
+        "in_degree": 8
+      },
+      {
+        "node_id": "RNHR0600858897533",
+        "mule_score": 100.0,
+        "fan_in": 12,
+        "flagged_by_generator": true,
+        "in_degree": 12
+      },
+      {
+        "node_id": "JAQZ5868024093249",
+        "mule_score": 100.0,
+        "fan_in": 6,
+        "flagged_by_generator": true,
+        "in_degree": 6
+      },
+      {
+        "node_id": "BFZR3314692659624",
+        "mule_score": 100.0,
+        "fan_in": 1,
+        "flagged_by_generator": true,
+        "in_degree": 1
+      },
+      {
+        "node_id": "KWBT3728088868643",
+        "mule_score": 100.0,
+        "fan_in": 9,
+        "flagged_by_generator": true,
+        "in_degree": 9
+      }
+    ]
+  },
+  "chain_of_custody": {
+    "data_source": "SafeNet AI Synthetic Dataset",
+    "source_files": [
+      "data/synthetic/transactions_SYNTHETIC.csv",
+      "data/synthetic/calls_SYNTHETIC.csv"
+    ],
+    "analysis_method": "NetworkX greedy_modularity_communities + mule fan-in scoring",
+    "analyst": "SafeNet AI Automated System (v0.1.0)",
+    "note": "All timestamps are synthetic and do not reflect real events."
+  }
+}

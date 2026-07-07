@@ -58,6 +58,8 @@ desktop.ini
 # ─── Data (keep synthetic, ignore large real datasets) ───
 data/raw/
 data/processed/
+data/reports/
+backend/app/orchestrator/audit_log.jsonl
 *.parquet
 *.h5
 

@@ -5,7 +5,7 @@ import { RiskFeed } from './RiskFeed';
 import { CrimeMap } from './CrimeMap';
 import { EvidencePanel } from './EvidencePanel';
 import { CitizenShieldChat } from './CitizenShieldChat';
-import { getDashboardFeed, getHotspots, getCaseEvidence } from '../../lib/api';
+import { getDashboardFeed, getHotspots, getCaseEvidence, simulateScenario } from '../../lib/api';
 import './DashboardLayout.css';
 
 export default function Dashboard() {
@@ -47,23 +47,41 @@ export default function Dashboard() {
   };
 
   const handleSimulate = async () => {
-    // A quick sequence injecting fake events to simulate orchestrator streaming
-    const newEvent = {
-      id: `sim-${Date.now()}`,
-      type: "SCAM_CALL",
-      severity: "critical",
-      timestamp: new Date().toISOString(),
-      title: "SIMULATED: Phishing Attack Detected",
-      description: "Real-time intercept triggered by orchestrator analysis.",
-      location: { lat: 40.7580, lng: -73.9855, name: "Midtown, NY" },
-      entities: ["+1-999-555-1234"],
-      score: 99.1
-    };
+    // Trigger the real orchestrator simulation
+    const result = await simulateScenario();
+    console.log('Simulation started:', result);
 
-    setLoadingFeed(true);
-    await new Promise(r => setTimeout(r, 800));
-    setFeedItems(prev => [newEvent, ...prev]);
-    setLoadingFeed(false);
+    if (result.mock) {
+      const newEvent = {
+        id: `sim-${Date.now()}`,
+        type: "SCAM_CALL",
+        severity: "critical",
+        timestamp: new Date().toISOString(),
+        title: "SIMULATED: Phishing Attack Detected",
+        description: "Backend offline; showing local demo event.",
+        location: { lat: 40.7580, lng: -73.9855, name: "Midtown, NY" },
+        entities: ["+1-999-555-1234"],
+        score: 99.1
+      };
+      setFeedItems(prev => [newEvent, ...prev]);
+      return;
+    }
+
+    // Poll the feed every 1.5s for ~12s to catch events as they arrive
+    // This creates the "live streaming" visual effect as the orchestrator
+    // processes the scenario in the background
+    let pollCount = 0;
+    const maxPolls = 8;
+    
+    const pollInterval = setInterval(async () => {
+      pollCount++;
+      const updatedFeed = await getDashboardFeed();
+      setFeedItems(updatedFeed);
+      
+      if (pollCount >= maxPolls) {
+        clearInterval(pollInterval);
+      }
+    }, 1500);
   };
 
   return (

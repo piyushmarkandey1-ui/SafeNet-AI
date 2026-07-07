@@ -61,6 +61,34 @@
   letter-spacing: var(--tracking-wide);
 }
 
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.btn-note-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--accent-trust-dim);
+  color: var(--accent-trust);
+  border: 1px solid rgba(46, 196, 182, 0.25);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-note-check:hover {
+  background: var(--accent-trust);
+  color: #0A0E14;
+  box-shadow: 0 0 12px var(--accent-trust-glow);
+}
+
 .btn-simulate {
   display: flex;
   align-items: center;

@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DesignSystemPage from './pages/DesignSystemPage/DesignSystemPage';
 import Dashboard from './components/dashboard/Dashboard';
 import LandingPage from './pages/LandingPage/LandingPage';
+import NoteChecker from './pages/NoteChecker/NoteChecker';
 import './App.css';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/note-checker" element={<NoteChecker />} />
         <Route path="/design-system" element={<DesignSystemPage />} />
       </Routes>
     </BrowserRouter>
