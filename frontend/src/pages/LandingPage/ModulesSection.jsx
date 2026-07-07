@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { PhoneCall, AlertTriangle, Network, Map, Shield } from 'lucide-react';
 import { GlassPanel } from '../../components/ui';
+import TiltedCard from '../../components/ui/TiltedCard';
 import './ModulesSection.css';
 
 const MODULES = [
@@ -27,7 +28,7 @@ export default function ModulesSection() {
         }
       });
 
-      tl.from('.module-card', {
+      tl.from('.module-card-wrapper', {
         y: 50,
         opacity: 0,
         duration: 0.8,
@@ -73,13 +74,29 @@ export default function ModulesSection() {
           {MODULES.map((mod, i) => {
             const Icon = mod.icon;
             return (
-              <GlassPanel key={i} hoverable={false} className="module-card">
-                <div className="module-icon-wrap">
-                  <Icon size={24} />
-                </div>
-                <h3>{mod.title}</h3>
-                <p>{mod.desc}</p>
-              </GlassPanel>
+              <div key={i} className="module-card-wrapper">
+                <TiltedCard
+                  imageSrc={null}
+                  containerHeight="220px"
+                  containerWidth="100%"
+                  imageHeight="100%"
+                  imageWidth="100%"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.05}
+                  showMobileWarning={false}
+                  showTooltip={false}
+                  displayOverlayContent={true}
+                  overlayContent={
+                    <GlassPanel hoverable={false} className="module-card" style={{ height: '100%', pointerEvents: 'auto' }}>
+                      <div className="module-icon-wrap">
+                        <Icon size={24} />
+                      </div>
+                      <h3>{mod.title}</h3>
+                      <p>{mod.desc}</p>
+                    </GlassPanel>
+                  }
+                />
+              </div>
             );
           })}
         </div>
