@@ -82,8 +82,10 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
     # Calculate confidence based on color match
     base_confidence = (best_score / 3.0) * 0.6  # Max 60% from color
     
+    from PIL import ImageFilter
+    
     # Check image quality
-    sharpness = img.filter(Image.SHARPEN)
+    sharpness = img.filter(ImageFilter.SHARPEN)
     sharpness_score = np.std(np.array(sharpness)) / 255.0
     quality_confidence = min(sharpness_score * 0.2, 0.2)  # Max 20% from quality
     
@@ -174,7 +176,7 @@ KEY_OBSERVATIONS: [Bullet points of specific features noticed]"""
         confidence_line = [line for line in text.split('\n') if 'CONFIDENCE:' in line]
         if confidence_line:
             try:
-                conf_str = confidence_line[0].split('CONFIDENCE:')[1].strip().split()[0]
+                conf_str = confidence_line[0].partition('CONFIDENCE:')[2].strip().split()[0]
                 gemini_confidence = float(conf_str) / 100.0
             except:
                 gemini_confidence = basic_analysis['confidence']
@@ -183,7 +185,7 @@ KEY_OBSERVATIONS: [Bullet points of specific features noticed]"""
         
         # Extract explanation
         expl_lines = [line for line in text.split('\n') if 'EXPLANATION:' in line]
-        explanation = expl_lines[0].split('EXPLANATION:')[1].strip() if expl_lines else text[:200]
+        explanation = expl_lines[0].partition('EXPLANATION:')[2].strip() if expl_lines else text[:200]
         
         return {
             "is_fake": is_fake,
