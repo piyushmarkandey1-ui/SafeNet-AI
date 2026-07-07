@@ -44,7 +44,13 @@ except ImportError as e:
     
     @app.get("/")
     @app.get("/api")
-    def fallback_root():
+    def fallback_root(debug: str = None):
+        if debug == "1":
+            try:
+                content = (backend_dir / "app" / "orchestrator" / "settings.py").read_text()
+                return {"settings.py": content}
+            except Exception as ex:
+                return {"error": str(ex)}
         return {
             "status": "error",
             "message": f"Backend import failed: {str(e)}",
