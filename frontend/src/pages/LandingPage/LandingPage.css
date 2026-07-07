@@ -51,3 +51,21 @@
   pointer-events: auto; /* Individual sections receive clicks */
   background: transparent !important; /* Force sections to be transparent */
 }
+
+.mobile-experience-note {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-experience-note {
+    display: block;
+    position: relative;
+    z-index: 100;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+}

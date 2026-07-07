@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { GlassPanel, RiskBadge, SkeletonGroup, Skeleton } from '../ui';
 import { AlertTriangle, PhoneCall, Link2, MapPin, CheckCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import './RiskFeed.css';
 
 const TYPE_ICONS = {
@@ -13,9 +14,12 @@ const TYPE_ICONS = {
 
 export function RiskFeed({ items, loading, selectedId, onSelect }) {
   const scrollRef = useRef(null);
+  const isMobile = useIsMobile();
 
-  // Auto-scroll logic that allows native user scrolling
+  // Auto-scroll logic that allows native user scrolling (Disabled on mobile)
   useEffect(() => {
+    if (isMobile) return;
+    
     const el = scrollRef.current;
     if (!el) return;
 
@@ -46,7 +50,7 @@ export function RiskFeed({ items, loading, selectedId, onSelect }) {
       el.removeEventListener('mouseenter', handleMouseEnter);
       el.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [items]); // Re-bind if items change, though it shouldn't matter much
+  }, [items, isMobile]); // Re-bind if items change, though it shouldn't matter much
 
   if (loading) {
     return (
@@ -69,8 +73,8 @@ export function RiskFeed({ items, loading, selectedId, onSelect }) {
     );
   }
 
-  // Duplicate items for seamless infinite scroll
-  const loopedItems = [...items, ...items];
+  // Duplicate items for seamless infinite scroll on desktop, keep standard on mobile
+  const loopedItems = isMobile ? items : [...items, ...items];
 
   return (
     <div className="risk-feed" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>

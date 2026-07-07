@@ -9,12 +9,18 @@ import {
   Map,
   Shield,
   ChevronRight,
+  ShieldAlert,
+  BadgeCent,
+  Scale,
+  LayoutDashboard,
+  BrainCircuit,
 } from 'lucide-react';
+import { GlassPanel } from '../../components/ui';
 import ScrollStack, { ScrollStackItem } from '../../components/ui/ScrollStack';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import './AboutSection.css';
 
 const FEATURES = [
-// ... (features remain same, I'll keep the import at the top)
   {
     step: '01',
     icon: PhoneCall,
@@ -84,6 +90,7 @@ const FEATURES = [
 
 
 export default function AboutSection() {
+  const isMobile = useIsMobile();
   const sectionRef = useRef(null);
 
   useGSAP(() => {
@@ -142,12 +149,12 @@ export default function AboutSection() {
           <h3 className="guide-title">How to use each feature</h3>
         </div>
 
-        <div className="features-guide-carousel hide-scrollbar" style={{ height: '85vh', margin: '0 auto', maxWidth: '800px', overflow: 'hidden' }}>
-          <ScrollStack itemDistance={150} itemScale={0.03} itemStackDistance={50} blurAmount={1.2} fadeAmount={0.7}>
+        {isMobile ? (
+          <div className="features-mobile-grid" style={{ display: 'flex', flexDirection: 'column', gap: '24px', margin: '32px 0' }}>
             {FEATURES.map((feat) => {
               const Icon = feat.icon;
               return (
-                <ScrollStackItem key={feat.step} itemClassName={`feature-card feature-card--${feat.color}`}>
+                <div key={feat.step} className={`feature-card feature-card--${feat.color}`} style={{ width: '100%', maxWidth: '600px', margin: '0 auto', transform: 'none', position: 'relative' }}>
                   <div className="feature-card__header">
                     <span className="feature-step">{feat.step}</span>
                     <div className={`feature-icon-wrap icon--${feat.color}`}>
@@ -166,11 +173,41 @@ export default function AboutSection() {
                       </li>
                     ))}
                   </ol>
-                </ScrollStackItem>
+                </div>
               );
             })}
-          </ScrollStack>
-        </div>
+          </div>
+        ) : (
+          <div className="features-guide-carousel hide-scrollbar" style={{ height: '85vh', margin: '0 auto', maxWidth: '800px', overflow: 'hidden' }}>
+            <ScrollStack itemDistance={150} itemScale={0.03} itemStackDistance={50} blurAmount={1.2} fadeAmount={0.7}>
+              {FEATURES.map((feat) => {
+                const Icon = feat.icon;
+                return (
+                  <ScrollStackItem key={feat.step} itemClassName={`feature-card feature-card--${feat.color}`}>
+                    <div className="feature-card__header">
+                      <span className="feature-step">{feat.step}</span>
+                      <div className={`feature-icon-wrap icon--${feat.color}`}>
+                        <Icon size={20} />
+                      </div>
+                      <div className="feature-meta">
+                        <h4 className="feature-title">{feat.title}</h4>
+                        <span className="feature-where">{feat.where}</span>
+                      </div>
+                    </div>
+                    <ol className="feature-steps">
+                      {feat.guide.map((step, i) => (
+                        <li key={i} className="feature-step-item">
+                          <span className="step-num">{i + 1}</span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </ScrollStackItem>
+                );
+              })}
+            </ScrollStack>
+          </div>
+        )}
 
       </div>
     </section>

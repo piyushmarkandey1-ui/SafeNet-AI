@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { PhoneCall, AlertTriangle, Network, Map, Shield } from 'lucide-react';
 import { GlassPanel } from '../../components/ui';
 import TiltedCard from '../../components/ui/TiltedCard';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import './ModulesSection.css';
 
 const MODULES = [
@@ -16,6 +17,7 @@ const MODULES = [
 
 export default function ModulesSection() {
   const sectionRef = useRef(null);
+  const isMobile = useIsMobile();
 
   useGSAP(() => {
     const mm = gsap.matchMedia();
@@ -73,6 +75,21 @@ export default function ModulesSection() {
 
           {MODULES.map((mod, i) => {
             const Icon = mod.icon;
+            
+            if (isMobile) {
+              return (
+                <div key={i} className="module-card-wrapper">
+                  <GlassPanel hoverable={false} className="module-card" style={{ height: '100%', pointerEvents: 'auto' }}>
+                    <div className="module-icon-wrap">
+                      <Icon size={24} />
+                    </div>
+                    <h3>{mod.title}</h3>
+                    <p>{mod.desc}</p>
+                  </GlassPanel>
+                </div>
+              );
+            }
+
             return (
               <div key={i} className="module-card-wrapper">
                 <TiltedCard
