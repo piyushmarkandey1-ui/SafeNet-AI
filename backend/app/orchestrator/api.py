@@ -86,12 +86,20 @@ async def get_dashboard_feed():
     "/simulate",
     summary="Trigger the full demo scenario (wires the Simulate Scenario button)",
 )
-async def trigger_simulation(background_tasks: BackgroundTasks):
+async def trigger_simulation():
     """
-    Kicks off the demo scenario in the background and returns immediately
-    so the button press feels instant.  Events drip in over ~10s, giving
-    the animated RiskFeed time to show each one appearing.
+    Kicks off the demo scenario synchronously so it works reliably on Vercel 
+    Serverless Functions without background tasks being killed prematurely.
     """
     from app.orchestrator.demo_scenario import run_scenario
-    background_tasks.add_task(asyncio.to_thread, run_scenario)
-    return {"status": "simulation_started", "message": "Demo scenario running in background."}
+    from app.orchestrator.graph import orchestrator_feed
+    
+    # Run the scenario completely before returning so Vercel doesn't kill it.
+    # Pass a tiny delay so it completes fast (well under the 10s Vercel limit).
+    await asyncio.to_thread(run_scenario, 0.1)
+    
+    return {
+        "status": "simulation_completed",
+        "message": "Demo scenario completed.",
+        "events": list(orchestrator_feed)
+    }

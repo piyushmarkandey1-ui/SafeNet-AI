@@ -67,9 +67,13 @@ export default function Dashboard() {
       return;
     }
 
-    // Poll the feed every 1.5s for ~12s to catch events as they arrive
-    // This creates the "live streaming" visual effect as the orchestrator
-    // processes the scenario in the background
+    if (result.events && result.events.length > 0) {
+      // Vercel serverless environment (synchronous completion)
+      setFeedItems(result.events);
+      return;
+    }
+
+    // Polling fallback for local long-running background tasks
     let pollCount = 0;
     const maxPolls = 8;
     
