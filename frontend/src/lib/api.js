@@ -31,6 +31,8 @@ const getApiBaseUrl = () => {
 
 const API_BASE_URL = getApiBaseUrl();
 
+console.log('[SafeNet API] Base URL configured as:', API_BASE_URL);
+
 export async function getDashboardFeed() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/orchestrator/dashboard-feed`);
@@ -151,8 +153,11 @@ export async function checkNote(imageFile) {
   const formData = new FormData();
   formData.append('file', imageFile);
 
+  const fullUrl = `${API_BASE_URL}/api/vision/check-note`;
+  console.log('[SafeNet API] checkNote() calling:', fullUrl);
+
   try {
-    const res = await fetch(`${API_BASE_URL}/api/vision/check-note`, {
+    const res = await fetch(fullUrl, {
       method: 'POST',
       body: formData,
     });
@@ -172,7 +177,7 @@ export async function checkNote(imageFile) {
       denomination_raw: '500',
       auth_class: 'fake',
       gradcam_overlay: '',
-      recommendation: 'ALERT: High-confidence counterfeit detected. (MOCK — backend offline)',
+      recommendation: `ALERT: High-confidence counterfeit detected. (MOCK — backend offline). ERROR DETAILS: ${err.message}`,
       severity: 'critical',
       event_id: `cv-mock-${Date.now()}`,
       timestamp: new Date().toISOString(),
