@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { Link } from 'react-router-dom';
 import './HeroSection.css';
 
 // Low-CPU Canvas background drawing a slow drifting node graph
@@ -95,6 +96,12 @@ export default function HeroSection() {
         opacity: 0,
         duration: 1,
         ease: 'power3.out'
+      }, "-=0.8")
+      .from('.hero-actions', {
+        y: 20,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
       }, "-=0.8");
     });
   }, { scope: sectionRef });
@@ -113,6 +120,15 @@ export default function HeroSection() {
         <p className="hero-subtitle">
           The unified digital public safety platform designed for law enforcement and citizens.
         </p>
+        
+        <div className="hero-actions">
+          <Link to="/dashboard" className="hero-btn primary-btn">
+            Launch Dashboard
+          </Link>
+          <Link to="/note-checker" className="hero-btn secondary-btn">
+            Try Note Checker
+          </Link>
+        </div>
       </div>
     </section>
   );
