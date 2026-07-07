@@ -10,8 +10,9 @@ Module contract (safenet.md §3):
 
 from fastapi import APIRouter
 from pydantic import BaseModel, ConfigDict, Field
+from typing import Optional, List, Dict
 
-from app.citizen_shield.agent import ask, SUPPORTED_LANGUAGES
+from app.citizen_shield.agent import respond_to_user, SUPPORTED_LANGUAGES
 
 router = APIRouter(prefix="/shield", tags=["Citizen Shield"])
 
@@ -30,6 +31,10 @@ class AskRequest(BaseModel):
             "Defaults to 'en' (English)."
         ),
     )
+    conversation_history: Optional[List[Dict[str, str]]] = Field(
+        default_factory=list,
+        description="List of prior messages in the format {'role': 'user'|'assistant', 'content': '...'}",
+    )
 
 
 class AskResponse(BaseModel):
@@ -44,6 +49,7 @@ class AskResponse(BaseModel):
     intent: str
     risk_level: str
     language: str
+    next_steps: Optional[str] = None
 
 
 @router.post(
@@ -73,5 +79,9 @@ async def ask_endpoint(body: AskRequest) -> AskResponse:
         AskResponse matching the CitizenShieldChat widget schema.
     """
     language = body.language if body.language in SUPPORTED_LANGUAGES else "en"
-    result = ask(body.query, language=language)
+    result = respond_to_user(
+        user_message=body.query,
+        conversation_history=body.conversation_history or [],
+        language=language
+    )
     return AskResponse(**result)
