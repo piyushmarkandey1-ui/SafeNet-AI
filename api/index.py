@@ -1,60 +1,48 @@
 """
-SafeNet AI — Vercel Serverless Function Entry Point
+SafeNet AI — Vercel Serverless Function Entry Point (api/index.py)
 
-This file adapts the FastAPI app for Vercel's serverless architecture.
+All /api/* requests on Vercel are rewritten to this file via vercel.json.
+This file loads the full FastAPI app (with all routers already mounted under /api)
+and serves it as an ASGI application via Mangum.
 """
 
 import os
 import sys
 from pathlib import Path
 
-# Add the backend directory to Python path
+# Add the backend directory to Python path so app.* imports resolve correctly
 backend_dir = Path(__file__).parent.parent / "backend"
 sys.path.insert(0, str(backend_dir))
 
-# Set environment for production
-os.environ["VERCEL_ENV"] = "production"
+# Set production environment flag
+os.environ.setdefault("VERCEL_ENV", "production")
 
-# Import and configure the FastAPI app
+# Import the fully-wired FastAPI app (loads dotenv, registers all routers under /api)
 try:
     from app.main import app
-    
-    # Configure for serverless deployment
-    app.title = "SafeNet AI - Production API"
-    app.description = "Digital public safety intelligence platform - deployed on Vercel"
-    
-    # Add production middleware and settings
+
+except ImportError as e:
+    # Fallback minimal app if backend imports fail (e.g. missing heavy deps on Vercel)
+    from fastapi import FastAPI
     from fastapi.middleware.cors import CORSMiddleware
-    
-    # Update CORS for production
+
+    app = FastAPI(title="SafeNet AI - Fallback")
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            "https://*.vercel.app",
-            "https://safenet-ai.vercel.app",
-            "https://localhost:5173",
-            "http://localhost:5173",
-        ],
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    
-except ImportError as e:
-    # Fallback minimal app if imports fail
-    from fastapi import FastAPI
-    
-    app = FastAPI(title="SafeNet AI - Fallback")
-    
-    @app.get("/")
+
+    @app.get("/api/")
     def fallback_root():
         return {
             "status": "error",
             "message": f"Import failed: {str(e)}",
-            "note": "Some dependencies may be missing in serverless environment"
+            "note": "Some dependencies may be missing in the serverless environment.",
         }
 
-# Vercel handler
-def handler(request):
-    """Vercel serverless function handler"""
-    return app(request)
+# Vercel requires an ASGI handler named `app` — FastAPI is already ASGI-compatible.
+# Vercel will pick up the `app` object exported from this module automatically.

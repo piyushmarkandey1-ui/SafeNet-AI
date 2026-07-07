@@ -1,8 +1,13 @@
 /**
- * SafeNet AI — API Layer (Vercel Production)
+ * SafeNet AI — API Layer (Vercel Production + Local Dev)
  *
  * This module abstracts all data fetching with automatic fallback
  * to local development or Vercel production endpoints.
+ *
+ * All backend endpoints are prefixed with /api/ so that:
+ *   - In local dev  → requests hit http://localhost:8000/api/...
+ *   - On Vercel     → requests hit https://your-app.vercel.app/api/...
+ *     (which routes to the api/index.py serverless function)
  */
 
 import mockDashboardFeed from '../mocks/mockDashboardFeed.json';
@@ -15,12 +20,12 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // Auto-detect API base URL
 const getApiBaseUrl = () => {
   if (typeof window !== 'undefined') {
-    // Client-side: use current origin if on Vercel, localhost for dev
-    if (window.location.hostname.includes('vercel.app')) {
+    // On Vercel: use the current origin — /api/* rewrites handle routing
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
       return window.location.origin;
     }
   }
-  // Fallback to localhost for development
+  // Local development: FastAPI uvicorn server
   return 'http://localhost:8000';
 };
 
@@ -60,8 +65,8 @@ export async function getCaseEvidence(eventId) {
     const candidateIds = [eventId];
 
     for (const feedUrl of [
-      'http://localhost:8000/orchestrator/dashboard-feed',
-      'http://localhost:8000/dashboard/feed',
+      `${API_BASE_URL}/api/orchestrator/dashboard-feed`,
+      `${API_BASE_URL}/api/dashboard/feed`,
     ]) {
       try {
         const feedRes = await fetch(feedUrl);
@@ -78,7 +83,7 @@ export async function getCaseEvidence(eventId) {
     const uniqueCandidates = [...new Set(candidateIds.filter(Boolean))];
     let lastError = null;
     for (const entityId of uniqueCandidates) {
-      const res = await fetch(`http://localhost:8000/graph/case/${encodeURIComponent(entityId)}`);
+      const res = await fetch(`${API_BASE_URL}/api/graph/case/${encodeURIComponent(entityId)}`);
       if (res.ok) return await res.json();
       lastError = new Error(`Graph API returned ${res.status} for ${entityId}`);
     }
@@ -99,7 +104,7 @@ export async function getCaseEvidence(eventId) {
  */
 export async function askCitizenShield(query, language = 'en') {
   try {
-    const res = await fetch('http://localhost:8000/shield/ask', {
+    const res = await fetch(`${API_BASE_URL}/api/shield/ask`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, language }),
@@ -147,7 +152,7 @@ export async function checkNote(imageFile) {
   formData.append('file', imageFile);
 
   try {
-    const res = await fetch('http://localhost:8000/vision/check-note', {
+    const res = await fetch(`${API_BASE_URL}/api/vision/check-note`, {
       method: 'POST',
       body: formData,
     });

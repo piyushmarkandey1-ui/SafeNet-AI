@@ -2,6 +2,11 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (no-op if file doesn't exist)
+load_dotenv()
+
 from app.scam_detector.api import router as scam_router, live_feed_events
 from app.counterfeit_vision.api import router as vision_router, vision_feed_events
 from app.fraud_graph.api import router as graph_router
@@ -15,24 +20,31 @@ app = FastAPI(
     version="0.1.0"
 )
 
-# Configure CORS for Vite frontend
+# Configure CORS for Vite frontend and Vercel deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://*.vercel.app",
+        "https://safenet-ai.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(scam_router)
-app.include_router(vision_router)
-app.include_router(graph_router)
-app.include_router(geo_router)
-app.include_router(shield_router)
-app.include_router(orchestrator_router)
+# All routers are mounted under /api prefix so that local development and
+# Vercel serverless routing are identical.
+app.include_router(scam_router, prefix="/api")
+app.include_router(vision_router, prefix="/api")
+app.include_router(graph_router, prefix="/api")
+app.include_router(geo_router, prefix="/api")
+app.include_router(shield_router, prefix="/api")
+app.include_router(orchestrator_router, prefix="/api")
 
 
-@app.get("/dashboard/feed", summary="Aggregated live risk feed (all modules)")
+@app.get("/api/dashboard/feed", summary="Aggregated live risk feed (all modules)")
 def get_dashboard_feed():
     """
     Orchestrator-level feed endpoint.

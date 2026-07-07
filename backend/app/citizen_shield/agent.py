@@ -331,10 +331,10 @@ def _handle_general_question(query: str) -> dict:
 
 def _translate(text: str, target_language: str) -> str:
     """
-    Translates text into the target language using an LLM.
+    Translates text into the target language using an LLM (Gemini or OpenAI).
 
-    Called only when LLM_API_KEY / OPENAI_API_KEY is set AND
-    target_language != 'en'.  Falls back to English + disclaimer.
+    Tries GEMINI_API_KEY first (preferred), then LLM_API_KEY / OPENAI_API_KEY.
+    Falls back to English + disclaimer if neither key is configured.
 
     Args:
         text:            English text to translate.
@@ -344,41 +344,70 @@ def _translate(text: str, target_language: str) -> str:
         Translated string, or original English with a note on failure.
     """
     lang_name = SUPPORTED_LANGUAGES.get(target_language, target_language)
-    api_key = os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY")
 
-    if not api_key:
-        return (
-            f"{text}\n\n"
-            f"[Translation to {lang_name} unavailable — LLM_API_KEY not set. "
-            "Response shown in English.]"
-        )
+    translate_prompt = (
+        f"Translate the following text into {lang_name}. "
+        "Keep formatting (line breaks, bullet points) intact. "
+        "Preserve proper nouns like 'SafeNet AI', 'cybercrime.gov.in', "
+        "and phone numbers unchanged. Return ONLY the translated text.\n\n"
+        f"{text}"
+    )
 
-    try:
-        from openai import OpenAI
-        client = OpenAI(api_key=api_key)
-        resp = client.chat.completions.create(
-            model=os.getenv("OPENAI_MODEL", "gpt-4o"),
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        f"You are a helpful translator. Translate the following text "
-                        f"into {lang_name}. Keep formatting (line breaks, bullet points) "
-                        "intact. Preserve proper nouns like 'SafeNet AI', 'cybercrime.gov.in', "
-                        "and phone numbers unchanged."
-                    ),
-                },
-                {"role": "user", "content": text},
-            ],
-            max_tokens=1000,
-            temperature=0.1,
-        )
-        return resp.choices[0].message.content.strip()
-    except Exception as e:
-        return (
-            f"{text}\n\n"
-            f"[Translation to {lang_name} failed ({e}). Response shown in English.]"
-        )
+    # ── Try Gemini first ──────────────────────────────────────────────────────
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    if gemini_key:
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=gemini_key)
+            model = genai.GenerativeModel("gemini-2.0-flash-exp")
+            response = model.generate_content(
+                translate_prompt,
+                generation_config=genai.types.GenerationConfig(
+                    temperature=0.1,
+                    max_output_tokens=1000,
+                ),
+            )
+            return response.text.strip()
+        except Exception as e:
+            # Fall through to OpenAI fallback
+            pass
+
+    # ── Try OpenAI / LLM_API_KEY ─────────────────────────────────────────────
+    openai_key = os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY")
+    if openai_key:
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=openai_key)
+            resp = client.chat.completions.create(
+                model=os.getenv("OPENAI_MODEL", "gpt-4o"),
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            f"You are a helpful translator. Translate the following text "
+                            f"into {lang_name}. Keep formatting (line breaks, bullet points) "
+                            "intact. Preserve proper nouns like 'SafeNet AI', 'cybercrime.gov.in', "
+                            "and phone numbers unchanged."
+                        ),
+                    },
+                    {"role": "user", "content": text},
+                ],
+                max_tokens=1000,
+                temperature=0.1,
+            )
+            return resp.choices[0].message.content.strip()
+        except Exception as e:
+            return (
+                f"{text}\n\n"
+                f"[Translation to {lang_name} failed ({e}). Response shown in English.]"
+            )
+
+    # ── No LLM key available ─────────────────────────────────────────────────
+    return (
+        f"{text}\n\n"
+        f"[Translation to {lang_name} unavailable — GEMINI_API_KEY not set. "
+        "Response shown in English.]"
+    )
 
 
 # ── Public API ─────────────────────────────────────────────────────────────────

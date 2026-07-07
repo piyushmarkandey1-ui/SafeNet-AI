@@ -244,9 +244,68 @@ def query_fraud_graph(
         "answer": answer,
         "citations": citations,
         "retrieved_docs": len(retrieved_docs),
-        "llm_used": llm_used,
+        "llm_used": gemini_used,
         "generated_at": datetime.now(timezone.utc).isoformat(),
     }
+
+
+def _gemini_synthesise(
+    query_text: str,
+    retrieved_docs: list[str],
+    citations: list[dict],
+    api_key: str,
+) -> str:
+    """
+    Calls Gemini to synthesise a narrative evidence report from retrieved fraud graph chunks.
+
+    Args:
+        query_text:     Original query.
+        retrieved_docs: Top-K raw text chunks from ChromaDB.
+        citations:      Citation metadata list.
+        api_key:        Gemini API key.
+
+    Returns:
+        Gemini-generated evidence narrative string.
+    """
+    import google.generativeai as genai
+    import textwrap
+
+    genai.configure(api_key=api_key)
+
+    context = "\n\n".join(
+        f"[Source {i + 1}]\n{doc}" for i, doc in enumerate(retrieved_docs)
+    )
+    citation_list = "\n".join(
+        f"[{i + 1}] {c['metadata'].get('cluster_id') or c['metadata'].get('case_id', 'N/A')}"
+        for i, c in enumerate(citations)
+    )
+
+    system_prompt = textwrap.dedent("""
+        You are a financial crime analyst writing structured evidence reports for law enforcement.
+        Use only the provided source documents. Cite sources as [1], [2], etc.
+        Format your response as:
+          FINDINGS: 2-3 sentences summarising what the graph shows.
+          KEY ENTITIES: Bullet list of the most suspicious nodes with their risk scores.
+          RECOMMENDED ACTION: One concrete next step.
+        Be factual and concise. This is SYNTHETIC data for a demo system.
+    """).strip()
+
+    prompt = (
+        f"{system_prompt}\n\n"
+        f"Query: {query_text}\n\n"
+        f"Source documents:\n{context}\n\n"
+        f"Citation index:\n{citation_list}"
+    )
+
+    model = genai.GenerativeModel("gemini-2.0-flash-exp")
+    response = model.generate_content(
+        prompt,
+        generation_config=genai.types.GenerationConfig(
+            temperature=0.2,
+            max_output_tokens=600,
+        ),
+    )
+    return response.text.strip()
 
 
 def _template_response(query_text: str, citations: list[dict]) -> str:
