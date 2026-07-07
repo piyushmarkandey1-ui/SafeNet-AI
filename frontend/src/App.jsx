@@ -7,11 +7,13 @@ import Dashboard from './components/dashboard/Dashboard';
 import LandingPage from './pages/LandingPage/LandingPage';
 import NoteChecker from './pages/NoteChecker/NoteChecker';
 import NumberChecker from './pages/NumberChecker/NumberChecker';
+import AnimatedBackground from './components/ui/AnimatedBackground';
 import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
+      <AnimatedBackground />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
