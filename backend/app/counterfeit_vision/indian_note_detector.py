@@ -220,12 +220,10 @@ def generate_simple_heatmap(image_bytes: bytes, focus_areas: list = None) -> str
         img = img.resize((224, 224))
         img_array = np.array(img)
         
-        # Create heatmap (simple edge detection as proxy for suspicious areas)
-        from scipy import ndimage
-        
+        # Create heatmap (simple mock heatmap based on intensity since scipy is removed)
         gray = np.mean(img_array, axis=2)
-        edges = ndimage.sobel(gray)
-        edges = (edges - edges.min()) / (edges.max() - edges.min() + 1e-8)
+        # Simple thresholding instead of sobel edges to avoid scipy dependency
+        edges = np.where(gray > 150, 1.0, 0.0)
         
         # Convert to heatmap colors (red for high values)
         heatmap = np.zeros_like(img_array)
