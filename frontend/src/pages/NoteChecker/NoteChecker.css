@@ -67,6 +67,41 @@
 }
 
 /* ── Upload pane ── */
+.upload-pane__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-md);
+  gap: var(--space-md);
+}
+
+.input-mode-toggle {
+  display: flex;
+  background: var(--surface-100, #1e293b);
+  border-radius: var(--radius-full);
+  padding: 4px;
+}
+
+.input-mode-toggle .mode-btn {
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.input-mode-toggle .mode-btn.active {
+  background: var(--surface-300, #334155);
+  color: var(--text-primary);
+}
+
 .upload-pane__title {
   font-family: var(--font-display);
   font-size: var(--text-h3);
@@ -375,16 +410,34 @@
   .note-checker__nav {
     padding: var(--space-sm) var(--space-md);
     flex-wrap: wrap;
-    gap: var(--space-sm);
+    align-items: center;
+    gap: var(--space-xs);
   }
-  .note-checker__nav-title {
-    font-size: var(--text-base);
+  .note-checker__nav-back {
+    flex-shrink: 0;
   }
   .note-checker__nav-badge {
-    margin-left: 0;
+    margin-left: auto;
+    font-size: 10px;
+  }
+  .note-checker__nav-title {
+    width: 100%;
+    font-size: var(--text-base);
+    order: 3;
+    padding-top: 4px;
   }
   .upload-pane__title {
     font-size: var(--text-h4);
+  }
+  .upload-pane__header {
+    flex-direction: column;
+  }
+  .input-mode-toggle {
+    width: 100%;
+  }
+  .input-mode-toggle .mode-btn {
+    flex: 1;
+    justify-content: center;
   }
   .drop-zone {
     padding: var(--space-xl) var(--space-md);

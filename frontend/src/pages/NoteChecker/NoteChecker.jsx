@@ -230,7 +230,7 @@ export default function NoteChecker() {
         {/* ── Upload Pane ── */}
         <div>
           <GlassPanel hoverable={false} glowColor="trust">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-md)' }}>
+            <div className="upload-pane__header">
               <div>
                 <h1 className="upload-pane__title">Check a Currency Note</h1>
                 <p className="upload-pane__subtitle">
@@ -241,18 +241,16 @@ export default function NoteChecker() {
                 </p>
               </div>
               
-              <div className="input-mode-toggle" style={{ display: 'flex', background: 'var(--surface-100)', borderRadius: 'var(--radius-full)', padding: '4px' }}>
+              <div className="input-mode-toggle">
                 <button 
                   className={`mode-btn ${inputMode === 'upload' ? 'active' : ''}`}
                   onClick={() => setInputMode('upload')}
-                  style={{ padding: '6px 12px', border: 'none', background: inputMode === 'upload' ? 'var(--surface-300)' : 'transparent', color: inputMode === 'upload' ? 'var(--text-primary)' : 'var(--text-secondary)', borderRadius: 'var(--radius-full)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--text-sm)', fontWeight: 500 }}
                 >
                   <Upload size={14} /> Upload
                 </button>
                 <button 
                   className={`mode-btn ${inputMode === 'camera' ? 'active' : ''}`}
                   onClick={() => setInputMode('camera')}
-                  style={{ padding: '6px 12px', border: 'none', background: inputMode === 'camera' ? 'var(--surface-300)' : 'transparent', color: inputMode === 'camera' ? 'var(--text-primary)' : 'var(--text-secondary)', borderRadius: 'var(--radius-full)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--text-sm)', fontWeight: 500 }}
                 >
                   <Camera size={14} /> Camera
                 </button>
