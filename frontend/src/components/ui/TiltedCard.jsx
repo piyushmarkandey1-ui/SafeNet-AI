@@ -112,7 +112,9 @@ export default function TiltedCard({
         )}
 
         {displayOverlayContent && overlayContent && (
-          <motion.div className="tilted-card-overlay">{overlayContent}</motion.div>
+          <motion.div className={imageSrc ? "tilted-card-overlay" : "tilted-card-overlay--relative"}>
+            {overlayContent}
+          </motion.div>
         )}
       </motion.div>
 

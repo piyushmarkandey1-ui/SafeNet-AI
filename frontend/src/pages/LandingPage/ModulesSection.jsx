@@ -77,9 +77,9 @@ export default function ModulesSection() {
               <div key={i} className="module-card-wrapper">
                 <TiltedCard
                   imageSrc={null}
-                  containerHeight="220px"
+                  containerHeight="auto"
                   containerWidth="100%"
-                  imageHeight="100%"
+                  imageHeight="auto"
                   imageWidth="100%"
                   rotateAmplitude={12}
                   scaleOnHover={1.05}

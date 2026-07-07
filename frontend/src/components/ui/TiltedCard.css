@@ -54,6 +54,16 @@
   pointer-events: none;
 }
 
+.tilted-card-overlay--relative {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 2;
+  will-change: transform;
+  transform: translateZ(30px);
+  pointer-events: none;
+}
+
 .tilted-card-caption {
   pointer-events: none;
   position: absolute;
