@@ -1,7 +1,7 @@
 {
   "buildCommand": "cd frontend && npm ci && npm run build",
   "outputDirectory": "frontend/dist",
-  "installCommand": "pip3 install --upgrade pip && pip3 install -r requirements.txt",
+  "installCommand": "cd frontend && npm ci",
   "devCommand": "cd frontend && npm run dev",
   "framework": null,
   "rewrites": [
