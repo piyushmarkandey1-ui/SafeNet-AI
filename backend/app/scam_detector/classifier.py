@@ -57,38 +57,40 @@ def _llm_secondary_check(transcript_window: str, base_score: int) -> Optional[fl
         return None
     
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=gemini_api_key)
-        
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
-        
+        from google import genai
+        from google.genai import types as genai_types
+
+        client = genai.Client(api_key=gemini_api_key)
+
         prompt = f"""You are a fraud detection expert. Rate the scam likelihood of this call transcript on a scale of 0-100.
 
 Transcript: {transcript_window}
 
 Rate scam likelihood (0-100, return ONLY the number):"""
-        
-        response = model.generate_content(
-            prompt,
-            generation_config=genai.types.GenerationConfig(
+
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt,
+            config=genai_types.GenerateContentConfig(
                 temperature=0,
                 max_output_tokens=10,
-            )
+            ),
         )
-        
+
         llm_score_str = response.text.strip()
         llm_score = float(llm_score_str) if llm_score_str.replace('.', '').isdigit() else None
-        
+
         if llm_score is not None:
             # Weighted average: 70% pattern matching, 30% LLM
             adjusted_score = int(base_score * 0.7 + llm_score * 0.3)
             return min(max(adjusted_score, 0), 100)
-            
+
     except Exception as e:
         # Silently fall back to pattern matching if LLM fails
         print(f"Gemini check failed: {e}")
-    
+
     return None
+
 
 def score_call(transcript_window: str, call_metadata: dict) -> dict:
     """

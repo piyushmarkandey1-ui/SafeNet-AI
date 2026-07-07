@@ -267,10 +267,11 @@ def _gemini_synthesise(
     Returns:
         Gemini-generated evidence narrative string.
     """
-    import google.generativeai as genai
     import textwrap
+    from google import genai
+    from google.genai import types as genai_types
 
-    genai.configure(api_key=api_key)
+    client = genai.Client(api_key=api_key)
 
     context = "\n\n".join(
         f"[Source {i + 1}]\n{doc}" for i, doc in enumerate(retrieved_docs)
@@ -297,10 +298,10 @@ def _gemini_synthesise(
         f"Citation index:\n{citation_list}"
     )
 
-    model = genai.GenerativeModel("gemini-2.0-flash-exp")
-    response = model.generate_content(
-        prompt,
-        generation_config=genai.types.GenerationConfig(
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt,
+        config=genai_types.GenerateContentConfig(
             temperature=0.2,
             max_output_tokens=600,
         ),

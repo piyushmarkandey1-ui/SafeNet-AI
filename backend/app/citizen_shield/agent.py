@@ -357,12 +357,13 @@ def _translate(text: str, target_language: str) -> str:
     gemini_key = os.getenv("GEMINI_API_KEY")
     if gemini_key:
         try:
-            import google.generativeai as genai
-            genai.configure(api_key=gemini_key)
-            model = genai.GenerativeModel("gemini-2.0-flash-exp")
-            response = model.generate_content(
-                translate_prompt,
-                generation_config=genai.types.GenerationConfig(
+            from google import genai
+            from google.genai import types as genai_types
+            client = genai.Client(api_key=gemini_key)
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=translate_prompt,
+                config=genai_types.GenerateContentConfig(
                     temperature=0.1,
                     max_output_tokens=1000,
                 ),

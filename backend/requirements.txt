@@ -20,4 +20,5 @@ pillow
 opencv-python-headless
 fpdf2
 pytest
+google-genai
 # tflite-runtime - not available on Windows/Python 3.13, add when needed
