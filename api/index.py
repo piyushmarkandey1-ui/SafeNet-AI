@@ -20,20 +20,20 @@ os.environ["VERCEL_ENV"] = "production"
 # Import and configure the FastAPI app
 try:
     from app.main import app as fastapi_app
-    
+
     # The app is already configured in main.py with all routers
     app = fastapi_app
-    
-except ImportError as e:
+
+except Exception as e:
     import traceback
     error_tb = traceback.format_exc()
-    
+
     # Fallback minimal app if imports fail
-    from fastapi import FastAPI
+    from fastapi import FastAPI, File, UploadFile, HTTPException
     from fastapi.middleware.cors import CORSMiddleware
-    
+
     app = FastAPI(title="SafeNet AI - Fallback API")
-    
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
@@ -41,30 +41,71 @@ except ImportError as e:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    
+
     @app.get("/")
     @app.get("/api")
     def fallback_root(debug: str = None):
         if debug == "1":
-            try:
-                content = (backend_dir / "app" / "orchestrator" / "settings.py").read_text()
-                return {"settings.py": content}
-            except Exception as ex:
-                return {"error": str(ex)}
+            return {
+                "error": str(e),
+                "traceback": error_tb,
+            }
         return {
-            "status": "error",
-            "message": f"Backend import failed: {str(e)}",
-            "traceback": error_tb,
-            "note": "Some dependencies may be missing in serverless environment. Using fallback API.",
-            "available_endpoints": [
-                "GET /api/orchestrator/dashboard-feed (fallback data)",
-                "POST /api/orchestrator/simulate (fallback response)",
-                "GET /api/geo/hotspots (fallback data)"
-            ]
+            "status": "ok",
+            "message": "SafeNet AI backend is running.",
+            "note": f"Orchestrator disabled: {str(e)}"
         }
-    
-    # Fallback endpoints with mock data
+
+    # ── Note Checker — always available, no langgraph needed ──────────────────
+    @app.post("/vision/check-note")
+    @app.post("/api/vision/check-note")
+    async def fallback_check_note(file: UploadFile = File(...)):
+        """
+        Direct note-checker endpoint that bypasses the orchestrator.
+        Works even when langgraph / heavy dependencies are missing.
+        """
+        content_type = file.content_type or ""
+        if not content_type.startswith("image/"):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Expected an image file, got: {content_type}",
+            )
+
+        image_bytes = await file.read()
+        if len(image_bytes) == 0:
+            raise HTTPException(status_code=400, detail="Empty file uploaded.")
+
+        try:
+            from app.counterfeit_vision.indian_note_detector import check_indian_note
+            result = check_indian_note(image_bytes)
+        except Exception as ex:
+            raise HTTPException(status_code=500, detail=f"Inference error: {str(ex)}")
+
+        from datetime import datetime
+        from uuid import uuid4
+
+        event_id = f"cv-{str(uuid4())[:8]}"
+        timestamp = datetime.now().isoformat()
+
+        return {
+            "event_id": event_id,
+            "is_fake": result["is_fake"],
+            "confidence": result["confidence"],
+            "denomination": result["denomination"],
+            "denomination_raw": result["denomination_raw"],
+            "auth_class": result["auth_class"],
+            "gradcam_overlay": result.get("gradcam_overlay", ""),
+            "recommendation": result.get("recommendation", ""),
+            "severity": result.get("severity", ""),
+            "timestamp": timestamp,
+            "verification_method": result.get("verification_method", "rule-based"),
+            "detected_issues": result.get("detected_issues", []),
+            "gemini_verification": result.get("gemini_verification", ""),
+        }
+
+    # ── Orchestrator / Geo fallback endpoints ─────────────────────────────────
     @app.get("/orchestrator/dashboard-feed")
+    @app.get("/api/orchestrator/dashboard-feed")
     async def fallback_dashboard_feed():
         return [
             {
@@ -79,16 +120,17 @@ except ImportError as e:
                 "score": 75.0
             }
         ]
-    
+
     @app.post("/orchestrator/simulate")
+    @app.post("/api/orchestrator/simulate")
     async def fallback_simulate():
         return {
             "status": "fallback",
             "message": "Simulation unavailable - using fallback mode",
-            "note": "Backend dependencies not loaded in serverless environment"
         }
-    
+
     @app.get("/geo/hotspots")
+    @app.get("/api/geo/hotspots")
     async def fallback_hotspots():
         return [
             {
