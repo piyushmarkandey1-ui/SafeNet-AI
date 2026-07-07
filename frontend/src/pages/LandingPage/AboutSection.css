@@ -1,0 +1,252 @@
+/* ── AboutSection ───────────────────────────────────────────────── */
+.about-section {
+  background: var(--bg-base);
+  border-top: 1px solid var(--border-subtle);
+  min-height: auto;
+  padding: var(--space-4xl) var(--space-xl);
+}
+
+/* ── Platform Overview ─────────────────────────────────────────── */
+.about-intro {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto var(--space-4xl);
+}
+
+.section-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--accent-trust);
+  margin-bottom: var(--space-lg);
+}
+
+.about-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-trust) 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-body {
+  font-size: var(--text-h4);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-2xl);
+}
+
+.about-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.about-launch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-trust);
+  color: #0A0E14;
+  font-family: var(--font-body);
+  font-weight: var(--weight-semi);
+  font-size: var(--text-sm);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s var(--ease-out);
+}
+
+.about-launch-btn:hover {
+  background: #3dd9ca;
+  color: #0A0E14;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-trust);
+}
+
+.about-note {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ── User Guide Header ─────────────────────────────────────────── */
+.guide-header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.guide-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-top: var(--space-sm);
+}
+
+/* ── Feature Cards Grid ────────────────────────────────────────── */
+.features-guide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+/* Last card (5th) centered when odd */
+.features-guide .feature-card:nth-child(5) {
+  grid-column: 1 / -1;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.feature-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.feature-card--risk::before  { background: radial-gradient(ellipse at top left, var(--accent-risk-dim), transparent 70%); }
+.feature-card--warning::before { background: radial-gradient(ellipse at top left, var(--accent-warning-dim), transparent 70%); }
+.feature-card--trust::before  { background: radial-gradient(ellipse at top left, var(--accent-trust-dim), transparent 70%); }
+
+.feature-card:hover::before { opacity: 1; }
+
+.feature-card:hover {
+  transform: translateY(-3px);
+}
+
+.feature-card--risk:hover    { border-color: var(--accent-risk); }
+.feature-card--warning:hover { border-color: var(--accent-warning); }
+.feature-card--trust:hover   { border-color: var(--accent-trust); }
+
+/* ── Card Header ───────────────────────────────────────────────── */
+.feature-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.feature-step {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: var(--weight-bold);
+  color: var(--border-default);
+  line-height: 1;
+  min-width: 3rem;
+}
+
+.feature-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.icon--risk    { background: var(--accent-risk-dim);    color: var(--accent-risk); }
+.icon--warning { background: var(--accent-warning-dim); color: var(--accent-warning); }
+.icon--trust   { background: var(--accent-trust-dim);   color: var(--accent-trust); }
+
+.feature-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.feature-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semi);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.feature-where {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+/* ── Step List ─────────────────────────────────────────────────── */
+.feature-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-left: 0;
+  margin: 0;
+}
+
+.feature-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--bg-overlay);
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .features-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .features-guide .feature-card:nth-child(5) {
+    grid-column: auto;
+    max-width: 100%;
+  }
+
+  .about-cta-row {
+    flex-direction: column;
+  }
+}

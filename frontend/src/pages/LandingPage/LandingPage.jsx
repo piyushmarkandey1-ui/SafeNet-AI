@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import HeroSection from './HeroSection';
 import StatsSection from './StatsSection';
 import ModulesSection from './ModulesSection';
+import AboutSection from './AboutSection';
 import RiskTeaserSection from './RiskTeaserSection';
 import CTASection from './CTASection';
 import './LandingPage.css';
@@ -23,6 +24,7 @@ export default function LandingPage() {
       <HeroSection />
       <StatsSection />
       <ModulesSection />
+      <AboutSection />
       <RiskTeaserSection />
       <CTASection />
     </div>
