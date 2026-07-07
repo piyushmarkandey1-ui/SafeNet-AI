@@ -4,19 +4,30 @@ SafeNet AI — Graph Loader (In-Memory NetworkX)
 Ingests synthetic transactions and call records into a NetworkX MultiDiGraph.
 Provides methods to identify connected components (mule rings) and high-risk nodes.
 """
-import networkx as nx
-import pandas as pd
+try:
+    import networkx as nx
+    import pandas as pd
+    _GRAPH_DEPS_AVAILABLE = True
+except ImportError:
+    _GRAPH_DEPS_AVAILABLE = False
 import os
+
 
 class FraudGraph:
     def __init__(self):
+        if not _GRAPH_DEPS_AVAILABLE:
+            self.G = None
+            return
         # MultiDiGraph allows multiple edges between same nodes (e.g., multiple calls)
         self.G = nx.MultiDiGraph()
-        
+
     def load_call_records(self, csv_path):
+        if not _GRAPH_DEPS_AVAILABLE or self.G is None:
+            return
         if not os.path.exists(csv_path):
             print(f"Warning: {csv_path} not found.")
             return
+
             
         df = pd.read_csv(csv_path)
         for _, row in df.iterrows():

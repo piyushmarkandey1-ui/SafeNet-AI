@@ -27,7 +27,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
-import networkx as nx
+try:
+    import networkx as nx
+    _NX_AVAILABLE = True
+except ImportError:
+    _NX_AVAILABLE = False
+
 
 # ── Path constants ─────────────────────────────────────────────────────────────
 _REPO_ROOT = Path(__file__).parent.parent.parent.parent

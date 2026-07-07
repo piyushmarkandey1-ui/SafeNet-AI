@@ -1,20 +1,17 @@
 # SafeNet AI — Production Dependencies for Vercel Serverless
-# Lightweight version - excludes heavy packages (torch, torchvision, chromadb)
+# Minimal footprint — only what the note checker and core API need.
+# Heavy ML/graph packages are lazy-loaded inside their respective modules.
 
 fastapi==0.115.0
 pydantic==2.9.0
 python-dotenv==1.0.1
-networkx==3.3
 numpy==1.26.4
-pandas==2.2.2
-scipy==1.11.4
 pillow==10.0.0
 google-generativeai==0.8.6
 python-multipart==0.0.9
 mangum==0.17.0
 
-# Optional: Add these if needed and within Vercel limits
-# langchain==0.3.0
-# langgraph==0.2.0
-# sentence-transformers==3.0.0
-# fpdf2==2.7.9
+# Optional — these are only used by modules that gracefully fall back when absent
+# networkx==3.3
+# pandas==2.2.2
+# scipy==1.11.4
