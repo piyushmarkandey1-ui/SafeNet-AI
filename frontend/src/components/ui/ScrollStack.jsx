@@ -18,6 +18,7 @@ const ScrollStack = ({
   scaleDuration = 0.5,
   rotationAmount = 0,
   blurAmount = 0,
+  fadeAmount = 0, /* NEW PROP: How much to fade out cards that are beneath the top card */
   useWindowScroll = false,
   onStackComplete
 }) => {
@@ -101,20 +102,21 @@ const ScrollStack = ({
       const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
 
       let blur = 0;
-      if (blurAmount) {
-        let topCardIndex = 0;
-        for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = getElementOffset(cardsRef.current[j]);
-          const jTriggerStart = jCardTop - stackPositionPx - itemStackDistance * j;
-          if (scrollTop >= jTriggerStart) {
-            topCardIndex = j;
-          }
+      let opacity = 1;
+      
+      let topCardIndex = 0;
+      for (let j = 0; j < cardsRef.current.length; j++) {
+        const jCardTop = getElementOffset(cardsRef.current[j]);
+        const jTriggerStart = jCardTop - stackPositionPx - itemStackDistance * j;
+        if (scrollTop >= jTriggerStart) {
+          topCardIndex = j;
         }
+      }
 
-        if (i < topCardIndex) {
-          const depthInStack = topCardIndex - i;
-          blur = Math.max(0, depthInStack * blurAmount);
-        }
+      if (i < topCardIndex) {
+        const depthInStack = topCardIndex - i;
+        blur = blurAmount ? Math.max(0, depthInStack * blurAmount) : 0;
+        opacity = fadeAmount ? Math.max(0, 1 - (depthInStack * fadeAmount)) : 1;
       }
 
       let translateY = 0;
@@ -130,7 +132,8 @@ const ScrollStack = ({
         translateY: Math.round(translateY * 100) / 100,
         scale: Math.round(scale * 1000) / 1000,
         rotation: Math.round(rotation * 100) / 100,
-        blur: Math.round(blur * 100) / 100
+        blur: Math.round(blur * 100) / 100,
+        opacity: Math.round(opacity * 100) / 100
       };
 
       const lastTransform = lastTransformsRef.current.get(i);
@@ -139,7 +142,8 @@ const ScrollStack = ({
         Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
         Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
         Math.abs(lastTransform.rotation - newTransform.rotation) > 0.1 ||
-        Math.abs(lastTransform.blur - newTransform.blur) > 0.1;
+        Math.abs(lastTransform.blur - newTransform.blur) > 0.1 ||
+        Math.abs(lastTransform.opacity - newTransform.opacity) > 0.01;
 
       if (hasChanged) {
         const transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
@@ -147,6 +151,7 @@ const ScrollStack = ({
 
         card.style.transform = transform;
         card.style.filter = filter;
+        card.style.opacity = newTransform.opacity;
 
         lastTransformsRef.current.set(i, newTransform);
       }

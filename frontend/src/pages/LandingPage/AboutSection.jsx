@@ -143,7 +143,7 @@ export default function AboutSection() {
         </div>
 
         <div className="features-guide-carousel hide-scrollbar" style={{ height: '85vh', margin: '0 auto', maxWidth: '800px', overflow: 'hidden' }}>
-          <ScrollStack itemDistance={150} itemScale={0.03} itemStackDistance={50} blurAmount={1.2}>
+          <ScrollStack itemDistance={150} itemScale={0.03} itemStackDistance={50} blurAmount={1.2} fadeAmount={0.7}>
             {FEATURES.map((feat) => {
               const Icon = feat.icon;
               return (
