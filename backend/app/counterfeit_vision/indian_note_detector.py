@@ -168,7 +168,7 @@ CONFIDENCE: [0-100]
 EXPLANATION: [2-3 sentences explaining your assessment]
 KEY_OBSERVATIONS: [Bullet points of specific features noticed]"""
 
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         response = model.generate_content(
             [prompt, img],
             request_options={"timeout": 6.0}
