@@ -16,7 +16,15 @@ from typing import Optional
 from datetime import datetime
 from uuid import uuid4
 
-from app.counterfeit_vision.inference import check_note
+# Try to import the ML-based detector, fallback to rule-based Indian note detector
+try:
+    from app.counterfeit_vision.inference import check_note, TORCH_AVAILABLE
+    if not TORCH_AVAILABLE:
+        raise ImportError("PyTorch not available")
+except (ImportError, Exception):
+    # Fallback to enhanced Indian note detector
+    from app.counterfeit_vision.indian_note_detector import check_indian_note as check_note
+    TORCH_AVAILABLE = False
 
 router = APIRouter(prefix="/vision", tags=["Counterfeit Vision"])
 
@@ -41,6 +49,9 @@ class NoteCheckResponse(BaseModel):
     recommendation: str
     severity: str
     timestamp: str
+    verification_method: Optional[str] = "ml-based"
+    detected_issues: Optional[list] = []
+    gemini_verification: Optional[str] = ""
 
 
 def _build_recommendation(is_fake: bool, confidence: float) -> tuple[str, str]:
@@ -121,9 +132,15 @@ async def check_note_endpoint(file: UploadFile = File(...)) -> NoteCheckResponse
         raise HTTPException(status_code=500, detail=f"Inference error: {str(e)}")
 
     # ── Build response ────────────────────────────────────────────────────────
-    recommendation, severity = _build_recommendation(
-        result["is_fake"], result["confidence"]
-    )
+    # Use recommendation from detector if available, otherwise generate it
+    if "recommendation" in result and "severity" in result:
+        recommendation = result["recommendation"]
+        severity = result["severity"]
+    else:
+        recommendation, severity = _build_recommendation(
+            result["is_fake"], result["confidence"]
+        )
+    
     event_id = f"cv-{str(uuid4())[:8]}"
     timestamp = datetime.now().isoformat()
 
@@ -157,6 +174,9 @@ async def check_note_endpoint(file: UploadFile = File(...)) -> NoteCheckResponse
         recommendation=recommendation,
         severity=severity,
         timestamp=timestamp,
+        verification_method=result.get("verification_method", "ml-based"),
+        detected_issues=result.get("detected_issues", []),
+        gemini_verification=result.get("gemini_verification", ""),
     )
 
 

@@ -1,15 +1,16 @@
-# SafeNet AI — Vercel Serverless Python Dependencies
-# This is the LIGHTWEIGHT version for Vercel (no torch/ML libs — exceeds 500 MB limit).
-# Heavy ML modules (counterfeit vision) will gracefully fall back to mock on Vercel.
-fastapi
-uvicorn[standard]
-pydantic>=2.0
-python-dotenv
-python-multipart
-networkx
-pandas
-numpy
-langchain
-langgraph
-fpdf2
-google-genai
+# SafeNet AI — Production Dependencies for Vercel Serverless
+# Lightweight version - excludes heavy packages (torch, torchvision, chromadb)
+
+fastapi==0.115.0
+pydantic==2.9.0
+python-dotenv==1.0.1
+networkx==3.3
+numpy==1.26.4
+pandas==2.2.2
+google-generativeai==0.8.6
+
+# Optional: Add these if needed and within Vercel limits
+# langchain==0.3.0
+# langgraph==0.2.0
+# sentence-transformers==3.0.0
+# fpdf2==2.7.9
