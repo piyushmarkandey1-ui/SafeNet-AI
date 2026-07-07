@@ -177,7 +177,7 @@ export async function checkNote(imageFile) {
       denomination_raw: '500',
       auth_class: 'fake',
       gradcam_overlay: '',
-      recommendation: `ALERT: High-confidence counterfeit detected. (MOCK — backend offline). ERROR DETAILS: ${err.message}`,
+      recommendation: 'ALERT: High-confidence counterfeit detected. (MOCK — backend offline)',
       severity: 'critical',
       event_id: `cv-mock-${Date.now()}`,
       timestamp: new Date().toISOString(),

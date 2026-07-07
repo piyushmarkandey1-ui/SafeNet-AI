@@ -79,6 +79,10 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
             best_score = score
             best_match = denom
     
+    # Fallback to ₹500 if no color match found (most common denomination)
+    if not best_match:
+        best_match = "500"
+    
     # Calculate confidence based on color match
     base_confidence = (best_score / 3.0) * 0.6  # Max 60% from color
     
@@ -89,9 +93,9 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
     sharpness_score = np.std(np.array(sharpness)) / 255.0
     quality_confidence = min(sharpness_score * 0.2, 0.2)  # Max 20% from quality
     
-    # Check dimensions
+    # Check dimensions — best_match is now guaranteed non-None
     aspect_ratio = img.width / img.height if img.height > 0 else 0
-    expected_ratio = DENOMINATION_SIZES[best_match][0] / DENOMINATION_SIZES[best_match][1] if best_match else 2.0
+    expected_ratio = DENOMINATION_SIZES[best_match][0] / DENOMINATION_SIZES[best_match][1]
     ratio_diff = abs(aspect_ratio - expected_ratio) / expected_ratio
     size_confidence = max(0, 0.2 * (1 - ratio_diff))  # Max 20% from size
     
