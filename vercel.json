@@ -1,22 +1,14 @@
 {
   "buildCommand": "cd frontend && npm ci && npm run build",
   "outputDirectory": "frontend/dist",
-  "installCommand": "cd frontend && npm ci",
-  "devCommand": "cd frontend && npm run dev",
-  "framework": null,
-  "functions": {
-    "api/index.py": {
-      "maxDuration": 30
-    }
-  },
   "rewrites": [
     { 
       "source": "/api/:path*", 
-      "destination": "/api/index" 
+      "destination": "/api/index.py"
     },
     {
       "source": "/api",
-      "destination": "/api/index"
+      "destination": "/api/index.py"
     }
   ],
   "headers": [
