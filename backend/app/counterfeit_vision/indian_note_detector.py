@@ -58,9 +58,17 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
         Dict with denomination, confidence, and detected_issues
     """
     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-    img_array = np.array(img)
     
-    # Get dominant color
+    # Crop center 60% for color analysis since webcam frames have a lot of background
+    w, h = img.size
+    crop_w, crop_h = int(w * 0.6), int(h * 0.6)
+    left = (w - crop_w) // 2
+    top = (h - crop_h) // 2
+    img_cropped = img.crop((left, top, left + crop_w, top + crop_h))
+    
+    img_array = np.array(img_cropped)
+    
+    # Get dominant color from the cropped center
     avg_color = img_array.mean(axis=(0, 1))
     r, g, b = avg_color
     
@@ -94,20 +102,17 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
     quality_confidence = min(sharpness_score * 0.2, 0.2)  # Max 20% from quality
     
     # Check dimensions — best_match is now guaranteed non-None
-    aspect_ratio = img.width / img.height if img.height > 0 else 0
-    expected_ratio = DENOMINATION_SIZES[best_match][0] / DENOMINATION_SIZES[best_match][1]
-    ratio_diff = abs(aspect_ratio - expected_ratio) / expected_ratio
-    size_confidence = max(0, 0.2 * (1 - ratio_diff))  # Max 20% from size
+    # Since this is a webcam feed, the image aspect ratio is the camera's, not the note's.
+    # We ignore the aspect ratio for fake detection to avoid false positives.
+    size_confidence = 0.2  # Provide max size confidence since we can't accurately measure the note's edges
     
     total_confidence = base_confidence + quality_confidence + size_confidence
     
     # Detect potential issues
     issues = []
-    if sharpness_score < 0.3:
+    if sharpness_score < 0.25:
         issues.append("Low image quality or blur detected")
-    if ratio_diff > 0.15:
-        issues.append("Unusual aspect ratio for Indian currency notes")
-    if base_confidence < 0.3:
+    if base_confidence < 0.2:
         issues.append("Color profile doesn't match expected denomination colors")
     
     return {
