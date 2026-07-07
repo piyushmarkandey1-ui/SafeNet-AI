@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import Galaxy from '../../components/ui/Galaxy';
 import './CTASection.css';
 
 export default function CTASection() {
@@ -28,6 +29,17 @@ export default function CTASection() {
 
   return (
     <section className="landing-section cta-section" ref={sectionRef}>
+      <div className="cta-bg-canvas">
+        <Galaxy 
+          hueShift={190} /* Cyan/Teal to match --accent-trust */
+          density={1.2}
+          glowIntensity={0.6}
+          saturation={0.8}
+          starSpeed={0.8}
+          mouseRepulsion={true}
+          repulsionStrength={2.5}
+        />
+      </div>
       <div className="section-content cta-content">
         <h2>Ready to secure the digital frontier?</h2>
         <p>Explore the unified command center.</p>
