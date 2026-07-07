@@ -10,9 +10,11 @@ import {
   Shield,
   ChevronRight,
 } from 'lucide-react';
+import LogoLoop from '../../components/ui/LogoLoop';
 import './AboutSection.css';
 
 const FEATURES = [
+// ... (features remain same, I'll keep the import at the top)
   {
     step: '01',
     icon: PhoneCall,
@@ -96,12 +98,11 @@ export default function AboutSection() {
         ease: 'power3.out',
       });
 
-      gsap.from('.feature-card', {
-        scrollTrigger: { trigger: '.features-guide', start: 'top 75%' },
+      gsap.from('.features-guide-carousel', {
+        scrollTrigger: { trigger: '.features-guide-carousel', start: 'top 75%' },
         y: 50,
         opacity: 0,
         duration: 0.7,
-        stagger: 0.12,
         ease: 'power3.out',
       });
     });
@@ -141,32 +142,42 @@ export default function AboutSection() {
           <h3 className="guide-title">How to use each feature</h3>
         </div>
 
-        <div className="features-guide">
-          {FEATURES.map((feat) => {
-            const Icon = feat.icon;
-            return (
-              <div key={feat.step} className={`feature-card feature-card--${feat.color}`}>
-                <div className="feature-card__header">
-                  <span className="feature-step">{feat.step}</span>
-                  <div className={`feature-icon-wrap icon--${feat.color}`}>
-                    <Icon size={20} />
+        <div className="features-guide-carousel" style={{ margin: '0 -2rem' }}>
+          <LogoLoop
+            logos={FEATURES}
+            speed={40}
+            direction="left"
+            logoHeight={1} /* Handled by our own CSS instead of font-size */
+            gap={24}
+            pauseOnHover={true}
+            fadeOut={true}
+            fadeOutColor="#0A0E14"
+            renderItem={(feat) => {
+              const Icon = feat.icon;
+              return (
+                <div key={feat.step} className={`feature-card feature-card--${feat.color}`} style={{ width: '380px', height: '100%', whiteSpace: 'normal' }}>
+                  <div className="feature-card__header">
+                    <span className="feature-step">{feat.step}</span>
+                    <div className={`feature-icon-wrap icon--${feat.color}`}>
+                      <Icon size={20} />
+                    </div>
+                    <div className="feature-meta">
+                      <h4 className="feature-title">{feat.title}</h4>
+                      <span className="feature-where">{feat.where}</span>
+                    </div>
                   </div>
-                  <div className="feature-meta">
-                    <h4 className="feature-title">{feat.title}</h4>
-                    <span className="feature-where">{feat.where}</span>
-                  </div>
+                  <ol className="feature-steps">
+                    {feat.guide.map((step, i) => (
+                      <li key={i} className="feature-step-item">
+                        <span className="step-num">{i + 1}</span>
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
-                <ol className="feature-steps">
-                  {feat.guide.map((step, i) => (
-                    <li key={i} className="feature-step-item">
-                      <span className="step-num">{i + 1}</span>
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            );
-          })}
+              );
+            }}
+          />
         </div>
 
       </div>
