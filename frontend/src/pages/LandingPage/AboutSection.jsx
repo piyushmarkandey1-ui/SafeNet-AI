@@ -18,12 +18,12 @@ const FEATURES = [
     icon: PhoneCall,
     title: 'Scam Call Detector',
     color: 'risk',
-    where: 'Dashboard → Risk Feed',
+    where: 'Dashboard → "Scam Detector" pill or Risk Feed',
     guide: [
-      'Open the Dashboard from the home page.',
-      'Click "Simulate Scenario" in the top-right to inject a live scam-call event.',
-      'Select any event in the Risk Feed on the left to see its threat score.',
-      'The Evidence Panel on the right shows entities, transcript snippets & graph links.',
+      'Open the Dashboard (click "Launch Dashboard" on the home page).',
+      'Click the "Scam Detector" pill in the top nav — it scrolls to the Risk Feed.',
+      'Hit "Simulate Scenario" (top-right) to inject a live scam-call event.',
+      'Click any event card to see its AI threat score and detected tactics in the Evidence Panel.',
     ],
   },
   {
@@ -31,12 +31,12 @@ const FEATURES = [
     icon: ScanLine,
     title: 'Counterfeit Note Checker',
     color: 'warning',
-    where: 'Home → "Try Note Checker"',
+    where: 'Home → "Try Note Checker"  or  Dashboard → "Note Checker" pill',
     guide: [
-      'Click the "Try Note Checker" button on the home page.',
-      'Upload a photo of any currency note (JPG / PNG).',
-      'The AI model analyses watermarks, serial numbers & printing patterns.',
-      'A verdict — Genuine or Suspect — is returned with a confidence score.',
+      'Click "Try Note Checker" on the home page, or click "Note Checker" in the Dashboard top nav.',
+      'Upload a clear photo of any currency note (JPG / PNG).',
+      'The AI analyses watermarks, serial numbers & printing micro-patterns.',
+      'You receive a verdict — Genuine or Suspect — with a confidence score.',
     ],
   },
   {
@@ -44,12 +44,12 @@ const FEATURES = [
     icon: Network,
     title: 'Fraud Graph',
     color: 'trust',
-    where: 'Dashboard → click any event',
+    where: 'Dashboard → "Fraud Graph" pill → click any Risk Feed event',
     guide: [
-      'Open the Dashboard and click any event in the Risk Feed.',
-      'The Evidence Panel loads a Fraud Graph showing connected entities.',
-      'Nodes represent phone numbers, bank accounts, and persons of interest.',
-      'Edges show transaction flows — thicker means more suspicious activity.',
+      'Click the "Fraud Graph" pill in the Dashboard top nav to jump to the Risk Feed.',
+      'Click any event card — the Evidence Panel slides in on the right.',
+      'Nodes represent phone numbers, bank accounts & persons of interest.',
+      'Edges show transaction flows; thicker lines mean higher suspicious activity.',
     ],
   },
   {
@@ -57,12 +57,12 @@ const FEATURES = [
     icon: Map,
     title: 'Geospatial Heatmap',
     color: 'risk',
-    where: 'Dashboard → Centre Map Panel',
+    where: 'Dashboard → "Heatmap" pill or centre panel',
     guide: [
-      'The centre panel of the Dashboard always shows the live crime map.',
-      'Hotspots glow red for high-risk zones and blue for low-risk zones.',
-      'Clicking a map pin highlights the matching event in the Risk Feed.',
-      'Hotspot data updates automatically when you simulate new scenarios.',
+      'Click the "Heatmap" pill in the top nav — it scrolls to the live crime map.',
+      'Red glowing circles = critical hotspots; teal = lower-risk clusters.',
+      'Click any circle on the map to see the incident details in a popup.',
+      'Simulate a new scenario to see hotspots update in real time.',
     ],
   },
   {
@@ -70,15 +70,16 @@ const FEATURES = [
     icon: Shield,
     title: 'Citizen Shield (AI Chat)',
     color: 'trust',
-    where: 'Dashboard → Chat bubble (bottom-right)',
+    where: 'Dashboard → "Citizen Shield" pill  or  chat bubble (bottom-right)',
     guide: [
-      'Open the Dashboard and click the floating chat bubble.',
-      'Type any question — "How do I avoid UPI scams?" works great.',
-      'Citizen Shield uses a RAG knowledge base of RBI & MHA advisories.',
-      'It gives step-by-step prevention advice in plain language.',
+      'Click the "Citizen Shield" pill in the top nav — the chat opens instantly.',
+      'Or click the floating chat bubble at the bottom-right of the Dashboard.',
+      'Type any question — e.g. "How do I avoid UPI scams?" or "Is this call a scam?"',
+      'The RAG-powered AI responds with step-by-step prevention advice from RBI & MHA advisories.',
     ],
   },
 ];
+
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
