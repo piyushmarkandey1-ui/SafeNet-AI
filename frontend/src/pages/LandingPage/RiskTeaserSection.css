@@ -1,7 +1,6 @@
 /* RiskTeaserSection */
 .teaser-section {
   background: var(--bg-surface);
-  border-top: 1px solid var(--border-subtle);
 }
 
 .teaser-header {

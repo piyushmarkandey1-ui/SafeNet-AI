@@ -1,7 +1,6 @@
 /* ── AboutSection ───────────────────────────────────────────────── */
 .about-section {
   background: var(--bg-base);
-  border-top: 1px solid var(--border-subtle);
   min-height: auto;
   padding: var(--space-4xl) var(--space-xl);
 }

@@ -1,8 +1,5 @@
-/* StatsSection */
 .stats-section {
-  background: var(--bg-surface);
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
 }
 
 .stats-content {
