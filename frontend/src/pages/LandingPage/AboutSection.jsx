@@ -10,7 +10,7 @@ import {
   Shield,
   ChevronRight,
 } from 'lucide-react';
-import LogoLoop from '../../components/ui/LogoLoop';
+import ScrollStack, { ScrollStackItem } from '../../components/ui/ScrollStack';
 import './AboutSection.css';
 
 const FEATURES = [
@@ -142,19 +142,12 @@ export default function AboutSection() {
           <h3 className="guide-title">How to use each feature</h3>
         </div>
 
-        <div className="features-guide-carousel" style={{ margin: '0 -2rem' }}>
-          <LogoLoop
-            logos={FEATURES}
-            speed={40}
-            direction="left"
-            logoHeight={1} /* Handled by our own CSS instead of font-size */
-            gap={24}
-            pauseOnHover={true}
-            fadeOut={false}
-            renderItem={(feat) => {
+        <div className="features-guide-carousel hide-scrollbar" style={{ height: '85vh', margin: '0 auto', maxWidth: '800px', overflow: 'hidden' }}>
+          <ScrollStack itemDistance={120} itemScale={0.05} itemStackDistance={40} blurAmount={2}>
+            {FEATURES.map((feat) => {
               const Icon = feat.icon;
               return (
-                <div key={feat.step} className={`feature-card feature-card--${feat.color}`} style={{ width: '380px', height: '100%', whiteSpace: 'normal' }}>
+                <ScrollStackItem key={feat.step} itemClassName={`feature-card--${feat.color}`}>
                   <div className="feature-card__header">
                     <span className="feature-step">{feat.step}</span>
                     <div className={`feature-icon-wrap icon--${feat.color}`}>
@@ -173,10 +166,10 @@ export default function AboutSection() {
                       </li>
                     ))}
                   </ol>
-                </div>
+                </ScrollStackItem>
               );
-            }}
-          />
+            })}
+          </ScrollStack>
         </div>
 
       </div>
