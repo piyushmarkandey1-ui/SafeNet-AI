@@ -42,9 +42,11 @@ except ImportError as e:
     @app.get("/")
     @app.get("/api")
     def fallback_root():
+        import traceback
         return {
             "status": "error",
             "message": f"Backend import failed: {str(e)}",
+            "traceback": traceback.format_exc(),
             "note": "Some dependencies may be missing in serverless environment. Using fallback API.",
             "available_endpoints": [
                 "GET /api/orchestrator/dashboard-feed (fallback data)",
