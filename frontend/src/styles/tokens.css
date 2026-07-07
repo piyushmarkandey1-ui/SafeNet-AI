@@ -41,9 +41,9 @@
 
 :root {
   /* ─── Background Scale ─── */
-  --bg-base:       transparent;
-  --bg-surface:    rgba(17, 25, 35, 0.65); /* More transparent for glassmorphism */
-  --bg-elevated:   rgba(26, 35, 50, 0.85);
+  --bg-base:       #0A0E14;
+  --bg-surface:    #111923;
+  --bg-elevated:   #1A2332;
   --bg-overlay:    #243044;
 
   /* ─── Accent Colors ─── */

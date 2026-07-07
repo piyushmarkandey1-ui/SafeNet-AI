@@ -150,8 +150,7 @@ export default function AboutSection() {
             logoHeight={1} /* Handled by our own CSS instead of font-size */
             gap={24}
             pauseOnHover={true}
-            fadeOut={true}
-            fadeOutColor="#0A0E14"
+            fadeOut={false}
             renderItem={(feat) => {
               const Icon = feat.icon;
               return (

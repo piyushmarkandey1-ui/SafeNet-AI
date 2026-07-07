@@ -4,10 +4,10 @@
 
 .note-checker {
   min-height: 100vh;
+  background: var(--bg-base);
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  background: transparent;
 }
 
 /* ── Top nav bar ── */
