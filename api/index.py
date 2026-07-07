@@ -25,6 +25,9 @@ try:
     app = fastapi_app
     
 except ImportError as e:
+    import traceback
+    error_tb = traceback.format_exc()
+    
     # Fallback minimal app if imports fail
     from fastapi import FastAPI
     from fastapi.middleware.cors import CORSMiddleware
@@ -42,11 +45,10 @@ except ImportError as e:
     @app.get("/")
     @app.get("/api")
     def fallback_root():
-        import traceback
         return {
             "status": "error",
             "message": f"Backend import failed: {str(e)}",
-            "traceback": traceback.format_exc(),
+            "traceback": error_tb,
             "note": "Some dependencies may be missing in serverless environment. Using fallback API.",
             "available_endpoints": [
                 "GET /api/orchestrator/dashboard-feed (fallback data)",
