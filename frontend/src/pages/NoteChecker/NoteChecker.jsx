@@ -22,8 +22,10 @@ import {
   ScanLine,
   X,
   Info,
+  Camera,
 } from 'lucide-react';
 import { GlassPanel, RiskBadge } from '../../components/ui';
+import NoteCamera from './NoteCamera';
 import { checkNote } from '../../lib/api';
 import { fadeInUp } from '../../lib/motion';
 import './NoteChecker.css';
@@ -133,6 +135,7 @@ export default function NoteChecker() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [inputMode, setInputMode] = useState('upload'); // 'upload' or 'camera'
 
   // ── File handling ──────────────────────────────────────────────────────────
   const handleFile = useCallback((file) => {
@@ -174,20 +177,37 @@ export default function NoteChecker() {
   };
 
   // ── Submission ─────────────────────────────────────────────────────────────
-  const handleSubmit = async () => {
-    if (!selectedFile) return;
+  const handleSubmit = async (fileToSubmit = selectedFile) => {
+    if (!fileToSubmit) return;
 
     setIsLoading(true);
     setError(null);
     setResult(null);
 
     try {
-      const data = await checkNote(selectedFile);
+      const data = await checkNote(fileToSubmit);
       setResult(data);
     } catch (err) {
       setError(err.message || 'An unexpected error occurred.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleCameraCapture = async (file, isLive) => {
+    // If it's a live capture, don't show the big spinner blocking the UI
+    if (isLive) {
+      try {
+        const data = await checkNote(file);
+        setResult(data);
+        setError(null);
+      } catch (err) {
+        console.warn("Live check failed:", err);
+      }
+    } else {
+      // Standard capture logic (shows loading spinner)
+      setSelectedFile(file);
+      await handleSubmit(file);
     }
   };
 
@@ -210,14 +230,38 @@ export default function NoteChecker() {
         {/* ── Upload Pane ── */}
         <div>
           <GlassPanel hoverable={false} glowColor="trust">
-            <h1 className="upload-pane__title">Check a Currency Note</h1>
-            <p className="upload-pane__subtitle">
-              Upload a photo of an Indian Rupee note. The AI will classify it as
-              genuine or counterfeit and highlight the decision-relevant regions
-              using Grad-CAM explainability.
-            </p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-md)' }}>
+              <div>
+                <h1 className="upload-pane__title">Check a Currency Note</h1>
+                <p className="upload-pane__subtitle">
+                  {inputMode === 'upload' 
+                    ? 'Upload a photo of an Indian Rupee note.' 
+                    : 'Scan an Indian Rupee note with your camera.'}
+                  The AI will classify it as genuine or counterfeit and highlight the decision-relevant regions.
+                </p>
+              </div>
+              
+              <div className="input-mode-toggle" style={{ display: 'flex', background: 'var(--surface-100)', borderRadius: 'var(--radius-full)', padding: '4px' }}>
+                <button 
+                  className={`mode-btn ${inputMode === 'upload' ? 'active' : ''}`}
+                  onClick={() => setInputMode('upload')}
+                  style={{ padding: '6px 12px', border: 'none', background: inputMode === 'upload' ? 'var(--surface-300)' : 'transparent', color: inputMode === 'upload' ? 'var(--text-primary)' : 'var(--text-secondary)', borderRadius: 'var(--radius-full)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--text-sm)', fontWeight: 500 }}
+                >
+                  <Upload size={14} /> Upload
+                </button>
+                <button 
+                  className={`mode-btn ${inputMode === 'camera' ? 'active' : ''}`}
+                  onClick={() => setInputMode('camera')}
+                  style={{ padding: '6px 12px', border: 'none', background: inputMode === 'camera' ? 'var(--surface-300)' : 'transparent', color: inputMode === 'camera' ? 'var(--text-primary)' : 'var(--text-secondary)', borderRadius: 'var(--radius-full)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--text-sm)', fontWeight: 500 }}
+                >
+                  <Camera size={14} /> Camera
+                </button>
+              </div>
+            </div>
 
-            {!selectedFile ? (
+            {inputMode === 'upload' ? (
+              <>
+                {!selectedFile ? (
               <div
                 className={`drop-zone ${isDragging ? 'drop-zone--active' : ''}`}
                 onDrop={handleDrop}
@@ -265,23 +309,27 @@ export default function NoteChecker() {
               </p>
             )}
 
-            <button
-              className={`btn-check ${isLoading ? 'btn-check--loading' : ''}`}
-              onClick={handleSubmit}
-              disabled={!selectedFile || isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 size={18} className="spinner" />
-                  Analysing…
-                </>
-              ) : (
-                <>
-                  <ScanLine size={18} />
-                  Check Note
-                </>
-              )}
-            </button>
+                <button
+                  className={`btn-check ${isLoading ? 'btn-check--loading' : ''}`}
+                  onClick={() => handleSubmit(selectedFile)}
+                  disabled={!selectedFile || isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 size={18} className="spinner" />
+                      Analysing…
+                    </>
+                  ) : (
+                    <>
+                      <ScanLine size={18} />
+                      Check Note
+                    </>
+                  )}
+                </button>
+              </>
+            ) : (
+              <NoteCamera onCapture={handleCameraCapture} disabled={isLoading} />
+            )}
           </GlassPanel>
         </div>
 
