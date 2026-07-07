@@ -480,10 +480,13 @@
   line-height: var(--leading-normal);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .nc-main { padding: var(--space-md); gap: var(--space-md); }
   .nc-examples-grid { grid-template-columns: 1fr; }
   .nc-verdict-row   { flex-direction: column; }
   .nc-confidence    { align-items: flex-start; }
   .nc-topbar        { flex-wrap: wrap; height: auto; padding: var(--space-sm) var(--space-md); }
   .nc-disclaimer    { margin-left: 0; }
+  .nc-input-card, .nc-verdict-card, .nc-examples-card { padding: var(--space-md); }
+  .nc-title { font-size: var(--text-h4); }
 }

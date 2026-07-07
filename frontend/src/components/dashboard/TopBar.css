@@ -164,3 +164,23 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: var(--space-sm) var(--space-md);
+    height: auto;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    justify-content: center;
+  }
+  .topbar__modules {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+  .topbar__actions {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

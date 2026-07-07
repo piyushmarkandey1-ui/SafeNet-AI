@@ -187,3 +187,13 @@
   -webkit-text-fill-color: transparent;
   animation: skeleton-shimmer 2s linear infinite;
 }
+
+@media (max-width: 768px) {
+  .evidence-panel {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .evidence-panel__inner {
+    width: 100%;
+  }
+}

@@ -366,8 +366,27 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .note-checker__body {
     grid-template-columns: 1fr;
+    padding: var(--space-md);
+    gap: var(--space-md);
+  }
+  .note-checker__nav {
+    padding: var(--space-sm) var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  .note-checker__nav-title {
+    font-size: var(--text-base);
+  }
+  .note-checker__nav-badge {
+    margin-left: 0;
+  }
+  .upload-pane__title {
+    font-size: var(--text-h4);
+  }
+  .drop-zone {
+    padding: var(--space-xl) var(--space-md);
   }
 }

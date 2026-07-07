@@ -33,3 +33,20 @@
   z-index: 10;
   box-shadow: -2px 0 12px rgba(0,0,0,0.5);
 }
+
+@media (max-width: 1024px) {
+  .dashboard-content {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .pane-left, .pane-right {
+    width: 100% !important;
+    height: auto !important;
+    flex: none;
+  }
+  .pane-center {
+    height: 50vh;
+    flex: none;
+    order: -1; /* map at top on mobile maybe? Or keep order. Let's keep order */
+  }
+}

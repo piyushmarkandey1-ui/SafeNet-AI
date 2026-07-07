@@ -117,3 +117,11 @@
 .flex-row { display: flex; flex-direction: row; gap: 12px; }
 .flex-col { display: flex; flex-direction: column; gap: 8px; }
 .w-full { width: 100%; }
+
+@media (max-width: 768px) {
+  .risk-feed {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    max-height: 45vh;
+  }
+}
