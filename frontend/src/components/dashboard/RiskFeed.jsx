@@ -39,7 +39,7 @@ export function RiskFeed({ items, loading, selectedId, onSelect }) {
       <div style={{ flex: 1, minHeight: 0, margin: '0 -16px' /* negative margin to hide edge */ }}>
         <LogoLoop
           logos={items}
-          direction="top"
+          direction="up"
           speed={25}
           gap={12}
           pauseOnHover={true}
