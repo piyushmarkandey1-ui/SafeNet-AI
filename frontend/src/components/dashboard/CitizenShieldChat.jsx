@@ -12,6 +12,13 @@ export function CitizenShieldChat() {
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef(null);
 
+  // Listen for open event dispatched by TopBar module button
+  useEffect(() => {
+    const handleOpen = () => setIsOpen(true);
+    window.addEventListener('open-citizen-shield', handleOpen);
+    return () => window.removeEventListener('open-citizen-shield', handleOpen);
+  }, []);
+
   // Auto-scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {

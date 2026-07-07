@@ -1,26 +1,74 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldAlert, Play, Activity, ScanLine } from 'lucide-react';
-import { GlassPanel } from '../ui';
+import { ShieldAlert, Play, Activity, ScanLine, PhoneCall, AlertTriangle, Network, Map, Shield } from 'lucide-react';
 import './TopBar.css';
 
 const MODULES = [
-  { id: 'scam', name: 'Scam Call Detector' },
-  { id: 'vision', name: 'Counterfeit Vision' },
-  { id: 'graph', name: 'Fraud Graph' },
-  { id: 'geo', name: 'Geospatial Heatmap' },
-  { id: 'chat', name: 'Citizen Shield' },
+  {
+    id: 'scam',
+    name: 'Scam Detector',
+    icon: PhoneCall,
+    tooltip: 'View Risk Feed',
+    action: 'scroll',
+    target: 'risk-feed-panel',
+  },
+  {
+    id: 'vision',
+    name: 'Note Checker',
+    icon: AlertTriangle,
+    tooltip: 'Open Note Checker',
+    action: 'navigate',
+    target: '/note-checker',
+  },
+  {
+    id: 'graph',
+    name: 'Fraud Graph',
+    icon: Network,
+    tooltip: 'Click any event in Risk Feed',
+    action: 'scroll',
+    target: 'risk-feed-panel',
+  },
+  {
+    id: 'geo',
+    name: 'Heatmap',
+    icon: Map,
+    tooltip: 'View Crime Map',
+    action: 'scroll',
+    target: 'crime-map-panel',
+  },
+  {
+    id: 'chat',
+    name: 'Citizen Shield',
+    icon: Shield,
+    tooltip: 'Open AI Chat',
+    action: 'event',
+    target: 'open-citizen-shield',
+  },
 ];
 
 export function TopBar({ onSimulate }) {
   const navigate = useNavigate();
   const [isSimulating, setIsSimulating] = useState(false);
+  const [activeModule, setActiveModule] = useState(null);
 
   const handleSimulate = () => {
     setIsSimulating(true);
     onSimulate();
     setTimeout(() => setIsSimulating(false), 5000);
+  };
+
+  const handleModuleClick = (mod) => {
+    setActiveModule(mod.id);
+    setTimeout(() => setActiveModule(null), 1500);
+
+    if (mod.action === 'navigate') {
+      navigate(mod.target);
+    } else if (mod.action === 'scroll') {
+      const el = document.getElementById(mod.target);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (mod.action === 'event') {
+      window.dispatchEvent(new CustomEvent(mod.target));
+    }
   };
 
   return (
@@ -30,14 +78,23 @@ export function TopBar({ onSimulate }) {
         <h1 className="topbar__title">SafeNet AI Command Center</h1>
       </div>
 
-      <div className="topbar__modules">
-        {MODULES.map((mod) => (
-          <div key={mod.id} className="topbar__module-status">
-            <span className="status-dot healthy" />
-            <span className="status-name">{mod.name}</span>
-          </div>
-        ))}
-      </div>
+      <nav className="topbar__modules">
+        {MODULES.map((mod) => {
+          const Icon = mod.icon;
+          return (
+            <button
+              key={mod.id}
+              className={`topbar__module-btn ${activeModule === mod.id ? 'active' : ''}`}
+              onClick={() => handleModuleClick(mod)}
+              title={mod.tooltip}
+            >
+              <span className="status-dot healthy" />
+              <Icon size={13} className="module-icon" />
+              <span className="status-name">{mod.name}</span>
+            </button>
+          );
+        })}
+      </nav>
 
       <div className="topbar__actions">
         <button
@@ -60,3 +117,4 @@ export function TopBar({ onSimulate }) {
     </header>
   );
 }
+

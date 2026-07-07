@@ -89,7 +89,7 @@ export default function Dashboard() {
       <TopBar onSimulate={handleSimulate} />
       
       <main className="dashboard-content">
-        <aside className="pane-left">
+        <aside className="pane-left" id="risk-feed-panel">
           <RiskFeed 
             items={feedItems} 
             loading={loadingFeed} 
@@ -98,7 +98,7 @@ export default function Dashboard() {
           />
         </aside>
         
-        <section className="pane-center">
+        <section className="pane-center" id="crime-map-panel">
           <CrimeMap 
             hotspots={hotspots} 
             loading={loadingHotspots} 

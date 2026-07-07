@@ -31,16 +31,55 @@
   align-items: center;
 }
 
-.topbar__module-status {
+.topbar__module-btn {
   display: flex;
   align-items: center;
   gap: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.18s var(--ease-out);
+  position: relative;
+}
+
+.topbar__module-btn:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-subtle);
+}
+
+.topbar__module-btn:hover .status-name {
+  color: var(--text-secondary);
+}
+
+.topbar__module-btn.active {
+  background: var(--accent-trust-dim);
+  border-color: var(--accent-trust);
+  animation: module-flash 0.4s ease;
+}
+
+@keyframes module-flash {
+  0%   { box-shadow: 0 0 0 var(--accent-trust-glow); }
+  50%  { box-shadow: 0 0 14px var(--accent-trust-glow); }
+  100% { box-shadow: 0 0 0 var(--accent-trust-glow); }
+}
+
+.module-icon {
+  color: var(--text-muted);
+  transition: color 0.18s ease;
+}
+
+.topbar__module-btn:hover .module-icon,
+.topbar__module-btn.active .module-icon {
+  color: var(--accent-trust);
 }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .status-dot.healthy {
@@ -51,7 +90,7 @@
 
 @keyframes breathe {
   from { opacity: 0.6; box-shadow: 0 0 4px var(--accent-trust-dim); }
-  to { opacity: 1; box-shadow: 0 0 12px var(--accent-trust-glow); }
+  to   { opacity: 1;   box-shadow: 0 0 12px var(--accent-trust-glow); }
 }
 
 .status-name {
@@ -59,6 +98,7 @@
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
+  transition: color 0.18s ease;
 }
 
 .topbar__actions {
