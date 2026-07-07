@@ -77,7 +77,7 @@ export default function LandingPage() {
             saturation={0.8}
             starSpeed={0.8}
             mouseRepulsion={true}
-            repulsionStrength={2.5}
+            repulsionStrength={1.2}
           />
         )}
       </div>
