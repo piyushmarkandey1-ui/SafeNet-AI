@@ -58,17 +58,9 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
         Dict with denomination, confidence, and detected_issues
     """
     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+    img_array = np.array(img)
     
-    # Crop center 60% for color analysis since webcam frames have a lot of background
-    w, h = img.size
-    crop_w, crop_h = int(w * 0.6), int(h * 0.6)
-    left = (w - crop_w) // 2
-    top = (h - crop_h) // 2
-    img_cropped = img.crop((left, top, left + crop_w, top + crop_h))
-    
-    img_array = np.array(img_cropped)
-    
-    # Get dominant color from the cropped center
+    # Get dominant color from the cropped image
     avg_color = img_array.mean(axis=(0, 1))
     r, g, b = avg_color
     

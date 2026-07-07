@@ -65,19 +65,54 @@ export default function NoteCamera({ onCapture, disabled }) {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     
-    // Set canvas dimensions to match video source
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    // Calculate the visible area of the video based on the 4:3 container with object-fit: cover
+    const videoRatio = video.videoWidth / video.videoHeight;
+    const containerRatio = 4 / 3;
+    
+    let drawWidth, drawHeight, offsetX, offsetY;
+    
+    if (videoRatio > containerRatio) {
+      // Video is wider than container, sides are cropped in UI
+      drawHeight = video.videoHeight;
+      drawWidth = video.videoHeight * containerRatio;
+      offsetX = (video.videoWidth - drawWidth) / 2;
+      offsetY = 0;
+    } else {
+      // Video is taller than container, top/bottom are cropped in UI
+      drawWidth = video.videoWidth;
+      drawHeight = video.videoWidth / containerRatio;
+      offsetX = 0;
+      offsetY = (video.videoHeight - drawHeight) / 2;
+    }
+
+    // The guide box in UI is exactly 70% width and 40% height of the visible container
+    const guideWidth = drawWidth * 0.7;
+    const guideHeight = drawHeight * 0.4;
+    
+    // The source X, Y on the actual video feed
+    // If the video is mirrored, the user's left is the camera's right.
+    // However, since we are capturing from the center, the center X is the same.
+    const guideX = offsetX + (drawWidth - guideWidth) / 2;
+    const guideY = offsetY + (drawHeight - guideHeight) / 2;
+    
+    // Set canvas dimensions strictly to the guide box dimensions
+    canvas.width = guideWidth;
+    canvas.height = guideHeight;
     
     const ctx = canvas.getContext('2d');
     
-    // If mirrored, flip the canvas context before drawing so the captured image is correct
+    // If mirrored, flip the canvas context before drawing so the captured text isn't backwards
     if (isMirrored) {
       ctx.translate(canvas.width, 0);
       ctx.scale(-1, 1);
     }
     
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    // Draw ONLY the guide box region from the video onto the canvas
+    ctx.drawImage(
+      video,
+      guideX, guideY, guideWidth, guideHeight, // source rectangle
+      0, 0, guideWidth, guideHeight // destination rectangle
+    );
     
     // Reset transform
     if (isMirrored) {
