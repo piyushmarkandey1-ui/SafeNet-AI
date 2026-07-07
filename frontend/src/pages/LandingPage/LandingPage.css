@@ -27,7 +27,8 @@
 .landing-page {
   width: 100%;
   position: relative;
-  overflow: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
+  z-index: 0; /* Creates a stacking context so children don't hide behind the body */
 }
 
 .landing-global-bg {
@@ -36,18 +37,13 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
-  pointer-events: none; /* Let clicks pass through to content */
-}
-
-/* Make sure the universe background reacts to mouse inside the whole window, so it needs pointer-events auto but the inner content must be higher z-index */
-.landing-global-bg {
-  pointer-events: auto; 
+  z-index: 0; /* Changed from -1 so it stays above the root background */
+  pointer-events: auto; /* Let it react to mouse */
 }
 
 .landing-content {
   position: relative;
-  z-index: 1;
+  z-index: 1; /* Content stays on top */
   pointer-events: none; /* Container itself shouldn't block */
 }
 
