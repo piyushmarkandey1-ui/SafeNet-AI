@@ -1,6 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import LogoLoop from '../ui/LogoLoop';
 import { GlassPanel, RiskBadge, SkeletonGroup, Skeleton } from '../ui';
-import { fadeInUp, staggerChildren, staggerItem } from '../../lib/motion';
 import { AlertTriangle, PhoneCall, Link2, MapPin, CheckCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import './RiskFeed.css';
@@ -35,65 +34,58 @@ export function RiskFeed({ items, loading, selectedId, onSelect }) {
   }
 
   return (
-    <div className="risk-feed">
+    <div className="risk-feed" style={{ overflow: 'hidden' }}>
       <h2 className="feed-header">Live Risk Feed</h2>
-      <motion.div 
-        className="feed-list"
-        variants={staggerChildren}
-        initial="hidden"
-        animate="visible"
-      >
-        <AnimatePresence mode="popLayout">
-          {items.map((item) => {
+      <div style={{ flex: 1, minHeight: 0, margin: '0 -16px' /* negative margin to hide edge */ }}>
+        <LogoLoop
+          logos={items}
+          direction="top"
+          speed={25}
+          gap={12}
+          pauseOnHover={true}
+          fadeOut={true}
+          fadeOutColor="var(--bg-base)"
+          renderItem={(item) => {
             const Icon = TYPE_ICONS[item.type] || AlertTriangle;
             const isSelected = selectedId === item.id;
 
             return (
-              <motion.div
-                key={item.id}
-                layout
-                variants={staggerItem}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
+              <GlassPanel
+                hoverable
+                glowColor={item.severity === 'critical' || item.severity === 'high' ? 'risk' : 'trust'}
+                className={cn('feed-item', isSelected && 'feed-item--selected')}
+                onClick={() => onSelect(item)}
+                style={{ width: '100%', margin: '0 auto', maxWidth: 'calc(100% - 32px)' }}
               >
-                <GlassPanel
-                  hoverable
-                  glowColor={item.severity === 'critical' || item.severity === 'high' ? 'risk' : 'trust'}
-                  className={cn('feed-item', isSelected && 'feed-item--selected')}
-                  onClick={() => onSelect(item)}
-                >
-                  <div className="feed-item__header">
-                    <div className={cn("icon-wrapper", `icon--${item.severity}`)}>
-                      <Icon size={18} />
-                    </div>
-                    <div className="feed-item__meta">
-                      <span className="feed-item__time">
-                        {new Date(item.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                      </span>
-                      <RiskBadge severity={item.severity} />
-                    </div>
+                <div className="feed-item__header">
+                  <div className={cn("icon-wrapper", `icon--${item.severity}`)}>
+                    <Icon size={18} />
                   </div>
-                  
-                  <h3 className="feed-item__title">{item.title}</h3>
-                  <p className="feed-item__desc">{item.description}</p>
-                  
-                  <div className="feed-item__footer">
-                    <div className="feed-item__location">
-                      <MapPin size={12} />
-                      <span>{item.location.name}</span>
-                    </div>
-                    <div className="feed-item__score">
-                      Score: {item.score.toFixed(1)}
-                    </div>
+                  <div className="feed-item__meta">
+                    <span className="feed-item__time">
+                      {new Date(item.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                    </span>
+                    <RiskBadge severity={item.severity} />
                   </div>
-                </GlassPanel>
-              </motion.div>
+                </div>
+                
+                <h3 className="feed-item__title">{item.title}</h3>
+                <p className="feed-item__desc">{item.description}</p>
+                
+                <div className="feed-item__footer">
+                  <div className="feed-item__location">
+                    <MapPin size={12} />
+                    <span>{item.location.name}</span>
+                  </div>
+                  <div className="feed-item__score">
+                    Score: {item.score.toFixed(1)}
+                  </div>
+                </div>
+              </GlassPanel>
             );
-          })}
-        </AnimatePresence>
-      </motion.div>
+          }}
+        />
+      </div>
     </div>
   );
 }
