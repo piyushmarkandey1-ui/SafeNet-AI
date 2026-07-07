@@ -4,10 +4,20 @@
   "installCommand": "cd frontend && npm ci",
   "devCommand": "cd frontend && npm run dev",
   "framework": null,
+  "functions": {
+    "api/index.py": {
+      "runtime": "python3.12",
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     { 
       "source": "/api/:path*", 
       "destination": "/api/index" 
+    },
+    {
+      "source": "/api",
+      "destination": "/api/index"
     }
   ],
   "headers": [
