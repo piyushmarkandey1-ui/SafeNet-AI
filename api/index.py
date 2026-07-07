@@ -2,13 +2,12 @@
 SafeNet AI — Vercel Serverless Function Entry Point
 
 This file adapts the FastAPI app for Vercel's serverless architecture.
-Vercel will automatically handle routing to this file for /api/* requests.
+Vercel auto-detects the `app` ASGI object and routes /api/* here via rewrites.
 """
 
 import os
 import sys
 from pathlib import Path
-from mangum import Mangum
 
 # Add the backend directory to Python path
 backend_dir = Path(__file__).parent.parent / "backend"
@@ -17,18 +16,15 @@ sys.path.insert(0, str(backend_dir))
 # Set environment for production
 os.environ["VERCEL_ENV"] = "production"
 
-# Import and configure the FastAPI app
+# ── Try to import the full FastAPI app ────────────────────────────────────────
 try:
     from app.main import app as fastapi_app
-
-    # The app is already configured in main.py with all routers
     app = fastapi_app
 
 except Exception as e:
     import traceback
     error_tb = traceback.format_exc()
 
-    # Fallback minimal app if imports fail
     from fastapi import FastAPI, File, UploadFile, HTTPException
     from fastapi.middleware.cors import CORSMiddleware
 
@@ -44,12 +40,7 @@ except Exception as e:
 
     @app.get("/")
     @app.get("/api")
-    def fallback_root(debug: str = None):
-        if debug == "1":
-            return {
-                "error": str(e),
-                "traceback": error_tb,
-            }
+    def fallback_root():
         return {
             "status": "ok",
             "message": "SafeNet AI backend is running.",
@@ -60,16 +51,9 @@ except Exception as e:
     @app.post("/vision/check-note")
     @app.post("/api/vision/check-note")
     async def fallback_check_note(file: UploadFile = File(...)):
-        """
-        Direct note-checker endpoint that bypasses the orchestrator.
-        Works even when langgraph / heavy dependencies are missing.
-        """
         content_type = file.content_type or ""
         if not content_type.startswith("image/"):
-            raise HTTPException(
-                status_code=400,
-                detail=f"Expected an image file, got: {content_type}",
-            )
+            raise HTTPException(status_code=400, detail=f"Expected an image file, got: {content_type}")
 
         image_bytes = await file.read()
         if len(image_bytes) == 0:
@@ -103,7 +87,6 @@ except Exception as e:
             "gemini_verification": result.get("gemini_verification", ""),
         }
 
-    # ── Orchestrator / Geo fallback endpoints ─────────────────────────────────
     @app.get("/orchestrator/dashboard-feed")
     @app.get("/api/orchestrator/dashboard-feed")
     async def fallback_dashboard_feed():
@@ -124,10 +107,7 @@ except Exception as e:
     @app.post("/orchestrator/simulate")
     @app.post("/api/orchestrator/simulate")
     async def fallback_simulate():
-        return {
-            "status": "fallback",
-            "message": "Simulation unavailable - using fallback mode",
-        }
+        return {"status": "fallback", "message": "Simulation unavailable - using fallback mode"}
 
     @app.get("/geo/hotspots")
     @app.get("/api/geo/hotspots")
@@ -144,5 +124,11 @@ except Exception as e:
             }
         ]
 
-# Wrap the FastAPI app with Mangum for AWS Lambda/Vercel compatibility
-handler = Mangum(app, lifespan="off")
+# ── Vercel ASGI entrypoint: expose `app` directly (no Mangum needed) ─────────
+# Vercel's Python runtime natively supports ASGI via the `app` variable.
+# The Mangum wrapper below is kept as a fallback for Lambda-style invocation.
+try:
+    from mangum import Mangum
+    handler = Mangum(app, lifespan="off")
+except ImportError:
+    handler = None
