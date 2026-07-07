@@ -8,6 +8,7 @@ Vercel will automatically handle routing to this file for /api/* requests.
 import os
 import sys
 from pathlib import Path
+from mangum import Mangum
 
 # Add the backend directory to Python path
 backend_dir = Path(__file__).parent.parent / "backend"
@@ -23,12 +24,6 @@ try:
     # The app is already configured in main.py with all routers
     app = fastapi_app
     
-    # Update CORS for production if needed
-    from fastapi.middleware.cors import CORSMiddleware
-    
-    # Check if CORS is already added, if not add it
-    # Note: app.main already has CORS, this is just a safety check
-    
 except ImportError as e:
     # Fallback minimal app if imports fail
     from fastapi import FastAPI
@@ -38,11 +33,7 @@ except ImportError as e:
     
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            "https://*.vercel.app",
-            "http://localhost:5173",
-            "http://localhost:8000",
-        ],
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -64,7 +55,6 @@ except ImportError as e:
     
     # Fallback endpoints with mock data
     @app.get("/orchestrator/dashboard-feed")
-    @app.get("/api/orchestrator/dashboard-feed")
     async def fallback_dashboard_feed():
         return [
             {
@@ -81,7 +71,6 @@ except ImportError as e:
         ]
     
     @app.post("/orchestrator/simulate")
-    @app.post("/api/orchestrator/simulate")
     async def fallback_simulate():
         return {
             "status": "fallback",
@@ -90,7 +79,6 @@ except ImportError as e:
         }
     
     @app.get("/geo/hotspots")
-    @app.get("/api/geo/hotspots")
     async def fallback_hotspots():
         return [
             {
@@ -104,5 +92,5 @@ except ImportError as e:
             }
         ]
 
-# Export for Vercel
-handler = app
+# Wrap the FastAPI app with Mangum for AWS Lambda/Vercel compatibility
+handler = Mangum(app, lifespan="off")
