@@ -11,8 +11,7 @@
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: 0.4;
-  pointer-events: none;
+  opacity: 0.6; /* Increased slightly for better visibility */
 }
 
 .hero-content {
@@ -20,6 +19,13 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  position: relative;
+  z-index: 1;
+  pointer-events: none; /* Let clicks pass through to galaxy unless on a button */
+}
+
+.hero-content > * {
+  pointer-events: auto; /* Re-enable clicks for text and buttons */
 }
 
 .hero-eyebrow {

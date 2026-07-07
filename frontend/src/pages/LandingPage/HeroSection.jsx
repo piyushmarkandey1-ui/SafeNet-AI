@@ -4,69 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { Link } from 'react-router-dom';
 import './HeroSection.css';
 
-// Low-CPU Canvas background drawing a slow drifting node graph
-function BackgroundNetwork() {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    let animationFrameId;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', resize);
-    resize();
-
-    const nodes = Array.from({ length: 40 }).map(() => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      radius: Math.random() * 2 + 1,
-    }));
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-
-      nodes.forEach((node, i) => {
-        node.x += node.vx;
-        node.y += node.vy;
-
-        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        for (let j = i + 1; j < nodes.length; j++) {
-          const other = nodes[j];
-          const dist = Math.hypot(node.x - other.x, node.y - other.y);
-          if (dist < 150) {
-            ctx.beginPath();
-            ctx.moveTo(node.x, node.y);
-            ctx.lineTo(other.x, other.y);
-            ctx.stroke();
-          }
-        }
-      });
-      animationFrameId = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="hero-bg-canvas" />;
-}
+import Galaxy from '../../components/ui/Galaxy';
 
 export default function HeroSection() {
   const sectionRef = useRef(null);
@@ -108,7 +46,17 @@ export default function HeroSection() {
 
   return (
     <section className="landing-section hero-section" ref={sectionRef}>
-      <BackgroundNetwork />
+      <div className="hero-bg-canvas">
+        <Galaxy 
+          hueShift={190} /* Cyan/Teal to match --accent-trust */
+          density={1.2}
+          glowIntensity={0.6}
+          saturation={0.8}
+          starSpeed={0.8}
+          mouseRepulsion={true}
+          repulsionStrength={2.5}
+        />
+      </div>
       
       <div className="section-content hero-content">
         <p className="hero-eyebrow">SafeNet AI</p>
