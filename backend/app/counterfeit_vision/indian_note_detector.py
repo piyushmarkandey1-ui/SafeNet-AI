@@ -58,46 +58,45 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
         Dict with denomination, confidence, and detected_issues
     """
     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-    img_array = np.array(img)
+    # Resize for faster pixel-level processing
+    thumb = img.resize((100, 100))
+    thumb_array = np.array(thumb)
     
-    # Get dominant color from the cropped image
-    avg_color = img_array.mean(axis=(0, 1))
-    r, g, b = avg_color
+    # Get global average color for logging
+    avg_color = np.array(img).mean(axis=(0, 1))
+    r_avg, g_avg, b_avg = avg_color
     
-    # Skin tone / Face rejection heuristic
-    # Faces typically have significantly higher Red than Green/Blue due to hemoglobin
-    if r > g + 15 and r > b + 25 and r > 100:
+    # Calculate pixel match percentages for each denomination
+    best_match = None
+    best_match_pct = 0.0
+    
+    for denom, color_range in DENOMINATION_COLORS.items():
+        # Create boolean mask for pixels matching this exact color profile
+        r_mask = (thumb_array[:, :, 0] >= color_range["r"][0]) & (thumb_array[:, :, 0] <= color_range["r"][1])
+        g_mask = (thumb_array[:, :, 1] >= color_range["g"][0]) & (thumb_array[:, :, 1] <= color_range["g"][1])
+        b_mask = (thumb_array[:, :, 2] >= color_range["b"][0]) & (thumb_array[:, :, 2] <= color_range["b"][1])
+        
+        match_mask = r_mask & g_mask & b_mask
+        match_pct = match_mask.mean()  # Percentage of pixels that match
+        
+        if match_pct > best_match_pct:
+            best_match_pct = match_pct
+            best_match = denom
+            
+    # Require at least 10% of the image to perfectly match the note's exact color profile
+    if best_match_pct < 0.10:
         return {
             "denomination": "unknown",
             "confidence": 0.1,
-            "dominant_color": {"r": int(r), "g": int(g), "b": int(b)},
+            "dominant_color": {"r": int(r_avg), "g": int(g_avg), "b": int(b_avg)},
             "image_size": {"width": img.width, "height": img.height},
             "aspect_ratio": round(img.width / img.height, 2) if img.height > 0 else 1.0,
-            "detected_issues": ["Skin tone / face detected instead of currency note"],
+            "detected_issues": ["Not enough pixels match known currency colors"],
             "no_note": True
         }
-    
-    # Detect denomination based on color
-    best_match = None
-    best_score = 0
-    
-    for denom, color_range in DENOMINATION_COLORS.items():
-        # Check if colors are in expected range
-        r_match = color_range["r"][0] <= r <= color_range["r"][1]
-        g_match = color_range["g"][0] <= g <= color_range["g"][1]
-        b_match = color_range["b"][0] <= b <= color_range["b"][1]
         
-        score = sum([r_match, g_match, b_match])
-        if score > best_score:
-            best_score = score
-            best_match = denom
-    
-    # Fallback to ₹500 if no color match found (most common denomination)
-    if not best_match:
-        best_match = "500"
-    
-    # Calculate confidence based on color match
-    base_confidence = (best_score / 3.0) * 0.6  # Max 60% from color
+    # Calculate base confidence linearly up to 30% pixel coverage
+    base_confidence = min(1.0, (best_match_pct / 0.30)) * 0.6
     
     from PIL import ImageFilter
     
