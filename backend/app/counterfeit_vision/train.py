@@ -405,7 +405,14 @@ def train(
 
     # ── ONNX Export ───────────────────────────────────────────────────────────
     print("\n📦  Exporting to ONNX...")
-    model.load_state_dict(torch.load(model_dir / "model_weights.pth", map_location=device))
+    weights_path = model_dir / "model_weights.pth"
+    if weights_path.exists():
+        model.load_state_dict(torch.load(weights_path, map_location=device))
+    else:
+        print("⚠️  No checkpoint found (possibly aborted very early). Exporting current state.")
+        # Ensure we at least save the current weights so they exist for inference
+        torch.save(model.state_dict(), weights_path)
+        
     model.eval()
 
     dummy_input = torch.randn(1, 3, 224, 224).to(device)
