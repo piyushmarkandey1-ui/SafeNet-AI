@@ -6,22 +6,6 @@ import './TopBar.css';
 
 const MODULES = [
   {
-    id: 'scam',
-    name: 'Scam Detector',
-    icon: PhoneCall,
-    tooltip: 'View Risk Feed',
-    action: 'scroll',
-    target: 'risk-feed-panel',
-  },
-  {
-    id: 'vision',
-    name: 'Note Checker',
-    icon: AlertTriangle,
-    tooltip: 'Open Note Checker',
-    action: 'navigate',
-    target: '/note-checker',
-  },
-  {
     id: 'graph',
     name: 'Fraud Graph',
     icon: Network,
@@ -106,14 +90,6 @@ export function TopBar({ onSimulate, onReport }) {
         >
           <Flag size={16} />
           <span>Report Incident</span>
-        </button>
-        <button
-          className="btn-simulate cursor-target"
-          onClick={handleSimulate}
-          disabled={isSimulating}
-        >
-          {isSimulating ? <Activity className="animate-spin" size={16} /> : <Play size={16} />}
-          <span>{isSimulating ? 'Simulating...' : 'Simulate Scenario'}</span>
         </button>
       </div>
     </header>
