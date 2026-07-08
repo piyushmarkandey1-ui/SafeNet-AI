@@ -51,7 +51,9 @@ export async function getHotspots() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/geo/hotspots`);
     if (!res.ok) throw new Error(`Geo API returned ${res.status}`);
-    return await res.json();
+    const data = await res.json();
+    // If backend returned empty array (module not loaded on Vercel), use mocks
+    return Array.isArray(data) && data.length > 0 ? data : mockHotspots;
   } catch (err) {
     console.warn(`Hotspots API unavailable: ${err.message}. Falling back to mocks.`);
     await delay(800);
