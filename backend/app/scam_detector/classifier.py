@@ -43,51 +43,55 @@ TACTIC_WEIGHTS = {
 def _llm_secondary_check(transcript_window: str, base_score: int) -> Optional[float]:
     """
     Optional LLM pass for secondary confidence scoring.
-    Only called if GEMINI_API_KEY environment variable is set.
-    
+
+    Uses Fireworks AI (AMD-hosted) as primary, Gemini as fallback.
+    Only triggers when at least one API key is configured.
+
     Args:
         transcript_window: The call transcript text
         base_score: The pattern-matching base score (0-100)
-        
+
     Returns:
-        Adjusted score if Gemini is available, None otherwise
+        Adjusted score if any LLM is available, None otherwise
     """
-    gemini_api_key = os.getenv("GEMINI_API_KEY")
-    if not gemini_api_key:
+    # Check if any provider is available before building the prompt
+    has_fireworks = bool(os.getenv("FIREWORKS_API_KEY"))
+    has_gemini    = bool(os.getenv("GEMINI_API_KEY"))
+    has_openai    = bool(os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY"))
+
+    if not (has_fireworks or has_gemini or has_openai):
         return None
-    
+
     try:
-        from google import genai
-        from google.genai import types as genai_types
+        from app.fireworks_client import call_llm
 
-        client = genai.Client(api_key=gemini_api_key)
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a fraud detection expert. "
+                    "Rate the scam likelihood of a call transcript on a scale of 0-100. "
+                    "Return ONLY a single integer number, nothing else."
+                ),
+            },
+            {
+                "role": "user",
+                "content": f"Transcript: {transcript_window[:800]}\n\nScam likelihood (0-100):",
+            },
+        ]
 
-        prompt = f"""You are a fraud detection expert. Rate the scam likelihood of this call transcript on a scale of 0-100.
-
-Transcript: {transcript_window}
-
-Rate scam likelihood (0-100, return ONLY the number):"""
-
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt,
-            config=genai_types.GenerateContentConfig(
-                temperature=0,
-                max_output_tokens=10,
-            ),
-        )
-
-        llm_score_str = response.text.strip()
-        llm_score = float(llm_score_str) if llm_score_str.replace('.', '').isdigit() else None
-
-        if llm_score is not None:
-            # Weighted average: 70% pattern matching, 30% LLM
-            adjusted_score = int(base_score * 0.7 + llm_score * 0.3)
-            return min(max(adjusted_score, 0), 100)
+        result = call_llm(messages, task="classification", temperature=0, max_tokens=10)
+        if result:
+            # Strip any extra text and parse the number
+            num_str = result.strip().split()[0].replace(".", "")
+            if num_str.isdigit():
+                llm_score = float(num_str)
+                # Weighted average: 70% pattern matching, 30% LLM
+                adjusted = int(base_score * 0.7 + llm_score * 0.3)
+                return min(max(adjusted, 0), 100)
 
     except Exception as e:
-        # Silently fall back to pattern matching if LLM fails
-        print(f"Gemini check failed: {e}")
+        print(f"LLM secondary check failed: {e}")
 
     return None
 

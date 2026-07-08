@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, Play, Activity, ScanLine, PhoneCall, AlertTriangle, Network, Map, Shield, Phone } from 'lucide-react';
+import { AmdStatusPanel } from './AmdStatusPanel';
 import './TopBar.css';
 
 const MODULES = [
@@ -97,6 +98,7 @@ export function TopBar({ onSimulate }) {
       </nav>
 
       <div className="topbar__actions">
+        <AmdStatusPanel />
         <button
           className="btn-note-check"
           onClick={() => navigate('/number-checker')}

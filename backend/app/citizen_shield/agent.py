@@ -267,63 +267,27 @@ def _build_llm_prompt(
     return messages
 
 
-# ── LLM call (pluggable: Gemini → OpenAI → template fallback) ─────────────────
+# ── LLM call (pluggable: Fireworks AI → Gemini → OpenAI → template fallback) ──
 
-def _call_llm(messages: list[dict]) -> Optional[str]:
+def _call_llm(messages: list[dict], task: str = "chat") -> Optional[str]:
     """
-    Calls an LLM with the given messages list.
-    Returns the response text, or None if no LLM is available.
+    Calls the best available LLM with automatic fallback chain.
+
+    Priority: Fireworks AI (AMD Instinct GPUs) → Gemini → OpenAI → None
+
+    For the Citizen Shield "chat" task, Fireworks routes to Gemma (Google DeepMind
+    open model hosted on AMD hardware) — this satisfies the hackathon's
+    "Best AMD-Hosted Gemma Project" bonus prize criterion.
+
+    Args:
+        messages: OpenAI-format messages list.
+        task:     Logical task type for Fireworks model routing.
+
+    Returns:
+        Response text, or None if no LLM is available.
     """
-    # ── Gemini ────────────────────────────────────────────────────────────────
-    _fallback_key = "AQ.Ab8RN6J0bF4VOI08P" + "EeaROIeDmGj1IDLXSo4x5W6-cEP2AkKdQ"
-    gemini_key = os.getenv("GEMINI_API_KEY", _fallback_key)
-    if gemini_key:
-        try:
-            from google import genai
-            from google.genai import types as genai_types
-
-            client = genai.Client(api_key=gemini_key)
-
-            # Gemini expects a flat contents string; prefix system + history
-            system_msg = next((m["content"] for m in messages if m["role"] == "system"), "")
-            conversation_parts = []
-            for m in messages:
-                if m["role"] == "system":
-                    continue
-                prefix = "User: " if m["role"] == "user" else "Citizen Shield: "
-                conversation_parts.append(f"{prefix}{m['content']}")
-
-            full_prompt = system_msg + "\n\n" + "\n\n".join(conversation_parts)
-
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=full_prompt,
-                config=genai_types.GenerateContentConfig(
-                    temperature=0.7,
-                    max_output_tokens=600,
-                ),
-            )
-            return response.text.strip()
-        except Exception as e:
-            print(f"[citizen_shield] Gemini call failed: {e}")
-
-    # ── OpenAI ────────────────────────────────────────────────────────────────
-    openai_key = os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY")
-    if openai_key:
-        try:
-            from openai import OpenAI
-            client = OpenAI(api_key=openai_key)
-            resp = client.chat.completions.create(
-                model=os.getenv("OPENAI_MODEL", "gpt-4o"),
-                messages=messages,
-                max_tokens=600,
-                temperature=0.7,
-            )
-            return resp.choices[0].message.content.strip()
-        except Exception as e:
-            print(f"[citizen_shield] OpenAI call failed: {e}")
-
-    return None
+    from app.fireworks_client import call_llm
+    return call_llm(messages, task=task, temperature=0.7, max_tokens=600)
 
 
 # ── Template fallback (grounded, not canned) ──────────────────────────────────
@@ -456,39 +420,23 @@ def _translate(text: str, target_language: str) -> str:
         f"{text}"
     )
 
-    gemini_key = os.getenv("GEMINI_API_KEY")
-    if gemini_key:
-        try:
-            from google import genai
-            from google.genai import types as genai_types
-            client = genai.Client(api_key=gemini_key)
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=translate_prompt,
-                config=genai_types.GenerateContentConfig(temperature=0.1, max_output_tokens=1000),
-            )
-            return response.text.strip()
-        except Exception:
-            pass
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                f"You are a professional translator. "
+                f"Translate into {lang_name}. Return ONLY the translated text."
+            ),
+        },
+        {"role": "user", "content": translate_prompt},
+    ]
 
-    openai_key = os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY")
-    if openai_key:
-        try:
-            from openai import OpenAI
-            client = OpenAI(api_key=openai_key)
-            resp = client.chat.completions.create(
-                model=os.getenv("OPENAI_MODEL", "gpt-4o"),
-                messages=[
-                    {"role": "system", "content": f"You are a translator. Translate into {lang_name}. Return ONLY the translated text."},
-                    {"role": "user", "content": text},
-                ],
-                max_tokens=1000, temperature=0.1,
-            )
-            return resp.choices[0].message.content.strip()
-        except Exception as e:
-            return f"{text}\n\n[Translation to {lang_name} failed. Shown in English.]"
+    from app.fireworks_client import call_llm
+    result = call_llm(messages, task="translation", temperature=0.1, max_tokens=1000)
+    if result:
+        return result
 
-    return f"{text}\n\n[Translation to {lang_name} unavailable — GEMINI_API_KEY not set.]"
+    return f"{text}\n\n[Translation to {lang_name} unavailable — no LLM provider configured.]"
 
 
 # ── Public API ─────────────────────────────────────────────────────────────────
@@ -521,7 +469,7 @@ def respond_to_user(
 
     # Build LLM messages with history
     messages = _build_llm_prompt(user_message, facts, conversation_history)
-    llm_text = _call_llm(messages)
+    llm_text = _call_llm(messages, task="chat")
 
     if llm_text:
         text_en = llm_text

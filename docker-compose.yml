@@ -1,0 +1,73 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SafeNet AI — Docker Compose
+#
+# Usage:
+#   # Copy and fill env file
+#   cp backend/.env.example .env
+#
+#   # Build + start (first run)
+#   docker compose up --build
+#
+#   # Start (subsequent runs)
+#   docker compose up
+#
+#   # Stop
+#   docker compose down
+#
+# AMD Developer Cloud:
+#   This compose file can be used directly on AMD Developer Cloud instances.
+#   Set FIREWORKS_API_KEY to enable AMD-hosted Fireworks AI inference.
+#   If the host has ROCm GPU drivers, PyTorch inside the container will
+#   automatically use AMD GPU acceleration for the MobileNetV3 model.
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  # ── SafeNet AI (backend + frontend bundled) ──────────────────────────────────
+  safenet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: safenet-ai:latest
+    container_name: safenet-ai
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env              # Expects .env at repo root (copy from backend/.env.example)
+    environment:
+      - APP_ENV=production
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Persist generated incident reports + audit log across restarts
+      - reports_vol:/app/data/reports
+      - ./backend/app/orchestrator/audit_log.jsonl:/app/backend/app/orchestrator/audit_log.jsonl
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+
+  # ── Frontend dev server (optional, for hot-reload development) ───────────────
+  frontend-dev:
+    image: node:20-slim
+    container_name: safenet-frontend-dev
+    working_dir: /app
+    command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    profiles:
+      - dev           # Only started with: docker compose --profile dev up
+    depends_on:
+      safenet:
+        condition: service_healthy
+
+volumes:
+  reports_vol:
+    driver: local

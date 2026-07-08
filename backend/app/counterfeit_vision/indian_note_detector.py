@@ -95,7 +95,8 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
     
     # Check dimensions — best_match is now guaranteed non-None
     # Since this is a webcam feed, the image aspect ratio is the camera's, not the note's.
-    # We ignore the aspect ratio for fake detection to avoid false positives.
+    # We record it for reference but don't use it to penalise the score.
+    aspect_ratio = round(img.width / img.height, 2) if img.height > 0 else 1.0
     size_confidence = 0.2  # Provide max size confidence since we can't accurately measure the note's edges
     
     total_confidence = base_confidence + quality_confidence + size_confidence
@@ -112,7 +113,7 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
         "confidence": min(total_confidence, 0.95),  # Cap at 95% for basic analysis
         "dominant_color": {"r": int(r), "g": int(g), "b": int(b)},
         "image_size": {"width": img.width, "height": img.height},
-        "aspect_ratio": round(aspect_ratio, 2),
+        "aspect_ratio": aspect_ratio,
         "detected_issues": issues,
     }
 

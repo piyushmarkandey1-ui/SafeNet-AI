@@ -1,42 +1,79 @@
 [
   {
     "id": "hs-001",
-    "lat": 40.7128,
-    "lng": -74.0060,
-    "intensity": 0.9,
+    "lat": 28.6139,
+    "lng": 77.2090,
+    "intensity": 0.95,
     "radius": 1500,
-    "type": "CRITICAL"
+    "type": "CRITICAL",
+    "point_count": 62,
+    "top_complaint_type": "Vishing",
+    "complaint_types": { "Vishing": 38, "UPI Fraud": 14, "OTP Scam": 10 }
   },
   {
     "id": "hs-002",
-    "lat": 40.7580,
-    "lng": -73.9855,
-    "intensity": 0.75,
-    "radius": 800,
-    "type": "HIGH"
+    "lat": 19.0760,
+    "lng": 72.8777,
+    "intensity": 0.78,
+    "radius": 900,
+    "type": "HIGH",
+    "point_count": 41,
+    "top_complaint_type": "Counterfeit Currency",
+    "complaint_types": { "Counterfeit Currency": 22, "UPI Fraud": 12, "Job Scam": 7 }
   },
   {
     "id": "hs-003",
-    "lat": 40.7306,
-    "lng": -73.9352,
-    "intensity": 0.5,
+    "lat": 12.9716,
+    "lng": 77.5946,
+    "intensity": 0.55,
     "radius": 1200,
-    "type": "MEDIUM"
+    "type": "MEDIUM",
+    "point_count": 29,
+    "top_complaint_type": "UPI Fraud",
+    "complaint_types": { "UPI Fraud": 18, "OTP Scam": 11 }
   },
   {
     "id": "hs-004",
-    "lat": 40.6782,
-    "lng": -73.9442,
-    "intensity": 0.3,
-    "radius": 2000,
-    "type": "LOW"
+    "lat": 22.5726,
+    "lng": 88.3639,
+    "intensity": 0.32,
+    "radius": 800,
+    "type": "LOW",
+    "point_count": 17,
+    "top_complaint_type": "Job Scam",
+    "complaint_types": { "Job Scam": 10, "OTP Scam": 7 }
   },
   {
     "id": "hs-005",
-    "lat": 40.8090,
-    "lng": -73.9624,
-    "intensity": 0.8,
+    "lat": 17.3850,
+    "lng": 78.4867,
+    "intensity": 0.82,
+    "radius": 1100,
+    "type": "HIGH",
+    "point_count": 44,
+    "top_complaint_type": "UPI Fraud",
+    "complaint_types": { "UPI Fraud": 27, "Vishing": 10, "Counterfeit Currency": 7 }
+  },
+  {
+    "id": "hs-006",
+    "lat": 26.8467,
+    "lng": 80.9462,
+    "intensity": 0.68,
     "radius": 1000,
-    "type": "HIGH"
+    "type": "HIGH",
+    "point_count": 36,
+    "top_complaint_type": "Counterfeit Currency",
+    "complaint_types": { "Counterfeit Currency": 24, "Vishing": 12 }
+  },
+  {
+    "id": "hs-007",
+    "lat": 23.0225,
+    "lng": 72.5714,
+    "intensity": 0.44,
+    "radius": 700,
+    "type": "MEDIUM",
+    "point_count": 23,
+    "top_complaint_type": "UPI Fraud",
+    "complaint_types": { "UPI Fraud": 15, "Job Scam": 8 }
   }
 ]

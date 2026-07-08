@@ -1,50 +1,89 @@
 {
   "evt-001": {
-    "caseId": "CASE-2026-9941",
+    "caseId": "CASE-FG-09941",
     "status": "OPEN_INVESTIGATION",
     "riskScore": 94.2,
-    "primaryThreat": "Vishing Network",
-    "summary": "Coordinated robocall campaign spoofing local bank numbers. Transcript analysis indicates pressure tactics to obtain SMS 2FA codes.",
+    "primaryThreat": "Vishing / CBI Impersonation",
+    "summary": "Spoofed call from +916511361582 impersonated a CBI officer threatening arrest. Victim was asked to transfer ₹2 lakh and not tell family. Call entity connects to 6 other nodes in the fraud graph including 2 flagged mule accounts. 3 spoofed calls detected within the 2-hop subgraph.",
     "evidenceItems": [
       {
         "type": "AUDIO_TRANSCRIPT",
-        "snippet": "...this is the fraud department. We noticed unauthorized charges on your account. Please read the code we just sent you to verify your identity...",
+        "snippet": "\"Yeh CBI headquarters se bol rahe hain. Aapke naam arrest warrant hai. Abhi ₹2 lakh transfer karo warna giraftari hogi. Kisi ko mat batana...\"",
         "confidence": 0.98
       },
       {
         "type": "NETWORK_NODE",
-        "snippet": "Caller ID spoofed. True origin traced to VOIP block known for prior scam campaigns.",
+        "snippet": "Caller ID spoofed to appear as Delhi Police landline. True origin traced to VOIP node connected to 5 other scam numbers in synthetic dataset.",
         "confidence": 0.92
+      },
+      {
+        "type": "TRANSACTION_GRAPH",
+        "snippet": "2 transactions linked to this number: ₹49,500 and ₹48,200 — both below ₹50,000 threshold. Flagged as structuring (smurfing) activity.",
+        "confidence": 0.87
       }
     ],
     "linkedEntities": [
-      { "id": "NODE-VOIP-112", "type": "origin", "risk": "critical" },
-      { "id": "VIC-8842", "type": "target", "risk": "safe" }
+      { "id": "+916511361582", "type": "PhoneNumber", "risk": "critical" },
+      { "id": "ACCT-DL-8821", "type": "BankAccount", "risk": "critical" },
+      { "id": "ACCT-DL-3392", "type": "BankAccount", "risk": "high" },
+      { "id": "+919876543210", "type": "PhoneNumber", "risk": "high" },
+      { "id": "DEV-HASH-F4A2C1", "type": "Device", "risk": "safe" }
     ],
-    "recommendedAction": "Issue carrier-level block on identified VOIP block and alert local precinct."
+    "recommendedAction": "Freeze accounts ACCT-DL-8821 and ACCT-DL-3392. File SAR with FIU-IND. Alert victim and report to cybercrime.gov.in helpline 1930."
   },
   "evt-002": {
-    "caseId": "CASE-2026-9942",
+    "caseId": "CASE-FG-09942",
     "status": "PENDING_REVIEW",
     "riskScore": 88.5,
-    "primaryThreat": "Counterfeit Distribution",
-    "summary": "Mobile scan by retail merchant detected high-quality counterfeit $100 bill. Matches signature of known local printer ring.",
+    "primaryThreat": "Counterfeit Currency Distribution",
+    "summary": "Counterfeit ₹500 note detected at Dadar Market merchant. Matches known print signature — missing watermark, incorrect security thread fluorescence. This is the 4th report within 2 km in 48 hours, indicating coordinated distribution.",
     "evidenceItems": [
       {
         "type": "IMAGE_ANALYSIS",
-        "snippet": "Microprinting on collar absent. Security thread does not fluoresce under simulated UV.",
+        "snippet": "Mahatma Gandhi watermark absent when held against light. Security thread does not carry 'भारत' text. Latent image of denomination numeral not visible at 45°.",
         "confidence": 0.99
       },
       {
         "type": "GEO_CLUSTER",
-        "snippet": "4th report within 2 miles in the last 48 hours.",
+        "snippet": "4th counterfeit report within 2 km radius in past 48 hours. Hotspot intensity 0.78 — HIGH severity zone in Mumbai geospatial cluster.",
         "confidence": 0.85
       }
     ],
     "linkedEntities": [
-      { "id": "MERCH-8821", "type": "reporter", "risk": "safe" },
-      { "id": "RING-CB-44", "type": "suspect_group", "risk": "high" }
+      { "id": "MERCH-MH-4421", "type": "Merchant", "risk": "safe" },
+      { "id": "RING-MH-CT-07", "type": "SuspectGroup", "risk": "high" }
     ],
-    "recommendedAction": "Dispatch local unit to collect physical evidence. Alert nearby merchants."
+    "recommendedAction": "Dispatch local unit to Dadar Market. Collect physical note for RBI forensic examination. Alert nearby merchants via SafeNet bulletin."
+  },
+  "evt-006": {
+    "caseId": "CASE-FG-09943",
+    "status": "OPEN_INVESTIGATION",
+    "riskScore": 96.8,
+    "primaryThreat": "Coordinated Counterfeit Ring",
+    "summary": "Three merchants in Hazratganj bazaar reported high-quality counterfeit ₹2000 notes within 90 minutes. Notes lack colour-shifting numeral (should shift magenta→green) and latent image. Pattern matches a known printer ring operating in UP.",
+    "evidenceItems": [
+      {
+        "type": "IMAGE_ANALYSIS",
+        "snippet": "₹2000 note: colour-shifting numeral panel shows no shift. Ashoka Pillar emblem on reverse shows reduced tactile relief. Paper weight below 100g/m² standard.",
+        "confidence": 0.97
+      },
+      {
+        "type": "GEO_CLUSTER",
+        "snippet": "3 reports from MERCH-UP-112, MERCH-UP-443, MERCH-UP-992 — all within 500m, 90-minute window. Classic coordinated distribution pass.",
+        "confidence": 0.94
+      },
+      {
+        "type": "NETWORK_NODE",
+        "snippet": "MERCH-UP-443 previously flagged in 2025 for receiving counterfeit ₹500 notes. Repeat-victim or potential insider.",
+        "confidence": 0.76
+      }
+    ],
+    "linkedEntities": [
+      { "id": "MERCH-UP-112", "type": "Merchant", "risk": "safe" },
+      { "id": "MERCH-UP-443", "type": "Merchant", "risk": "high" },
+      { "id": "MERCH-UP-992", "type": "Merchant", "risk": "safe" },
+      { "id": "RING-UP-CT-02", "type": "SuspectGroup", "risk": "critical" }
+    ],
+    "recommendedAction": "Immediate field unit dispatch to Hazratganj. Seize all ₹2000 notes at three locations. Escalate to State Currency Crime Cell, Lucknow."
   }
 }

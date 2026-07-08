@@ -1,0 +1,46 @@
+# Git
+.git
+.gitignore
+
+# Node
+frontend/node_modules
+frontend/.vite
+
+# Python
+backend/__pycache__
+backend/**/__pycache__
+backend/**/*.pyc
+backend/.venv
+**/.venv
+**/*.egg-info
+
+# Large model weights (not committed, loaded at runtime)
+backend/app/counterfeit_vision/models/model_weights.pth
+
+# Test / dev artifacts
+backend/tests/
+backend/scripts/
+**/*.png
+**/*.jpg
+
+# Docs
+docs/
+*.md
+!README.md
+
+# Generated reports (written at runtime, not needed in image)
+data/reports/
+
+# Environment files (secrets — NEVER in image)
+.env
+backend/.env
+**/.env
+
+# Vercel artefacts
+.vercelignore
+vercel.json
+
+# IDE
+.vscode/
+.kiro/
+.agents/

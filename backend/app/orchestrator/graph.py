@@ -36,9 +36,7 @@ from app.orchestrator.settings import (
     ESCALATION_THRESHOLD, WARNING_THRESHOLD, INFO_THRESHOLD,
     RECENCY_FULL_WINDOW_HOURS, RECENCY_HALF_WINDOW_HOURS, RECENCY_MIN_FACTOR,
     REPORTS_DIR, AUDIT_LOG_PATH, MAX_FEED_EVENTS,
-)
-
-# ── Orchestrator event feed (in-memory, replaces per-module feeds) ─────────────
+)# ── Orchestrator event feed (in-memory, replaces per-module feeds) ─────────────
 orchestrator_feed: list[dict] = []
 
 
@@ -55,6 +53,10 @@ class OrchState(TypedDict):
     graph_anomaly_score: float  # 0–100 mule/ring score from graph
     nearest_hotspot: dict       # nearest geospatial cluster
     geo_density: float          # 0–1 hotspot intensity
+
+    # LLM enrichment (Fireworks AI — AMD Instinct GPUs)
+    llm_summary: str            # Natural-language summary of the compound event
+    llm_model_used: str         # Which model/provider was used
 
     # Scoring
     recency_factor: float       # 0–1 decay based on event age
@@ -259,8 +261,98 @@ def node_score(state: OrchState) -> OrchState:
 
 # ── Node 5: decide ─────────────────────────────────────────────────────────────
 
-def node_decide(state: OrchState) -> OrchState:
-    """Routes the event to the correct action branch based on CRS thresholds."""
+# ── Node 4b: llm_enrich ────────────────────────────────────────────────────────
+
+def node_llm_enrich(state: OrchState) -> OrchState:
+    """
+    Uses Fireworks AI (AMD Instinct GPUs) to generate a concise natural-language
+    summary of the compound risk event AFTER scoring but BEFORE the decision.
+
+    Model routing (cheapest sufficient model per CRS tier):
+      CRS < 40  → llama_small  (fast, cheap — low-stakes info events)
+      CRS < 70  → gemma        (Gemma 2 9B — medium events, bonus prize eligible)
+      CRS ≥ 70  → gemma_large  (Gemma 2 27B — critical escalations, more reasoning)
+
+    The summary is stored in state["llm_summary"] and embedded in the feed event
+    description and the incident report, giving judges a clear AI-narrated signal.
+    Falls back silently to a template string if no LLM is available.
+    """
+    crs   = state["crs"]
+    ev    = state["raw_event"]
+    bd    = state["crs_breakdown"]
+    gc    = state["graph_case"]
+    hs    = state["nearest_hotspot"]
+
+    # Pick task (model) based on severity of the event
+    if crs >= ESCALATION_THRESHOLD:
+        task = "chat_complex"   # Gemma 2 27B
+    elif crs >= WARNING_THRESHOLD:
+        task = "chat"           # Gemma 2 9B
+    else:
+        task = "summarisation"  # Llama 3.1 8B — cheap
+
+    # Build a compact prompt with all enrichment signals
+    context_lines = [
+        f"Event type: {ev.get('type', 'UNKNOWN')}",
+        f"Compound Risk Score: {crs:.1f}/100",
+        f"Scam signal: {bd.get('scam', {}).get('raw', 0):.0f}/100",
+        f"Fraud graph anomaly: {bd.get('graph', {}).get('raw', 0):.0f}/100",
+        f"Geospatial density: {bd.get('geo', {}).get('raw', 0):.2f}",
+    ]
+    if gc.get("primaryThreat"):
+        context_lines.append(f"Primary threat: {gc['primaryThreat']}")
+    if gc.get("summary"):
+        context_lines.append(f"Graph summary: {gc['summary'][:200]}")
+    if hs.get("top_complaint_type"):
+        context_lines.append(f"Hotspot type: {hs['top_complaint_type']} ({hs.get('point_count', 0)} complaints)")
+    if ev.get("transcript"):
+        context_lines.append(f"Transcript snippet: \"{ev['transcript'][:150]}\"")
+
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are SafeNet AI's threat analyst. "
+                "Write a single concise paragraph (2–3 sentences, max 80 words) "
+                "summarising this fraud event for a law enforcement dashboard. "
+                "Be specific about what signals were detected. "
+                "Do NOT use bullet points. Do NOT repeat the numbers verbatim."
+            ),
+        },
+        {
+            "role": "user",
+            "content": "\n".join(context_lines),
+        },
+    ]
+
+    llm_summary = ""
+    llm_model_used = "template"
+
+    try:
+        from app.fireworks_client import call_llm, get_provider_status
+        result = call_llm(messages, task=task, temperature=0.4, max_tokens=120)
+        if result:
+            llm_summary = result.strip()
+            status = get_provider_status()
+            llm_model_used = f"{status['active_provider']}:{status['active_model'].split('/')[-1]}"
+    except Exception as e:
+        print(f"[orchestrator] LLM enrich failed (non-fatal): {e}")
+
+    # Template fallback — always produces something readable
+    if not llm_summary:
+        sev = "critical" if crs >= ESCALATION_THRESHOLD else ("high" if crs >= WARNING_THRESHOLD else "medium")
+        llm_summary = (
+            f"A {sev}-severity {ev.get('type', 'fraud')} event scored {crs:.0f}/100 on the "
+            f"Compound Risk Score. Scam signal: {bd.get('scam', {}).get('raw', 0):.0f}, "
+            f"graph anomaly: {bd.get('graph', {}).get('raw', 0):.0f}, "
+            f"geo density: {bd.get('geo', {}).get('raw', 0):.2f}."
+        )
+        llm_model_used = "template-fallback"
+
+    return {**state, "llm_summary": llm_summary, "llm_model_used": llm_model_used}
+
+
+def node_decide(state: OrchState) -> OrchState:    """Routes the event to the correct action branch based on CRS thresholds."""
     crs = state["crs"]
     if crs >= ESCALATION_THRESHOLD:
         action, severity = "escalate", "critical"
@@ -521,7 +613,7 @@ def node_emit_feed(state: OrchState) -> OrchState:
         "severity": state["severity"],
         "timestamp": ts,
         "title": ev.get("title") or f"Compound Risk Event — CRS {crs:.0f}",
-        "description": (
+        "description": state.get("llm_summary") or (
             f"CRS {crs:.1f}/100 · "
             f"Scam {bd['scam']['raw']:.0f} · "
             f"Graph {bd['graph']['raw']:.0f} · "
@@ -536,6 +628,7 @@ def node_emit_feed(state: OrchState) -> OrchState:
         "report_path_json": state["report_path_json"],
         "report_path_pdf": state["report_path_pdf"],
         "graph_case_id": state["graph_case"].get("caseId", ""),
+        "llm_model_used": state.get("llm_model_used", "template"),
     }
 
     # ── Update in-memory feed ──────────────────────────────────────────────────
@@ -578,6 +671,7 @@ def _build_graph():
     g.add_node("enrich_graph", node_enrich_graph)
     g.add_node("enrich_geo",   node_enrich_geo)
     g.add_node("score",        node_score)
+    g.add_node("llm_enrich",   node_llm_enrich)   # Fireworks AI (AMD) summarisation
     g.add_node("decide",       node_decide)
     g.add_node("escalate",     node_escalate)
     g.add_node("warn",         node_warn)
@@ -592,7 +686,8 @@ def _build_graph():
     g.add_edge("ingest",       "enrich_graph")
     g.add_edge("enrich_graph", "enrich_geo")
     g.add_edge("enrich_geo",   "score")
-    g.add_edge("score",        "decide")
+    g.add_edge("score",        "llm_enrich")   # AMD inference step
+    g.add_edge("llm_enrich",   "decide")
 
     # Conditional branch on decision
     g.add_conditional_edges(
@@ -645,6 +740,8 @@ def process_event(raw_event: dict) -> dict:
         "nearest_hotspot": {},
         "geo_density": 0.0,
         "recency_factor": 1.0,
+        "llm_summary": "",
+        "llm_model_used": "template",
         "crs": 0.0,
         "crs_breakdown": {},
         "action": "ignore",

@@ -1,7 +1,11 @@
 # SafeNet AI — FastAPI Application Entry Point
 
+import os
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 
 # Load environment variables from .env file (no-op if file doesn't exist)
@@ -51,6 +55,18 @@ except ImportError as e:
 app.include_router(number_checker_router, prefix="/api")
 
 
+# ── Provider status endpoint (used by AMD status panel) ───────────────────────
+
+@app.get("/api/provider-status", summary="LLM provider and AMD inference status")
+def get_provider_status():
+    """
+    Returns which LLM providers are configured and whether AMD inference is active.
+    Used by the frontend AMD Status Panel on the dashboard.
+    """
+    from app.fireworks_client import get_provider_status
+    return get_provider_status()
+
+
 @app.get("/api/dashboard/feed", summary="Aggregated live risk feed (all modules)")
 def get_dashboard_feed():
     """
@@ -71,6 +87,38 @@ def get_dashboard_feed():
     return all_events[:50]
 
 
+@app.get("/health", summary="Health check")
+def health_check():
+    """Used by Docker HEALTHCHECK and load balancers."""
+    return {"status": "ok", "message": "SafeNet AI backend is running."}
+
+
 @app.get("/")
 def read_root():
+    """Root — serves the React SPA when running in Docker, or health info otherwise."""
+    frontend_dist = Path(os.getenv("FRONTEND_DIST_PATH", ""))
+    index_html = frontend_dist / "index.html"
+    if frontend_dist and index_html.exists():
+        return FileResponse(str(index_html))
     return {"status": "ok", "message": "SafeNet AI backend is running."}
+
+
+# ── Serve built frontend static assets (Docker / production mode) ─────────────
+_frontend_dist = Path(os.getenv("FRONTEND_DIST_PATH", ""))
+if _frontend_dist.exists():
+    # Serve /assets, /icons, etc. from the Vite build output
+    app.mount("/assets", StaticFiles(directory=str(_frontend_dist / "assets")), name="assets")
+    app.mount("/public", StaticFiles(directory=str(_frontend_dist)), name="public")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def serve_spa(full_path: str):
+        """Catch-all: return index.html for any non-API path (SPA routing)."""
+        # Don't intercept /api routes
+        if full_path.startswith("api"):
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404)
+        index_html = _frontend_dist / "index.html"
+        if index_html.exists():
+            return FileResponse(str(index_html))
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404)
