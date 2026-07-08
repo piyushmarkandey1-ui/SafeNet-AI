@@ -58,10 +58,10 @@ export default function HeroSection() {
         </p>
         
         <div className="hero-actions">
-          <Link to="/dashboard" className="hero-btn primary-btn">
+          <Link to="/dashboard" className="hero-btn primary-btn cursor-target">
             Launch Dashboard
           </Link>
-          <Link to="/note-checker" className="hero-btn secondary-btn">
+          <Link to="/note-checker" className="hero-btn secondary-btn cursor-target">
             Try Note Checker
           </Link>
         </div>

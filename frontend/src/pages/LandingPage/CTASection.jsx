@@ -32,7 +32,7 @@ export default function CTASection() {
       <div className="section-content cta-content">
         <h2>Ready to secure the digital frontier?</h2>
         <p>Explore the unified command center.</p>
-        <Link to="/dashboard" className="cta-button">
+        <Link to="/dashboard" className="cta-button cursor-target">
           Launch Dashboard <ArrowRight size={18} />
         </Link>
       </div>
