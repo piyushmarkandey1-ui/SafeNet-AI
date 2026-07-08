@@ -64,6 +64,19 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
     avg_color = img_array.mean(axis=(0, 1))
     r, g, b = avg_color
     
+    # Skin tone / Face rejection heuristic
+    # Faces typically have significantly higher Red than Green/Blue due to hemoglobin
+    if r > g + 15 and r > b + 25 and r > 100:
+        return {
+            "denomination": "unknown",
+            "confidence": 0.1,
+            "dominant_color": {"r": int(r), "g": int(g), "b": int(b)},
+            "image_size": {"width": img.width, "height": img.height},
+            "aspect_ratio": round(img.width / img.height, 2) if img.height > 0 else 1.0,
+            "detected_issues": ["Skin tone / face detected instead of currency note"],
+            "no_note": True
+        }
+    
     # Detect denomination based on color
     best_match = None
     best_score = 0
