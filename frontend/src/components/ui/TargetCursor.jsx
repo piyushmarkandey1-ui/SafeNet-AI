@@ -58,7 +58,7 @@ const TargetCursor = ({
     return (hasTouchScreen && isSmallScreen) || isMobileUserAgent;
   }, []);
 
-  const constants = useMemo(() => ({ borderWidth: 3, cornerSize: 12 }), []);
+  const constants = useMemo(() => ({ borderWidth: 2, cornerSize: 8 }), []);
 
   const moveCursor = useCallback((x, y) => {
     if (!cursorRef.current) return;
