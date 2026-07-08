@@ -1,179 +1,155 @@
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, CircleMarker, Circle, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { GlassPanel } from '../ui';
 import './CrimeMap.css';
 
-const SEVERITY_COLORS = {
-  CRITICAL: '#ff3b3b',
-  HIGH:     '#ff6b35',
-  MEDIUM:   '#f59e0b',
-  LOW:      '#2ec4b6',
-  SAFE:     '#2ec4b6',
+const SEVERITY = {
+  CRITICAL: { color: '#f43f5e', glow: 'rgba(244,63,94,0.5)',  ring: 'rgba(244,63,94,0.18)', dotR: 7,  ringR: 16 },
+  HIGH:     { color: '#fb923c', glow: 'rgba(251,146,60,0.4)',  ring: 'rgba(251,146,60,0.14)', dotR: 6,  ringR: 14 },
+  MEDIUM:   { color: '#fbbf24', glow: 'rgba(251,191,36,0.35)', ring: 'rgba(251,191,36,0.12)', dotR: 5,  ringR: 12 },
+  LOW:      { color: '#34d399', glow: 'rgba(52,211,153,0.3)',  ring: 'rgba(52,211,153,0.10)', dotR: 4,  ringR: 10 },
+  SAFE:     { color: '#34d399', glow: 'rgba(52,211,153,0.3)',  ring: 'rgba(52,211,153,0.10)', dotR: 4,  ringR: 10 },
 };
 
-const SEVERITY_FILL_OPACITY = {
-  CRITICAL: 0.18,
-  HIGH:     0.14,
-  MEDIUM:   0.10,
-  LOW:      0.07,
-  SAFE:     0.07,
-};
+const USER_REPORT_SEV = { color: '#c084fc', glow: 'rgba(192,132,252,0.4)', dotR: 6, ringR: 14 };
 
-// Component to dynamically re-center map if selected event changes
 function MapController({ selectedEvent }) {
   const map = useMap();
   useEffect(() => {
     if (selectedEvent?.location) {
-      map.flyTo([selectedEvent.location.lat, selectedEvent.location.lng], 13, {
-        duration: 1.5,
-      });
+      map.flyTo([selectedEvent.location.lat, selectedEvent.location.lng], 13, { duration: 1.5 });
     }
   }, [selectedEvent, map]);
   return null;
 }
 
 export function CrimeMap({ hotspots = [], loading, selectedEvent, userReports = [] }) {
-  // Default center: India
   const center = [22.9734, 78.6569];
 
   return (
     <div className="crime-map-container">
-      <MapContainer 
-        center={center} 
+      <MapContainer
+        center={center}
         zoom={5}
-        style={{ height: '100%', width: '100%', background: 'var(--bg-base)' }}
+        style={{ height: '100%', width: '100%' }}
         zoomControl={false}
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+          attribution='&copy; OpenStreetMap &copy; CARTO'
         />
-        
         <MapController selectedEvent={selectedEvent} />
 
+        {/* ── System hotspot markers ── */}
         {!loading && hotspots.map((spot) => {
-          const color = SEVERITY_COLORS[spot.type] || SEVERITY_COLORS.MEDIUM;
-          const fillOp = SEVERITY_FILL_OPACITY[spot.type] ?? 0.10;
-          const dotRadius = 6 + spot.intensity * 18;
-          const ringRadius = spot.radius ? spot.radius * 80 : spot.intensity * 80000;
+          const s = SEVERITY[spot.type] || SEVERITY.MEDIUM;
 
           return (
             <React.Fragment key={spot.id}>
-              {/* Big translucent alert zone ring */}
-              <Circle
-                center={[spot.lat, spot.lng]}
-                radius={ringRadius}
-                pathOptions={{
-                  color,
-                  fillColor: color,
-                  fillOpacity: fillOp,
-                  weight: 1.5,
-                  dashArray: spot.type === 'CRITICAL' ? '6 4' : undefined,
-                }}
-              />
-
-              {/* Centre dot marker */}
+              {/* Outer soft ring */}
               <CircleMarker
                 center={[spot.lat, spot.lng]}
+                radius={s.ringR}
                 pathOptions={{
-                  color: '#fff',
-                  fillColor: color,
-                  fillOpacity: 0.95,
-                  weight: 2,
+                  color: s.color,
+                  fillColor: s.color,
+                  fillOpacity: 0.08,
+                  weight: 1,
+                  opacity: 0.3,
                 }}
-                radius={dotRadius}
-                className={spot.type === 'CRITICAL' ? 'breathing-marker' : ''}
+                interactive={false}
+              />
+              {/* Inner filled dot */}
+              <CircleMarker
+                center={[spot.lat, spot.lng]}
+                radius={s.dotR}
+                pathOptions={{
+                  color: s.color,
+                  fillColor: s.color,
+                  fillOpacity: 1,
+                  weight: 0,
+                }}
+                className={spot.type === 'CRITICAL' ? 'marker-pulse' : ''}
               >
                 <Popup className="dark-popup">
-                  <strong>{spot.label || spot.type} Alert Zone</strong><br/>
-                  Severity: <span style={{ color }}>{spot.type}</span><br/>
-                  Intensity: {(spot.intensity * 100).toFixed(0)}%
+                  <strong>{spot.label || spot.type}</strong>
+                  <br />
+                  <span style={{ color: s.color, fontWeight: 700 }}>{spot.type}</span>
+                  &nbsp;·&nbsp;{(spot.intensity * 100).toFixed(0)}% intensity
                 </Popup>
               </CircleMarker>
             </React.Fragment>
           );
         })}
 
+        {/* ── Selected event pulse ── */}
         {selectedEvent?.location && (
           <CircleMarker
             center={[selectedEvent.location.lat, selectedEvent.location.lng]}
-            pathOptions={{
-              color: '#fff',
-              fillColor: '#ff3b3b',
-              fillOpacity: 1,
-              weight: 2,
-            }}
             radius={8}
-            className="pulse-marker"
+            pathOptions={{ color: '#fff', fillColor: '#f43f5e', fillOpacity: 1, weight: 2 }}
+            className="marker-pulse"
           >
             <Popup className="dark-popup">{selectedEvent.title}</Popup>
           </CircleMarker>
         )}
 
-        {/* User-submitted reports — distinct purple markers */}
+        {/* ── User-submitted citizen reports ── */}
         {userReports.map((report) => {
           if (!report?.location?.lat) return null;
-          const repColor = '#a855f7';
-          const sevColor = SEVERITY_COLORS[report.severity] || repColor;
+          const s = USER_REPORT_SEV;
           return (
             <React.Fragment key={report.id}>
-              <Circle
+              <CircleMarker
                 center={[report.location.lat, report.location.lng]}
-                radius={40000}
-                pathOptions={{
-                  color: repColor,
-                  fillColor: repColor,
-                  fillOpacity: 0.12,
-                  weight: 1.5,
-                  dashArray: '4 4',
-                }}
+                radius={s.ringR}
+                pathOptions={{ color: s.color, fillColor: s.color, fillOpacity: 0.08, weight: 1, opacity: 0.35, dashArray: '3 3' }}
+                interactive={false}
               />
               <CircleMarker
                 center={[report.location.lat, report.location.lng]}
-                pathOptions={{
-                  color: '#fff',
-                  fillColor: repColor,
-                  fillOpacity: 0.95,
-                  weight: 2,
-                }}
-                radius={10}
-                className="pulse-marker"
+                radius={s.dotR}
+                pathOptions={{ color: s.color, fillColor: s.color, fillOpacity: 1, weight: 0 }}
+                className="marker-pulse"
               >
                 <Popup className="dark-popup">
-                  <strong>🚩 Citizen Report</strong><br/>
-                  <strong>{report.title}</strong><br/>
-                  📍 {report.location.name}{report.landmark ? ` · ${report.landmark}` : ''}<br/>
-                  Severity: <span style={{ color: sevColor }}>{report.severity}</span><br/>
-                  {report.description?.substring(0, 120)}{report.description?.length > 120 ? '…' : ''}
+                  <strong>🚩 Citizen Report</strong>
+                  <br />
+                  <strong>{report.title}</strong>
+                  <br />
+                  📍 {report.location.name}
+                  {report.landmark ? ` · ${report.landmark}` : ''}
+                  <br />
+                  <span style={{ color: SEVERITY[report.severity]?.color || s.color }}>
+                    {report.severity}
+                  </span>
+                  <br />
+                  {report.description?.substring(0, 100)}
+                  {report.description?.length > 100 ? '…' : ''}
                 </Popup>
               </CircleMarker>
             </React.Fragment>
           );
         })}
       </MapContainer>
-      
-      {/* Overlay Legend */}
+
+      {/* Legend */}
       <div className="crime-map-overlay">
-         <GlassPanel hoverable={false} className="map-legend">
-            <span className="legend-title">Live Grid Status</span>
-            <div className="legend-item">
-              <span className="legend-dot" style={{ background: SEVERITY_COLORS.CRITICAL }}></span>
-              Critical Hotspot
+        <GlassPanel hoverable={false} className="map-legend">
+          <span className="legend-title">Live Grid Status</span>
+          {[
+            { color: SEVERITY.CRITICAL.color, label: 'Critical' },
+            { color: SEVERITY.HIGH.color,     label: 'High' },
+            { color: SEVERITY.MEDIUM.color,   label: 'Medium' },
+            { color: '#c084fc',               label: 'Citizen Report' },
+          ].map(({ color, label }) => (
+            <div className="legend-item" key={label}>
+              <span className="legend-dot" style={{ background: color, boxShadow: `0 0 6px ${color}` }} />
+              {label}
             </div>
-            <div className="legend-item">
-              <span className="legend-dot" style={{ background: SEVERITY_COLORS.HIGH }}></span>
-              High Activity
-            </div>
-            <div className="legend-item">
-              <span className="legend-dot" style={{ background: SEVERITY_COLORS.MEDIUM }}></span>
-              Elevated Activity
-            </div>
-            <div className="legend-item">
-              <span className="legend-dot" style={{ background: '#a855f7' }}></span>
-              Citizen Report
-            </div>
-         </GlassPanel>
+          ))}
+        </GlassPanel>
       </div>
     </div>
   );
