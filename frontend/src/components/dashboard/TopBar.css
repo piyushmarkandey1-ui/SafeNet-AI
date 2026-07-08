@@ -6,29 +6,36 @@
   padding: var(--space-md) var(--space-xl);
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border-subtle);
-  height: 64px;
+  min-height: 64px;
+  gap: var(--space-md);
 }
 
 .topbar__brand {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  flex-shrink: 0;
 }
 
 .topbar__logo {
   color: var(--accent-risk);
+  flex-shrink: 0;
 }
 
 .topbar__title {
   font-size: var(--text-h4);
   margin: 0;
   letter-spacing: var(--tracking-normal);
+  white-space: nowrap;
 }
 
 .topbar__modules {
   display: flex;
   gap: var(--space-lg);
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 1;
 }
 
 .topbar__module-btn {
@@ -38,10 +45,11 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  padding: 4px 10px;
+  padding: 6px 12px;
   cursor: pointer;
   transition: all 0.18s var(--ease-out);
   position: relative;
+  white-space: nowrap;
 }
 
 .topbar__module-btn:hover {
@@ -68,6 +76,7 @@
 .module-icon {
   color: var(--text-muted);
   transition: color 0.18s ease;
+  flex-shrink: 0;
 }
 
 .topbar__module-btn:hover .module-icon,
@@ -105,6 +114,9 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .btn-note-check {
@@ -121,6 +133,7 @@
   font-weight: var(--weight-medium);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
 }
 
 .btn-note-check:hover {
@@ -143,6 +156,7 @@
   font-weight: var(--weight-medium);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
 }
 
 .btn-simulate:hover:not(:disabled) {
@@ -165,22 +179,106 @@
   to { transform: rotate(360deg); }
 }
 
+/* ── Tablet (768px - 1024px) ───────────────────────────────────────── */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .topbar {
+    padding: var(--space-sm) var(--space-lg);
+  }
+  
+  .topbar__modules {
+    gap: var(--space-sm);
+  }
+  
+  .topbar__module-btn {
+    padding: 4px 8px;
+  }
+  
+  .status-name {
+    font-size: 10px;
+  }
+}
+
+/* ── Mobile (< 768px) ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .topbar {
     padding: var(--space-sm) var(--space-md);
-    height: auto;
+    min-height: auto;
     flex-wrap: wrap;
     gap: var(--space-sm);
-    justify-content: center;
   }
+  
+  .topbar__brand {
+    width: 100%;
+    justify-content: center;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  .topbar__title {
+    font-size: var(--text-base);
+  }
+  
   .topbar__modules {
-    flex-wrap: wrap;
+    width: 100%;
+    gap: var(--space-xs);
     justify-content: center;
-    gap: var(--space-sm);
+    order: 3;
   }
+  
+  .topbar__module-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .status-name {
+    display: none; /* Hide labels on mobile, icons only */
+  }
+  
   .topbar__actions {
     width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
+    order: 2;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  .btn-note-check span,
+  .btn-simulate span {
+    display: none; /* Icon only on mobile */
+  }
+  
+  .btn-note-check,
+  .btn-simulate {
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+}
+
+/* ── Small Mobile (< 640px) ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .topbar {
+    padding: var(--space-xs) var(--space-sm);
+  }
+  
+  .topbar__logo {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .topbar__title {
+    font-size: var(--text-sm);
+  }
+  
+  .topbar__module-btn {
+    padding: 6px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+  
+  .module-icon {
+    width: 14px;
+    height: 14px;
   }
 }

@@ -15,38 +15,126 @@
   position: relative;
 }
 
+/* ── Desktop Layout (1024px+) ──────────────────────────────────────── */
 .pane-left {
   width: 380px;
   flex-shrink: 0;
   z-index: 10;
   box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+  overflow-y: auto;
 }
 
 .pane-center {
   flex: 1;
   position: relative;
   z-index: 1;
+  min-width: 0; /* Fix flexbox overflow */
 }
 
 .pane-right {
+  width: 420px;
   flex-shrink: 0;
   z-index: 10;
   box-shadow: -2px 0 12px rgba(0,0,0,0.5);
+  overflow-y: auto;
 }
 
-@media (max-width: 1024px) {
+/* ── Tablet Layout (768px - 1024px) ────────────────────────────────── */
+@media (max-width: 1024px) and (min-width: 768px) {
   .dashboard-content {
     flex-direction: column;
     overflow-y: auto;
   }
-  .pane-left, .pane-right {
-    width: 100% !important;
-    height: auto !important;
-    flex: none;
+  
+  .pane-left {
+    width: 100%;
+    max-height: 40vh;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    overflow-y: auto;
   }
+  
   .pane-center {
     height: 50vh;
-    flex: none;
-    order: -1; /* map at top on mobile maybe? Or keep order. Let's keep order */
+    min-height: 400px;
+    order: -1; /* Map first on tablet */
   }
+  
+  .pane-right {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.5);
+    overflow-y: auto;
+  }
+}
+
+/* ── Mobile Layout (< 768px) ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .dashboard-layout {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .dashboard-content {
+    flex-direction: column;
+    overflow-y: visible;
+    height: auto;
+  }
+  
+  .pane-left {
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+    max-height: 50vh;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  
+  .pane-center {
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    order: -1; /* Map first on mobile */
+  }
+  
+  .pane-right {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+  }
+}
+
+/* ── Small Mobile (< 640px) ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .pane-center {
+    height: 50vh;
+    min-height: 300px;
+  }
+  
+  .pane-left {
+    min-height: 250px;
+    max-height: 40vh;
+  }
+}
+
+/* ── Scrollbar Styling for Panes ───────────────────────────────────── */
+.pane-left::-webkit-scrollbar,
+.pane-right::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pane-left::-webkit-scrollbar-track,
+.pane-right::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+.pane-left::-webkit-scrollbar-thumb,
+.pane-right::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+.pane-left::-webkit-scrollbar-thumb:hover,
+.pane-right::-webkit-scrollbar-thumb:hover {
+  background: var(--border-accent);
 }
