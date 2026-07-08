@@ -30,6 +30,9 @@ import sys
 import argparse
 import json
 import time
+import datetime
+import threading
+import subprocess
 from pathlib import Path
 from typing import Tuple
 
@@ -56,20 +59,49 @@ AUTH_CLASSES = ["fake", "real"]      # alphabetical — matches ImageFolder sort
 # ──────────────────────────────────────────────────────────────────────────────
 def get_device() -> torch.device:
     """
-    Returns the best available compute device.
-
-    Priority: CUDA (NVIDIA) → ROCm (AMD HIP, exposed as CUDA in PyTorch) → CPU.
-
-    Returns:
-        torch.device
+    Returns the compute device. Strictly enforces GPU for the AMD notebook environment.
     """
-    if torch.cuda.is_available():
-        name = torch.cuda.get_device_name(0)
-        backend = "ROCm/HIP" if "AMD" in name or "Radeon" in name else "CUDA"
-        print(f"🖥️  GPU detected [{backend}]: {name}")
-        return torch.device("cuda")
-    print("🖥️  No GPU detected. Training on CPU.")
-    return torch.device("cpu")
+    if not torch.cuda.is_available():
+        print("[FATAL] No GPU detected. This script is strictly configured for the AMD GPU notebook.")
+        print("Aborting to save shared team time.")
+        sys.exit(1)
+        
+    name = torch.cuda.get_device_name(0)
+    backend = "ROCm/HIP" if "AMD" in name or "Radeon" in name else "CUDA"
+    print(f"🖥️  GPU detected [{backend}]: {name}")
+    return torch.device("cuda")
+
+# ──────────────────────────────────────────────────────────────────────────────
+# ROCm Usage Logging
+# ──────────────────────────────────────────────────────────────────────────────
+def log_rocm_smi(stage: str, docs_dir: Path):
+    """Logs rocm-smi output for hackathon usage proof."""
+    docs_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_path = docs_dir / f"rocm_{stage}_{timestamp}.log"
+    
+    try:
+        # Will fail gracefully if rocm-smi is not installed
+        res = subprocess.run(["rocm-smi"], capture_output=True, text=True, check=False)
+        with open(log_path, "w") as f:
+            f.write(res.stdout if res.stdout else f"rocm-smi failed or not found: {res.stderr}")
+    except Exception as e:
+        with open(log_path, "w") as f:
+            f.write(f"Failed to execute rocm-smi: {e}")
+
+class RocmLoggerThread(threading.Thread):
+    def __init__(self, docs_dir: Path, interval_minutes: float):
+        super().__init__(daemon=True)
+        self.docs_dir = docs_dir
+        self.interval = interval_minutes * 60
+        self.stop_event = threading.Event()
+        
+    def run(self):
+        while not self.stop_event.wait(self.interval):
+            log_rocm_smi("mid", self.docs_dir)
+            
+    def stop(self):
+        self.stop_event.set()
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -219,6 +251,9 @@ def train(
     val_split: float = 0.2,
     subset_fraction: float = 1.0,
     device: torch.device = None,
+    max_minutes: float = 60.0,
+    dry_run: bool = False,
+    log_interval_minutes: float = 10.0,
 ) -> dict:
     """
     Runs the full training loop and saves model artifacts.
@@ -232,6 +267,9 @@ def train(
         val_split:        Fraction of data reserved for validation.
         subset_fraction:  Use only this fraction of data (for fast smoke tests).
         device:           Torch device. Auto-detected if None.
+        max_minutes:      Stop training gracefully after this many minutes.
+        dry_run:          Run exactly 1 mini-batch to sanity-check pipeline.
+        log_interval_minutes: Frequency to poll rocm-smi.
 
     Returns:
         dict with 'val_auth_acc', 'val_denom_acc', 'best_epoch'.
@@ -278,13 +316,25 @@ def train(
     results = {}
 
     print(f"\n🏋️  Training for {epochs} epochs on {device}...\n")
+    print(f"⏱️  Budget: This run is configured to use at most {max_minutes} minutes of your team's shared GPU time.")
+    if dry_run:
+        print("⚠️  DRY RUN MODE: Will only process 1 mini-batch to verify pipeline.")
+        
+    docs_dir = _MODULE_DIR.parent.parent.parent / "docs" / "amd_usage"
+    log_rocm_smi("before", docs_dir)
+    logger_thread = RocmLoggerThread(docs_dir, log_interval_minutes)
+    logger_thread.start()
+    
+    global_start_t = time.time()
 
     for epoch in range(1, epochs + 1):
         model.train()
         train_loss = 0.0
         t0 = time.time()
 
-        for imgs, auth_labels, denom_labels in train_loader:
+        for i, (imgs, auth_labels, denom_labels) in enumerate(train_loader):
+            if dry_run and i > 0:
+                break
             imgs = imgs.to(device)
             auth_labels = auth_labels.to(device)
             denom_labels = denom_labels.to(device)
@@ -296,6 +346,10 @@ def train(
             loss.backward()
             optimizer.step()
             train_loss += loss.item()
+            
+            if (time.time() - global_start_t) / 60.0 > max_minutes:
+                print("\n⚠️  Time limit approached! Breaking train loop early to save checkpoint.")
+                break
 
         scheduler.step()
 
@@ -304,7 +358,9 @@ def train(
         auth_correct = denom_correct = total = 0
 
         with torch.no_grad():
-            for imgs, auth_labels, denom_labels in val_loader:
+            for i, (imgs, auth_labels, denom_labels) in enumerate(val_loader):
+                if dry_run and i > 0:
+                    break
                 imgs = imgs.to(device)
                 auth_labels = auth_labels.to(device)
                 denom_labels = denom_labels.to(device)
@@ -335,6 +391,17 @@ def train(
             "val_denom_acc": round(val_denom_acc, 4),
             "best_epoch": best_epoch,
         }
+        
+        if (time.time() - global_start_t) / 60.0 > max_minutes:
+            print("\n⚠️  Time limit approached! Halting training completely.")
+            break
+            
+        if dry_run:
+            print("\n⚠️  DRY RUN MODE: Halting after 1 epoch.")
+            break
+            
+    logger_thread.stop()
+    log_rocm_smi("after", docs_dir)
 
     # ── ONNX Export ───────────────────────────────────────────────────────────
     print("\n📦  Exporting to ONNX...")
@@ -371,8 +438,33 @@ def train(
     print(f"   Saved: {label_map_path}")
 
     print(f"\n✅  Training complete. Best epoch: {best_epoch}  "
-          f"auth_acc={results['val_auth_acc']:.3f}  "
-          f"denom_acc={results['val_denom_acc']:.3f}")
+          f"auth_acc={results.get('val_auth_acc', 0):.3f}  "
+          f"denom_acc={results.get('val_denom_acc', 0):.3f}")
+
+    duration_s = time.time() - global_start_t
+    summary = {
+        "start_time": datetime.datetime.fromtimestamp(global_start_t).isoformat(),
+        "end_time": datetime.datetime.now().isoformat(),
+        "duration_seconds": round(duration_s, 2),
+        "device_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
+        "final_epoch": results.get("best_epoch", 0),
+        "final_val_auth_acc": results.get("val_auth_acc", 0),
+        "final_val_denom_acc": results.get("val_denom_acc", 0),
+        "output_model": str(onnx_path.resolve())
+    }
+    summary_path = docs_dir / "training_summary.json"
+    with open(summary_path, "w") as f:
+        json.dump(summary, f, indent=2)
+        
+    print("\n" + "="*60)
+    print("🚀  HARDWARE LOGGING & ARTIFACTS SAVED")
+    print("="*60)
+    print("Please download the following files from this AMD notebook environment")
+    print("back to your local repository before terminating the session:")
+    print(f" 1. Model: {onnx_path.resolve()}")
+    print(f" 2. Label Map: {model_dir.resolve() / 'label_map.json'}")
+    print(f" 3. AMD Logs: All files in {docs_dir.resolve()}")
+    print("="*60)
 
     return results
 
@@ -390,6 +482,9 @@ def main() -> None:
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--subset-fraction", type=float, default=1.0,
                         help="Use fraction of data (0–1). Use 0.3 for a fast smoke test.")
+    parser.add_argument("--max_minutes", type=float, default=60.0)
+    parser.add_argument("--log_interval_minutes", type=float, default=10.0)
+    parser.add_argument("--dry_run", action="store_true")
     args = parser.parse_args()
 
     train(
@@ -399,6 +494,9 @@ def main() -> None:
         batch_size=args.batch_size,
         lr=args.lr,
         subset_fraction=args.subset_fraction,
+        max_minutes=args.max_minutes,
+        dry_run=args.dry_run,
+        log_interval_minutes=args.log_interval_minutes,
     )
 
 
