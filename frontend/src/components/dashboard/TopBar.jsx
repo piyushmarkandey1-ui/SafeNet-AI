@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldAlert, Play, Activity, ScanLine, PhoneCall, AlertTriangle, Network, Map, Shield, Phone } from 'lucide-react';
+import { ShieldAlert, Play, Activity, ScanLine, PhoneCall, AlertTriangle, Network, Map, Shield, Phone, Flag } from 'lucide-react';
 import { AmdStatusPanel } from './AmdStatusPanel';
 import './TopBar.css';
 
@@ -47,7 +47,7 @@ const MODULES = [
   },
 ];
 
-export function TopBar({ onSimulate }) {
+export function TopBar({ onSimulate, onReport }) {
   const navigate = useNavigate();
   const [isSimulating, setIsSimulating] = useState(false);
   const [activeModule, setActiveModule] = useState(null);
@@ -99,6 +99,14 @@ export function TopBar({ onSimulate }) {
 
       <div className="topbar__actions">
         <AmdStatusPanel />
+        <button
+          className="btn-report-incident"
+          onClick={onReport}
+          title="Report a crime or incident in your area"
+        >
+          <Flag size={16} />
+          <span>Report Incident</span>
+        </button>
         <button
           className="btn-note-check"
           onClick={() => navigate('/number-checker')}

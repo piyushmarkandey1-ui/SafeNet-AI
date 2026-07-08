@@ -5,8 +5,11 @@ import { RiskFeed } from './RiskFeed';
 import { CrimeMap } from './CrimeMap';
 import { EvidencePanel } from './EvidencePanel';
 import { CitizenShieldChat } from './CitizenShieldChat';
+import ReportIncidentModal from './ReportIncidentModal';
 import { getDashboardFeed, getHotspots, getCaseEvidence, simulateScenario } from '../../lib/api';
 import './DashboardLayout.css';
+
+const USER_REPORTS_KEY = 'safenet_user_reports';
 
 export default function Dashboard() {
   const [feedItems, setFeedItems] = useState([]);
@@ -17,6 +20,23 @@ export default function Dashboard() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [evidenceData, setEvidenceData] = useState(null);
   const [loadingEvidence, setLoadingEvidence] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  // User-submitted reports — persisted in localStorage
+  const [userReports, setUserReports] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(USER_REPORTS_KEY) || '[]'); }
+    catch { return []; }
+  });
+
+  const handleNewReport = (report) => {
+    setUserReports(prev => {
+      const updated = [report, ...prev];
+      localStorage.setItem(USER_REPORTS_KEY, JSON.stringify(updated));
+      return updated;
+    });
+    // Also push into the live risk feed so it shows up immediately
+    setFeedItems(prev => [report, ...prev]);
+  };
 
   useEffect(() => {
     async function loadInitialData() {
@@ -90,7 +110,7 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-layout">
-      <TopBar onSimulate={handleSimulate} />
+      <TopBar onSimulate={handleSimulate} onReport={() => setShowReportModal(true)} />
       
       <main className="dashboard-content">
         <aside className="pane-left" id="risk-feed-panel">
@@ -107,6 +127,7 @@ export default function Dashboard() {
             hotspots={hotspots} 
             loading={loadingHotspots} 
             selectedEvent={selectedEvent}
+            userReports={userReports}
           />
         </section>
 
@@ -124,6 +145,13 @@ export default function Dashboard() {
       </main>
 
       <CitizenShieldChat />
+
+      {showReportModal && (
+        <ReportIncidentModal
+          onClose={() => setShowReportModal(false)}
+          onSubmit={(r) => { handleNewReport(r); setShowReportModal(false); }}
+        />
+      )}
     </div>
   );
 }

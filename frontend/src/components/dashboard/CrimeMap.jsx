@@ -33,7 +33,7 @@ function MapController({ selectedEvent }) {
   return null;
 }
 
-export function CrimeMap({ hotspots = [], loading, selectedEvent }) {
+export function CrimeMap({ hotspots = [], loading, selectedEvent, userReports = [] }) {
   // Default center: India
   const center = [22.9734, 78.6569];
 
@@ -110,6 +110,47 @@ export function CrimeMap({ hotspots = [], loading, selectedEvent }) {
             <Popup className="dark-popup">{selectedEvent.title}</Popup>
           </CircleMarker>
         )}
+
+        {/* User-submitted reports — distinct purple markers */}
+        {userReports.map((report) => {
+          if (!report?.location?.lat) return null;
+          const repColor = '#a855f7';
+          const sevColor = SEVERITY_COLORS[report.severity] || repColor;
+          return (
+            <React.Fragment key={report.id}>
+              <Circle
+                center={[report.location.lat, report.location.lng]}
+                radius={40000}
+                pathOptions={{
+                  color: repColor,
+                  fillColor: repColor,
+                  fillOpacity: 0.12,
+                  weight: 1.5,
+                  dashArray: '4 4',
+                }}
+              />
+              <CircleMarker
+                center={[report.location.lat, report.location.lng]}
+                pathOptions={{
+                  color: '#fff',
+                  fillColor: repColor,
+                  fillOpacity: 0.95,
+                  weight: 2,
+                }}
+                radius={10}
+                className="pulse-marker"
+              >
+                <Popup className="dark-popup">
+                  <strong>🚩 Citizen Report</strong><br/>
+                  <strong>{report.title}</strong><br/>
+                  📍 {report.location.name}{report.landmark ? ` · ${report.landmark}` : ''}<br/>
+                  Severity: <span style={{ color: sevColor }}>{report.severity}</span><br/>
+                  {report.description?.substring(0, 120)}{report.description?.length > 120 ? '…' : ''}
+                </Popup>
+              </CircleMarker>
+            </React.Fragment>
+          );
+        })}
       </MapContainer>
       
       {/* Overlay Legend */}
@@ -127,6 +168,10 @@ export function CrimeMap({ hotspots = [], loading, selectedEvent }) {
             <div className="legend-item">
               <span className="legend-dot" style={{ background: SEVERITY_COLORS.MEDIUM }}></span>
               Elevated Activity
+            </div>
+            <div className="legend-item">
+              <span className="legend-dot" style={{ background: '#a855f7' }}></span>
+              Citizen Report
             </div>
          </GlassPanel>
       </div>
