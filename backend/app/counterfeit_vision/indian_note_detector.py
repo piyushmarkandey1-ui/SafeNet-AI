@@ -293,7 +293,7 @@ def check_indian_note(image_bytes: bytes) -> Dict:
     denom = basic_analysis["denomination"]
     
     # Generate recommendation
-    if gemini_result.get("no_note"):
+    if gemini_result.get("no_note") or confidence < 0.50:
         severity = "unknown"
         recommendation = "No currency note detected in the frame. Please place a note clearly in view."
         denom = "None"
