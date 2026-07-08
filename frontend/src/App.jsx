@@ -20,8 +20,8 @@ function App() {
         spinDuration={3}
         hideDefaultCursor={true}
         parallaxOn={true}
-        cursorColor="#2ec4b6"
-        cursorColorOnTarget="#2ec4b6"
+        cursorColor="#ffffff"
+        cursorColorOnTarget="#ffffff"
         hoverDuration={0.15}
       />
       <Navigation />

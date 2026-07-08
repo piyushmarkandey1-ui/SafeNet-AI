@@ -100,7 +100,7 @@ export function TopBar({ onSimulate, onReport }) {
       <div className="topbar__actions">
         <AmdStatusPanel />
         <button
-          className="btn-report-incident"
+          className="btn-report-incident cursor-target"
           onClick={onReport}
           title="Report a crime or incident in your area"
         >
@@ -108,23 +108,7 @@ export function TopBar({ onSimulate, onReport }) {
           <span>Report Incident</span>
         </button>
         <button
-          className="btn-note-check"
-          onClick={() => navigate('/number-checker')}
-          title="Check if a phone number is a scam"
-        >
-          <Phone size={16} />
-          <span>Check Number</span>
-        </button>
-        <button
-          className="btn-note-check"
-          onClick={() => navigate('/note-checker')}
-          title="Open Note Checker"
-        >
-          <ScanLine size={16} />
-          <span>Check Note</span>
-        </button>
-        <button
-          className="btn-simulate"
+          className="btn-simulate cursor-target"
           onClick={handleSimulate}
           disabled={isSimulating}
         >
