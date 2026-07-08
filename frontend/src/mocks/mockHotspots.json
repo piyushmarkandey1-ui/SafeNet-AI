@@ -3,77 +3,90 @@
     "id": "hs-001",
     "lat": 28.6139,
     "lng": 77.2090,
-    "intensity": 0.95,
+    "intensity": 0.9,
     "radius": 1500,
     "type": "CRITICAL",
-    "point_count": 62,
-    "top_complaint_type": "Vishing",
-    "complaint_types": { "Vishing": 38, "UPI Fraud": 14, "OTP Scam": 10 }
+    "label": "New Delhi"
   },
   {
     "id": "hs-002",
     "lat": 19.0760,
     "lng": 72.8777,
-    "intensity": 0.78,
-    "radius": 900,
+    "intensity": 0.8,
+    "radius": 1000,
     "type": "HIGH",
-    "point_count": 41,
-    "top_complaint_type": "Counterfeit Currency",
-    "complaint_types": { "Counterfeit Currency": 22, "UPI Fraud": 12, "Job Scam": 7 }
+    "label": "Mumbai"
   },
   {
     "id": "hs-003",
     "lat": 12.9716,
     "lng": 77.5946,
-    "intensity": 0.55,
+    "intensity": 0.7,
     "radius": 1200,
-    "type": "MEDIUM",
-    "point_count": 29,
-    "top_complaint_type": "UPI Fraud",
-    "complaint_types": { "UPI Fraud": 18, "OTP Scam": 11 }
+    "type": "HIGH",
+    "label": "Bengaluru"
   },
   {
     "id": "hs-004",
     "lat": 22.5726,
     "lng": 88.3639,
-    "intensity": 0.32,
-    "radius": 800,
-    "type": "LOW",
-    "point_count": 17,
-    "top_complaint_type": "Job Scam",
-    "complaint_types": { "Job Scam": 10, "OTP Scam": 7 }
+    "intensity": 0.6,
+    "radius": 1300,
+    "type": "MEDIUM",
+    "label": "Kolkata"
   },
   {
     "id": "hs-005",
     "lat": 17.3850,
     "lng": 78.4867,
-    "intensity": 0.82,
-    "radius": 1100,
-    "type": "HIGH",
-    "point_count": 44,
-    "top_complaint_type": "UPI Fraud",
-    "complaint_types": { "UPI Fraud": 27, "Vishing": 10, "Counterfeit Currency": 7 }
+    "intensity": 0.5,
+    "radius": 900,
+    "type": "MEDIUM",
+    "label": "Hyderabad"
   },
   {
     "id": "hs-006",
-    "lat": 26.8467,
-    "lng": 80.9462,
-    "intensity": 0.68,
-    "radius": 1000,
-    "type": "HIGH",
-    "point_count": 36,
-    "top_complaint_type": "Counterfeit Currency",
-    "complaint_types": { "Counterfeit Currency": 24, "Vishing": 12 }
+    "lat": 23.0225,
+    "lng": 72.5714,
+    "intensity": 0.4,
+    "radius": 800,
+    "type": "MEDIUM",
+    "label": "Ahmedabad"
   },
   {
     "id": "hs-007",
-    "lat": 23.0225,
-    "lng": 72.5714,
-    "intensity": 0.44,
-    "radius": 700,
+    "lat": 26.8467,
+    "lng": 80.9462,
+    "intensity": 0.85,
+    "radius": 1100,
+    "type": "HIGH",
+    "label": "Lucknow"
+  },
+  {
+    "id": "hs-008",
+    "lat": 13.0827,
+    "lng": 80.2707,
+    "intensity": 0.55,
+    "radius": 1000,
     "type": "MEDIUM",
-    "point_count": 23,
-    "top_complaint_type": "UPI Fraud",
-    "complaint_types": { "UPI Fraud": 15, "Job Scam": 8 }
+    "label": "Chennai"
+  },
+  {
+    "id": "hs-009",
+    "lat": 18.5204,
+    "lng": 73.8567,
+    "intensity": 0.65,
+    "radius": 950,
+    "type": "HIGH",
+    "label": "Pune"
+  },
+  {
+    "id": "hs-010",
+    "lat": 26.9124,
+    "lng": 75.7873,
+    "intensity": 0.75,
+    "radius": 1050,
+    "type": "HIGH",
+    "label": "Jaipur"
   }
 ]
