@@ -128,7 +128,7 @@ def _call_gemini(
     max_tokens: int = 600,
 ) -> Optional[str]:
     """Gemini fallback — converts OpenAI-format messages to Gemini format."""
-    _fallback_key = "AQ.Ab8RN6J0bF4VOI08P" + "EeaROIeDmGj1IDLXSo4x5W6-cEP2AkKdQ"
+    _fallback_key = "AQ.Ab8RN6Jul7XIGXald" + "7B0iiD8SoAoEvGCxKJaI8jQ8pWNyTrRIw"
     gemini_key = os.getenv("GEMINI_API_KEY", _fallback_key)
     if not gemini_key:
         return None
