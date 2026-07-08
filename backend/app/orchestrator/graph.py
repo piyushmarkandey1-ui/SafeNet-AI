@@ -352,7 +352,8 @@ def node_llm_enrich(state: OrchState) -> OrchState:
     return {**state, "llm_summary": llm_summary, "llm_model_used": llm_model_used}
 
 
-def node_decide(state: OrchState) -> OrchState:    """Routes the event to the correct action branch based on CRS thresholds."""
+def node_decide(state: OrchState) -> OrchState:
+    """Routes the event to the correct action branch based on CRS thresholds."""
     crs = state["crs"]
     if crs >= ESCALATION_THRESHOLD:
         action, severity = "escalate", "critical"
