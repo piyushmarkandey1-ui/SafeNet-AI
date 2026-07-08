@@ -10,10 +10,9 @@ import { useNavigate } from 'react-router-dom';
 import {
   Phone, Search, ArrowLeft, AlertTriangle, CheckCircle,
   ShieldAlert, FileText, Info, ChevronDown, ChevronUp,
-  Database, ScanText, List,
+  Database, ScanText, List, Home, LayoutDashboard,
 } from 'lucide-react';
-import { RiskBadge } from '../../components/ui/RiskBadge';
-import { GlassPanel } from '../../components/ui/GlassPanel';
+import { RiskBadge, GlassPanel, Breadcrumb } from '../../components/ui';
 import { checkNumber } from '../../lib/api';
 import './NumberChecker.css';
 
@@ -38,7 +37,6 @@ function SourceIcon({ label }) {
 }
 
 export default function NumberChecker() {
-  const navigate = useNavigate();
   const [phone, setPhone] = useState('');
   const [text, setText] = useState('');
   const [result, setResult] = useState(null);
@@ -75,18 +73,13 @@ export default function NumberChecker() {
 
   return (
     <div className="nc-page">
-      {/* ── Top Nav ──────────────────────────────────────────────────── */}
-      <header className="nc-topbar">
-        <button className="nc-back-btn" onClick={() => navigate('/dashboard')}>
-          <ArrowLeft size={16} />
-          <span>Dashboard</span>
-        </button>
-        <div className="nc-brand">
-          <Phone size={18} className="nc-brand-icon" />
-          <span>Number Risk Checker</span>
-        </div>
-        <span className="nc-disclaimer">⚠️ No live call interception · User-submitted only</span>
-      </header>
+      <Breadcrumb 
+        items={[
+          { label: 'Home', path: '/', icon: Home },
+          { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+          { label: 'Number Checker', icon: Phone }
+        ]}
+      />
 
       <main className="nc-main">
         {/* ── Input Card ───────────────────────────────────────────────── */}

@@ -2,6 +2,7 @@
  * SafeNet AI — Application Root
  */
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Navigation } from './components/ui';
 import DesignSystemPage from './pages/DesignSystemPage/DesignSystemPage';
 import Dashboard from './components/dashboard/Dashboard';
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -12,6 +13,7 @@ import './App.css';
 function App() {
   return (
     <BrowserRouter>
+      <Navigation />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />

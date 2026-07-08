@@ -23,8 +23,11 @@ import {
   X,
   Info,
   Camera,
+  Home,
+  LayoutDashboard,
+  Banknote,
 } from 'lucide-react';
-import { GlassPanel, RiskBadge } from '../../components/ui';
+import { GlassPanel, RiskBadge, Breadcrumb } from '../../components/ui';
 import NoteCamera from './NoteCamera';
 import { checkNote } from '../../lib/api';
 import { fadeInUp } from '../../lib/motion';
@@ -214,16 +217,14 @@ export default function NoteChecker() {
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <div className="note-checker">
-      {/* Nav */}
-      <nav className="note-checker__nav">
-        <button className="note-checker__nav-back" onClick={() => navigate('/dashboard')}>
-          <ArrowLeft size={16} />
-          Dashboard
-        </button>
-        <span className="note-checker__nav-title">Counterfeit Vision — Note Check</span>
-        <span className="note-checker__nav-badge">MobileNetV3 + Grad-CAM</span>
-      </nav>
-
+      <Breadcrumb 
+        items={[
+          { label: 'Home', path: '/', icon: Home },
+          { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+          { label: 'Note Checker', icon: Banknote }
+        ]}
+      />
+      
       {/* Body */}
       <div className="note-checker__body">
 
