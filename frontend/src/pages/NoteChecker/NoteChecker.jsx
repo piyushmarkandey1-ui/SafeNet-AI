@@ -74,20 +74,24 @@ function VerdictCard({ result }) {
     >
       <div className="verdict-header">
         <div>
-          <h2 className={`verdict-title ${isFake ? 'verdict-title--fake' : 'verdict-title--real'}`}>
+          <h2 className={`verdict-title ${result.severity === 'unknown' ? 'verdict-title--unknown' : (isFake ? 'verdict-title--fake' : 'verdict-title--real')}`}>
             <Icon size={20} style={{ display: 'inline', marginRight: 8, verticalAlign: 'middle' }} />
-            {isFake ? 'COUNTERFEIT DETECTED' : 'GENUINE NOTE'}
+            {result.severity === 'unknown' ? 'NO NOTE DETECTED' : (isFake ? 'COUNTERFEIT DETECTED' : 'GENUINE NOTE')}
           </h2>
-          <p className="verdict-denomination">
-            Denomination: <strong>{result.denomination}</strong>
-          </p>
+          {result.severity !== 'unknown' && (
+            <p className="verdict-denomination">
+              Denomination: <strong>{result.denomination}</strong>
+            </p>
+          )}
         </div>
-        <RiskBadge severity={result.severity} />
+        {result.severity !== 'unknown' && <RiskBadge severity={result.severity} />}
       </div>
 
       <p className="verdict-recommendation">{result.recommendation}</p>
 
-      <ConfidenceBar confidence={result.confidence} isFake={isFake} />
+      {result.severity !== 'unknown' && (
+        <ConfidenceBar confidence={result.confidence} isFake={isFake} />
+      )}
     </GlassPanel>
   );
 }

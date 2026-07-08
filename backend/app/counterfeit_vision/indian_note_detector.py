@@ -279,7 +279,12 @@ def check_indian_note(image_bytes: bytes) -> Dict:
     denom = basic_analysis["denomination"]
     
     # Generate recommendation
-    if is_fake:
+    if confidence < 0.50:
+        severity = "unknown"
+        recommendation = "No currency note detected in the frame. Please place a note clearly in view."
+        denom = "None"
+        is_fake = False
+    elif is_fake:
         if confidence > 0.85:
             severity = "critical"
             recommendation = f"ALERT: High-confidence counterfeit detected. Do not accept this note. Report to nearest bank or police station."
