@@ -8,20 +8,21 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-client = OpenAI(
-    api_key=os.getenv("FIREWORKS_API_KEY"),
-    base_url="https://api.fireworks.ai/inference/v1",
-)
-
 def analyze_currency_image_fireworks(base64_image: str) -> Optional[str]:
     """
-    Sends the base64 encoded image to Fireworks AI's Llama 3.2 Vision model
+    Sends the base64 encoded image to Fireworks AI's vision model
     to detect if it's a real Indian currency note, a fake note, or just a face/background.
     
     Returns a JSON string matching the required schema, or None if it fails.
     """
-    if not os.getenv("FIREWORKS_API_KEY"):
+    api_key = os.getenv("FIREWORKS_API_KEY")
+    if not api_key:
         return None
+
+    client = OpenAI(
+        api_key=api_key,
+        base_url="https://api.fireworks.ai/inference/v1",
+    )
         
     prompt = """You are an expert currency detector. You MUST output ONLY raw JSON. Do not include any explanations, thoughts, or markdown formatting.
 

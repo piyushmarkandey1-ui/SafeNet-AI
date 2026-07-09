@@ -129,7 +129,7 @@ def analyze_image_basic(image_bytes: bytes) -> Dict:
     return {
         "denomination": best_match or "unknown",
         "confidence": min(total_confidence, 0.95),  # Cap at 95% for basic analysis
-        "dominant_color": {"r": int(r), "g": int(g), "b": int(b)},
+        "dominant_color": {"r": int(r_avg), "g": int(g_avg), "b": int(b_avg)},
         "image_size": {"width": img.width, "height": img.height},
         "aspect_ratio": aspect_ratio,
         "detected_issues": issues,
