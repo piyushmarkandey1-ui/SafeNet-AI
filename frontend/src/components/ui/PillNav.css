@@ -17,6 +17,19 @@
 }
 
 @media (max-width: 768px) {
+  .pill-nav-item span {
+    display: none;
+  }
+}
+
+/* ── Hide on Mobile ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .pill-nav-wrapper {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
   .pill-nav-container {
     top: 10px;
     left: 50%;
