@@ -8,10 +8,15 @@ Supports: ₹10, ₹20, ₹50, ₹100, ₹200, ₹500, ₹2000
 """
 
 import io
+import json
 import base64
-import os
 from PIL import Image
 import numpy as np
+
+try:
+    from app.fireworks_vision_client import analyze_currency_image_fireworks
+except ImportError:
+    analyze_currency_image_fireworks = None
 from typing import Dict, Tuple
 
 # Indian Rupee denominations and their primary colors
@@ -282,19 +287,36 @@ def check_indian_note(image_bytes: bytes) -> Dict:
     """
     Main function to check Indian currency notes for authenticity.
     
-    Combines rule-based analysis with Gemini AI verification.
-    
-    Args:
-        image_bytes: Raw image bytes
-    
-    Returns:
-        Dict with full analysis results
+    Combines rule-based analysis with Gemini AI verification and Fireworks Vision.
     """
-    # Step 1: Basic image analysis
     basic_analysis = analyze_image_basic(image_bytes)
+    gemini_result = None
     
-    # Step 2: Gemini AI verification
-    gemini_result = verify_with_gemini(image_bytes, basic_analysis)
+    # Try Fireworks Vision First (Primary)
+    if analyze_currency_image_fireworks:
+        try:
+            b64_img = base64.b64encode(image_bytes).decode("utf-8")
+            fw_res = analyze_currency_image_fireworks(b64_img)
+            if fw_res:
+                # Cleanup potential markdown ticks from LLM output
+                fw_clean = fw_res.replace("```json", "").replace("```", "").strip()
+                fw_data = json.loads(fw_clean)
+                gemini_result = {
+                    "is_fake": fw_data.get("is_fake", False),
+                    "confidence": float(fw_data.get("confidence", 0.0)),
+                    "explanation": "\n".join(fw_data.get("detected_issues", [])),
+                    "verification_method": "fireworks-vision",
+                    "no_note": fw_data.get("no_note", False)
+                }
+                if fw_data.get("denomination") and fw_data.get("denomination") != "None":
+                    basic_analysis["denomination"] = str(fw_data.get("denomination"))
+        except Exception as e:
+            print(f"Fireworks vision failed: {e}")
+            pass
+            
+    # Fallback to Gemini / Rules
+    if not gemini_result:
+        gemini_result = verify_with_gemini(image_bytes, basic_analysis)
     
     # Step 3: Generate heatmap
     gradcam_overlay = generate_simple_heatmap(image_bytes)
