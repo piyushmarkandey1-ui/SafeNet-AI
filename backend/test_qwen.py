@@ -1,15 +1,34 @@
-from app.fireworks_client import clean_thinking_process
+import os
+from openai import OpenAI
+from dotenv import load_dotenv
 
-mock_text = """question. Do not lecture prematurely."
- * Grounding facts indicate a "high scam likelihood" but a "pattern match score: 0/100" (meaning no specific scam pattern is identified yet in the text, just a general high likelihood flag, perhaps based on context or system state).
+load_dotenv()
 
-3. **Formulate the Response:**
- * Acknowledge the user briefly and professionally.
- * Ask exactly *one* highly targeted clarifying question to
- * *Draft 2:* Hi there. To help me protect you effectively, could you tell me exactly what suspicious message, call, or transaction you're dealing with right now? (Good, one question, targeted).
- * *Draft 3.(Refining for persona and rules):* Hello. I'm here to help protect you. To get started, could you tell me exactly what suspicious call, message, or transaction you are currently dealing with?
+client = OpenAI(
+    api_key=os.getenv("FIREWORKS_API_KEY"),
+    base_url="https://api.fireworks.ai/inference/v1",
+)
 
-Hello. I'm here to help protect you. To get started, could you tell me exactly what suspicious call, message, or transaction you are currently dealing with?"""
+system_prompt = """You are Citizen Shield, an advanced AI fraud prevention assistant protecting Indian citizens.
+Your job is to analyze the user's situation and provide direct, clear, empathetic safety guidance.
 
-print("CLEANED RESPONSE:")
-print(clean_thinking_process(mock_text))
+RULES:
+1. Speak naturally, professionally, and directly.
+2. If the user's message is very brief (e.g. "hi"), welcome them and ask how you can help them stay safe.
+3. If they are reporting a scam, give them direct, bulleted instructions on what to do.
+4. Keep your response concise.
+5. Never output draft steps, rules, or internal monologue. Output ONLY the direct response to the user."""
+
+try:
+    response = client.chat.completions.create(
+        model="accounts/fireworks/models/glm-5p1",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": "I received a call from CBI saying my bank account will be blocked unless I transfer money.\n\n[GROUNDING FACTS]\n- Intent: suspicious_call\n- Pattern score: 95/100\n- Triggered tactics: [IMPERSONATION, URGENCY_THREAT, ACTION_REQUEST]"}
+        ],
+        temperature=0.7,
+        max_tokens=600
+    )
+    print("RESPONSE:\n", response.choices[0].message.content)
+except Exception as e:
+    print("FAILED: ", e)

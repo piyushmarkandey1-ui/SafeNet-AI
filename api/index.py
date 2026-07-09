@@ -89,7 +89,7 @@ def debug_llm():
             base_url="https://api.fireworks.ai/inference/v1",
         )
         response = client.chat.completions.create(
-            model="accounts/fireworks/models/qwen3p7-plus",
+            model="accounts/fireworks/models/glm-5p1",
             messages=[{"role": "user", "content": "Say 'Active'"}],
             temperature=0.1,
             max_tokens=10
