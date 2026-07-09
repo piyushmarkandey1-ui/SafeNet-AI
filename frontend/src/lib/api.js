@@ -19,14 +19,10 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Auto-detect API base URL
 const getApiBaseUrl = () => {
-  if (typeof window !== 'undefined') {
-    // On Vercel: use the current origin — /api/* rewrites handle routing
-    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      return window.location.origin;
-    }
-  }
-  // Local development: FastAPI uvicorn server
-  return 'http://localhost:8000';
+  // We use Vite proxy for local dev, and Vercel for production.
+  // Both automatically handle /api routes natively.
+  // Using an empty string ensures requests are made relatively (e.g. /api/...)
+  return '';
 };
 
 const API_BASE_URL = getApiBaseUrl();
