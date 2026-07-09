@@ -17,3 +17,4 @@ mangum==0.17.0
 # scipy==1.11.4
 langgraph==0.2.14
 langchain-core==0.2.33
+openai
