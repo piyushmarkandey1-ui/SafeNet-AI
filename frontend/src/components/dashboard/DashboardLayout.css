@@ -71,49 +71,54 @@
 /* ── Mobile Layout (< 768px) ───────────────────────────────────────── */
 @media (max-width: 768px) {
   .dashboard-layout {
-    height: auto;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
   }
   
   .dashboard-content {
     flex-direction: column;
     overflow-y: visible;
     height: auto;
+    padding-bottom: 80px; /* space for chat toggle */
   }
   
   .pane-left {
     width: 100%;
     height: auto;
-    min-height: 300px;
-    max-height: 50vh;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    min-height: 350px;
+    max-height: none;
+    box-shadow: none;
+    border-top: 1px solid var(--border-subtle);
+    order: 2;
   }
   
   .pane-center {
     width: 100%;
-    height: 60vh;
-    min-height: 400px;
-    order: -1; /* Map first on mobile */
+    height: 50vh;
+    min-height: 350px;
+    order: 1; /* Map first on mobile */
   }
   
   .pane-right {
     width: 100%;
     height: auto;
     max-height: none;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+    box-shadow: none;
+    border-top: 1px solid var(--border-subtle);
+    order: 3;
   }
 }
 
 /* ── Small Mobile (< 640px) ────────────────────────────────────────── */
 @media (max-width: 640px) {
   .pane-center {
-    height: 50vh;
+    height: 45vh;
     min-height: 300px;
   }
   
   .pane-left {
     min-height: 250px;
-    max-height: 40vh;
   }
 }
 

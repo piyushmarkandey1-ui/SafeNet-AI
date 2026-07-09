@@ -262,19 +262,23 @@
     order: 2;
     padding-bottom: var(--space-xs);
     border-bottom: 1px solid var(--border-subtle);
+    gap: var(--space-md);
   }
   
   .btn-note-check span,
-  .btn-simulate span {
+  .btn-simulate span,
+  .btn-report-incident span {
     display: none; /* Icon only on mobile */
   }
   
   .btn-note-check,
-  .btn-simulate {
+  .btn-simulate,
+  .btn-report-incident {
     padding: 10px;
     min-width: 44px;
     min-height: 44px;
     justify-content: center;
+    flex: 1;
   }
 }
 

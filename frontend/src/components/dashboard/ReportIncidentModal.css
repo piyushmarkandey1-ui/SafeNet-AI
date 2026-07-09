@@ -303,10 +303,15 @@
 
 /* Mobile */
 @media (max-width: 600px) {
-  .rim-modal { border-radius: 16px 16px 0 0; max-height: 95vh; }
   .rim-backdrop { align-items: flex-end; padding: 0; }
+  .rim-modal { border-radius: 20px 20px 0 0; max-height: 90vh; border-bottom: none; }
+  .rim-header { padding: 16px 20px 12px; }
+  .rim-body { padding: 16px 20px; gap: 16px; }
   .rim-type-grid { grid-template-columns: 1fr; }
   .rim-field-row { grid-template-columns: 1fr; }
   .rim-severity-row { gap: 6px; }
-  .rim-severity-btn { font-size: 12px; padding: 7px 10px; }
+  .rim-severity-btn { font-size: 13px; padding: 10px 12px; flex: 1; justify-content: center; }
+  .rim-footer { padding: 16px 20px 24px; flex-direction: column; gap: 12px; }
+  .rim-btn-primary, .rim-btn-secondary { width: 100%; justify-content: center; padding: 14px; font-size: 16px; }
+  .rim-input, .rim-select, .rim-textarea { font-size: 16px; /* Prevents iOS auto-zoom */ padding: 12px 14px; }
 }

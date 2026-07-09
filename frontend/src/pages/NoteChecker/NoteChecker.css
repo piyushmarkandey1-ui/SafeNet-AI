@@ -447,4 +447,12 @@
   .drop-zone {
     padding: var(--space-xl) var(--space-md);
   }
+  .btn-check {
+    padding: 16px;
+    font-size: 18px; /* Larger tap target */
+    border-radius: 12px;
+  }
+  .preview-img {
+    height: 180px;
+  }
 }
