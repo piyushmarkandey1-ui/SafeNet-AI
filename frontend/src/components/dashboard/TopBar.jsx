@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ShieldAlert, Play, Activity, ScanLine, PhoneCall, AlertTriangle, Network, Map, Shield, Phone, Flag } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { ShieldAlert, Network, Map, Shield, Flag, MoreVertical, Home, Search, Hash } from 'lucide-react';
 import { AmdStatusPanel } from './AmdStatusPanel';
 import './TopBar.css';
 
@@ -35,6 +35,19 @@ export function TopBar({ onSimulate, onReport }) {
   const navigate = useNavigate();
   const [isSimulating, setIsSimulating] = useState(false);
   const [activeModule, setActiveModule] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSimulate = () => {
     setIsSimulating(true);
@@ -91,6 +104,44 @@ export function TopBar({ onSimulate, onReport }) {
           <Flag size={16} />
           <span>Report Incident</span>
         </button>
+
+        {/* 3-dots Dropdown Navigation */}
+        <div className="topbar__menu-container" ref={menuRef}>
+          <button 
+            className="btn-kebab-menu cursor-target" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Menu"
+          >
+            <MoreVertical size={20} />
+          </button>
+          
+          {isMenuOpen && (
+            <div className="topbar__dropdown">
+              <Link to="/" className="dropdown-item" onClick={() => setIsMenuOpen(false)}>
+                <Home size={16} />
+                <span>Home</span>
+              </Link>
+              <Link to="/note-checker" className="dropdown-item" onClick={() => setIsMenuOpen(false)}>
+                <Search size={16} />
+                <span>Note Checker</span>
+              </Link>
+              <Link to="/number-checker" className="dropdown-item" onClick={() => setIsMenuOpen(false)}>
+                <Hash size={16} />
+                <span>Number Checker</span>
+              </Link>
+              <button 
+                className="dropdown-item" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  window.dispatchEvent(new CustomEvent('open-citizen-shield'));
+                }}
+              >
+                <Shield size={16} />
+                <span>Citizen Help Bot</span>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
