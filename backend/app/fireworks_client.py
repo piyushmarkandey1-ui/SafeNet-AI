@@ -71,6 +71,25 @@ FIREWORKS_BASE_URL = os.getenv(
 )
 
 
+def clean_thinking_process(text: str) -> str:
+    """Strips internal 'Thinking Process' blocks or '<think>' tags from the LLM output."""
+    if not text:
+        return text
+    import re
+    # 1. Strip XML-style <think>...</think> blocks
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL | re.IGNORECASE)
+    
+    # 2. Strip 'Thinking Process:' block separated by horizontal rules (---)
+    if re.search(r'\bthinking\s+process\b', text, re.IGNORECASE):
+        if "---" in text:
+            parts = text.split("---")
+            if re.search(r'\bthinking\s+process\b', parts[0], re.IGNORECASE):
+                return "---".join(parts[1:]).strip()
+        # Fallback: remove lines starting with 'Thinking Process' up to double newline
+        text = re.sub(r'(?i)^Thinking\s+Process:.*?(?=\n\n|\n[A-Za-z])', '', text, flags=re.DOTALL)
+    return text.strip()
+
+
 def _call_fireworks(
     messages: list[dict],
     task: str = "chat",
@@ -119,7 +138,9 @@ def _call_fireworks(
                 f"tokens_in={response.usage.prompt_tokens} "
                 f"tokens_out={response.usage.completion_tokens}"
             )
-        return text.strip() if text else None
+            # Post-process: strip internal reasoning chains
+            text = clean_thinking_process(text)
+        return text if text else None
     except Exception as e:
         logger.warning(f"[fireworks] Call failed (model={model_key}): {e}")
         return None
