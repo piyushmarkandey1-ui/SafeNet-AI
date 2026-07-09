@@ -33,19 +33,30 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
     el.addEventListener('mouseenter', handleMouseEnter);
     el.addEventListener('mouseleave', handleMouseLeave);
 
+    let scrollPos = 0;
+
     const loop = () => {
       // Only start scrolling once the content overflows the container
       if (!started) {
         if (el.scrollHeight > el.clientHeight + 10) {
           started = true;
+          scrollPos = el.scrollTop;
         }
       }
 
       if (started && !isHovered) {
-        el.scrollTop += 0.6;
+        scrollPos += 0.6; // Increment fractional position smoothly
+        el.scrollTop = Math.floor(scrollPos);
+
+        // If the browser rounded the write down and refused to scroll, force it
+        if (el.scrollTop < Math.floor(scrollPos) - 1) {
+          scrollPos = el.scrollTop + 0.6;
+        }
+
         // With 6x duplication, we snap back when we scroll past exactly 1 copy (scrollHeight / 6)
         if (el.scrollTop >= el.scrollHeight / 6) {
           el.scrollTop = 0;
+          scrollPos = 0;
         }
       }
       rafId = requestAnimationFrame(loop);
