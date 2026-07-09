@@ -399,6 +399,7 @@
 /* Fix dropdown position on mobile to prevent going off-screen */
 @media (max-width: 768px) {
   .topbar__dropdown {
-    right: -12px; /* Align near the edge of the screen */
+    right: 0; /* Align perfectly with the right edge of the button */
+    top: calc(100% + 4px);
   }
 }
