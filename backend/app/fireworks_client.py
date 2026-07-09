@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 # Models available on AMD Developer Cloud via Fireworks AI
 FIREWORKS_MODELS = {
     # Qwen models (Primary)
-    "qwen": "accounts/fireworks/models/qwen3p7-plus",
+    "qwen": "accounts/fireworks/models/qwen2p5-72b-instruct",
 
     # Gemma models (Google DeepMind, AMD-hosted via Fireworks)
     "gemma":        "accounts/fireworks/models/gemma2-9b-it",
@@ -312,41 +312,11 @@ def get_provider_status() -> dict:
 # ──────────────────────────────────────────────────────────────────────────────
 # Simple Helper Function (Qwen + Gemini Fallback)
 # ──────────────────────────────────────────────────────────────────────────────
-try:
-    from openai import OpenAI
-    # Setup dedicated clients for the helper function
-    _fw_helper_client = OpenAI(
-        api_key=os.getenv("FIREWORKS_API_KEY"),
-        base_url="https://api.fireworks.ai/inference/v1",
-    )
-except Exception:
-    _fw_helper_client = None
-
-try:
-    import google.generativeai as genai
-    genai.configure(api_key=os.getenv("GEMINI_API_KEY", ""))
-    _gemini_helper_model = genai.GenerativeModel("gemini-2.5-flash")
-except Exception:
-    _gemini_helper_model = None
-
 
 def get_ai_response(prompt: str) -> Optional[str]:
     """
-    Helper function querying Qwen 3.7 Plus via Fireworks, falling back to Gemini 2.5 Flash.
+    Helper function querying Qwen via Fireworks, falling back to Gemini, then OpenAI.
+    Re-uses the centralized `call_llm` logic for robust fallback handling.
     """
-    try:
-        response = _fw_helper_client.chat.completions.create(
-            model="accounts/fireworks/models/qwen3p7-plus",
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
-        )
-        return response.choices[0].message.content
-
-    except Exception as e:
-        logger.warning(f"Fireworks failed for get_ai_response: {e}")
-        
-        if _gemini_helper_model:
-            gemini_resp = _gemini_helper_model.generate_content(prompt)
-            return gemini_resp.text
-        return None
+    messages = [{"role": "user", "content": prompt}]
+    return call_llm(messages, task="chat")

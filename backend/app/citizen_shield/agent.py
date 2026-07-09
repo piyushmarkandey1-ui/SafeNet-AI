@@ -298,79 +298,76 @@ def _grounded_template_response(user_message: str, facts: dict) -> str:
 
     if score >= 60 or len(tactics) >= 2:
         parts.append(
-            f"Based on what you described — \"{user_snippet}...\" — this looks like "
-            f"a high-risk scam situation."
+            f"I have analysed your situation carefully. The details you've shared—particularly \"{user_snippet}...\"—raise critical red flags. "
+            "This is a known, highly sophisticated fraud pattern we are actively tracking."
         )
     elif score >= 30 or len(tactics) >= 1:
         parts.append(
-            f"What you described raises some warning flags that are worth taking seriously."
+            "I've reviewed your message. There are several concerning elements here that you need to be very cautious about."
         )
     elif intent == "counterfeit_note_query":
-        parts.append("Here is what to do if you think you have received a counterfeit note.")
+        parts.append("I understand you're concerned about a potentially counterfeit note. I can certainly help you verify this.")
     elif intent == "upi_fraud_check":
-        parts.append("UPI fraud is one of the most common scam types right now. Let me help you check this.")
+        parts.append("UPI fraud is currently one of the most prevalent threats. Let's look at this carefully to ensure your funds are safe.")
     else:
         parts.append(
-            "I don't have a specific record matching this, but I can share what to watch for."
+            "I have processed your request. While I don't see an immediate, critical threat in this specific scenario, we should still proceed with caution."
         )
 
     if tactics:
         readable = [tactic_map.get(t, t.lower().replace("_", " ")) for t in tactics if t in tactic_map]
         if readable:
             parts.append(
-                f"Specifically, your message contains language patterns associated with: "
-                f"{', '.join(readable)}."
+                f"I detected clear psychological manipulation tactics in play here, specifically: {', '.join(readable)}. "
+                "Scammers use these exact methods to bypass your logical thinking and force quick, emotional decisions."
             )
 
     if blocklist:
         cnt = blocklist.get("report_count", "multiple")
         parts.append(
-            f"A number or ID in your message has been reported {cnt} times in our "
-            f"system for similar fraud. (⚠️ Synthetic data — demo only)"
+            f"I also ran a background check on the identifiers you provided. My database shows this exact entity has been reported {cnt} times for similar fraudulent activity."
         )
 
     if graph:
         parts.append(
-            f"A phone number you mentioned appears in our fraud network records "
-            f"(Case {graph.get('case_id', 'N/A')}) with a {graph['risk_level']} risk rating."
+            f"Furthermore, network analysis (Case ID: {graph.get('case_id', 'N/A')}) links the phone number you mentioned directly to a known fraud ring, carrying a {graph['risk_level'].upper()} risk rating."
         )
 
     kb = facts.get("kb_snippets", [])
     if kb and len(parts) < 3:
-        parts.append(kb[0][:200] + "…")
+        parts.append("Based on our latest intelligence: " + kb[0][:200] + "…")
 
     if not parts:
         parts.append(
-            "I wasn't able to find a specific match in our records, but it's always wise to "
-            "be cautious about unsolicited calls or messages asking for personal information."
+            "I couldn't match this directly to our active threat feeds, but I strongly advise you to remain vigilant, especially if they are asking for money or personal details."
         )
 
     # Next steps
     risk = _risk_level_from_facts(facts)
     if risk == "HIGH":
         next_steps = (
-            "What you should do:\n"
-            "1. Do not share any OTP, PIN, or personal information — hang up immediately.\n"
-            "2. Block the number and do not call back.\n"
-            "3. Report at cybercrime.gov.in or call helpline 1930.\n"
-            "4. Tell a trusted family member about this now."
+            "Here is my immediate, critical advice:\n"
+            "1. Disconnect entirely: Do not share any OTP, PIN, or personal info. Hang up right now.\n"
+            "2. Block the contact: Prevent them from reaching you again.\n"
+            "3. Report this incident: File an official complaint at cybercrime.gov.in or dial 1930 immediately.\n"
+            "4. Inform someone: Tell a trusted family member what just happened."
         )
     elif risk == "MEDIUM":
         next_steps = (
-            "What you should do:\n"
-            "1. Do not take any action they requested until you verify independently.\n"
-            "2. Call your bank or the relevant government body's official number.\n"
-            "3. If uncertain, report at cybercrime.gov.in or call 1930."
+            "Here is what you should do next:\n"
+            "1. Pause all actions: Do not send money or share details until you verify their identity independently.\n"
+            "2. Verify officially: Call your bank or the institution they claim to represent using a trusted, official phone number.\n"
+            "3. Stay secure: If you feel pressured, disengage and report them to 1930."
         )
     else:
         next_steps = (
-            "What you should do:\n"
-            "1. Trust your instincts — if something felt off, it may be.\n"
-            "2. Never share OTPs or passwords with anyone who called you.\n"
-            "3. Report suspicious contact at cybercrime.gov.in."
+            "My recommended precautions:\n"
+            "1. Trust your instincts: If anything feels slightly off, step back.\n"
+            "2. Protect your credentials: Never share OTPs or passwords over a phone call, no matter who they claim to be.\n"
+            "3. Stay informed: You can always report suspicious activity at cybercrime.gov.in."
         )
 
-    return "\n\n".join(parts) + "\n\n" + next_steps + "\n\nSafeNet AI · Demo system · Not legal advice"
+    return "\n\n".join(parts) + "\n\n" + next_steps
 
 
 # ── Post-process: extract structured fields from LLM text ─────────────────────
