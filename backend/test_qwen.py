@@ -1,28 +1,15 @@
 from app.fireworks_client import clean_thinking_process
 
-mock_text = """Thinking Process:
+mock_text = """question. Do not lecture prematurely."
+ * Grounding facts indicate a "high scam likelihood" but a "pattern match score: 0/100" (meaning no specific scam pattern is identified yet in the text, just a general high likelihood flag, perhaps based on context or system state).
 
-1. **Analyze the Input:**
-   * User input: "hi"
-   * Grounding facts: Pattern match score: 0/100 (meaning no specific scam pattern detected yet, it's just a greeting).
-   * Persona: Citizen Shield, advanced AI fraud prevention assistant for Indian citizens.
+3. **Formulate the Response:**
+ * Acknowledge the user briefly and professionally.
+ * Ask exactly *one* highly targeted clarifying question to
+ * *Draft 2:* Hi there. To help me protect you effectively, could you tell me exactly what suspicious message, call, or transaction you're dealing with right now? (Good, one question, targeted).
+ * *Draft 3.(Refining for persona and rules):* Hello. I'm here to help protect you. To get started, could you tell me exactly what suspicious call, message, or transaction you are currently dealing with?
 
-2. **Determine the Intent/Goal:**
-   * User is saying hello.
-   * Respond with a welcoming greeting, introduce myself, and ask how I can assist them today.
-
-3. **Draft the Response:**
-   * Keep it brief and natural (as per rule 6: "reply naturally in 1-3 sentences").
-   * Avoid listing steps.
-
-4. **Refine (Self-Correction during drafting):**
-   * Do not quote grounding facts.
-   * Do not mention "0/100 score" in the response.
-
----
-
-Namaste! I am Citizen Shield, your AI fraud prevention assistant. How can I help you stay safe today? Tell me if you've received any suspicious calls or messages!"""
+Hello. I'm here to help protect you. To get started, could you tell me exactly what suspicious call, message, or transaction you are currently dealing with?"""
 
 print("CLEANED RESPONSE:")
 print(clean_thinking_process(mock_text))
-
