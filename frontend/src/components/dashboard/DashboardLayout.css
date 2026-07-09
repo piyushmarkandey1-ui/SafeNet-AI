@@ -23,6 +23,7 @@
   z-index: 10;
   box-shadow: 2px 0 12px rgba(0,0,0,0.5);
   overflow-y: auto;
+  order: -1; /* Ensure Risk Feed appears on the left */
 }
 
 .pane-center {

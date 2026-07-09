@@ -73,8 +73,9 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
     );
   }
 
-  // Duplicate items for seamless infinite scroll on desktop, keep standard on mobile
-  const loopedItems = isMobile ? items : [...items, ...items];
+  // Duplicate items heavily for seamless infinite scroll on desktop, keep standard on mobile
+  // We need enough items so that scrollHeight > clientHeight, otherwise scrollTop won't move!
+  const loopedItems = isMobile ? items : Array.from({ length: 8 }).flatMap(() => items);
 
   return (
     <div className="risk-feed" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
