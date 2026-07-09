@@ -40,6 +40,51 @@ def health():
     return {"status": "ok", "message": "SafeNet AI backend is running."}
 
 
+# ── LLM Debug Endpoint ────────────────────────────────────────────────────────
+@app.get("/api/debug-llm")
+def debug_llm():
+    """Temporary diagnostic endpoint to debug Fireworks API failures in production."""
+    import os
+    from openai import OpenAI
+    
+    fw_key = os.getenv("FIREWORKS_API_KEY", "")
+    masked_key = f"{fw_key[:6]}...{fw_key[-4:]}" if len(fw_key) > 10 else "not set or too short"
+    
+    diagnostic = {
+        "env_keys_present": {
+            "FIREWORKS_API_KEY": bool(fw_key),
+            "GEMINI_API_KEY": bool(os.getenv("GEMINI_API_KEY")),
+            "OPENAI_API_KEY": bool(os.getenv("OPENAI_API_KEY")),
+            "LLM_API_KEY": bool(os.getenv("LLM_API_KEY")),
+        },
+        "masked_fireworks_key": masked_key,
+        "test_call_result": None,
+        "test_call_error": None
+    }
+    
+    if not fw_key:
+        diagnostic["test_call_error"] = "FIREWORKS_API_KEY is missing from environment variables."
+        return diagnostic
+        
+    try:
+        client = OpenAI(
+            api_key=fw_key,
+            base_url="https://api.fireworks.ai/inference/v1",
+        )
+        response = client.chat.completions.create(
+            model="accounts/fireworks/models/qwen3p7-plus",
+            messages=[{"role": "user", "content": "Say 'Active'"}],
+            temperature=0.1,
+            max_tokens=10
+        )
+        diagnostic["test_call_result"] = response.choices[0].message.content.strip()
+    except Exception as e:
+        diagnostic["test_call_error"] = f"{type(e).__name__}: {str(e)}"
+        
+    return diagnostic
+
+
+
 # ── Counterfeit Note Checker ──────────────────────────────────────────────────
 # Attempt to load the full router; if not possible, add a minimal inline route.
 try:
