@@ -16,15 +16,16 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
   const scrollRef = useRef(null);
   const isMobile = useIsMobile();
 
-  // Auto-scroll logic that allows native user scrolling (Disabled on mobile)
+  // Auto-scroll logic for desktop — smooth infinite ticker
   useEffect(() => {
     if (isMobile) return;
-    
+
     const el = scrollRef.current;
     if (!el) return;
 
     let rafId;
     let isHovered = false;
+    let started = false;
 
     const handleMouseEnter = () => (isHovered = true);
     const handleMouseLeave = () => (isHovered = false);
@@ -33,9 +34,16 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
     el.addEventListener('mouseleave', handleMouseLeave);
 
     const loop = () => {
-      if (!isHovered) {
-        el.scrollTop += 0.5; // Auto-scroll speed
-        // If we've scrolled past the first half of the duplicated list, snap back to top seamlessly
+      // Only start scrolling once the content overflows the container
+      if (!started) {
+        if (el.scrollHeight > el.clientHeight + 20) {
+          started = true;
+        }
+      }
+
+      if (started && !isHovered) {
+        el.scrollTop += 0.6;
+        // When we've scrolled exactly half, snap back seamlessly
         if (el.scrollTop >= el.scrollHeight / 2) {
           el.scrollTop = 0;
         }
@@ -50,7 +58,7 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
       el.removeEventListener('mouseenter', handleMouseEnter);
       el.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [items, isMobile]); // Re-bind if items change, though it shouldn't matter much
+  }, [items, isMobile]);
 
   if (loading) {
     return (
@@ -73,9 +81,10 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
     );
   }
 
-  // Duplicate items heavily for seamless infinite scroll on desktop, keep standard on mobile
-  // We need enough items so that scrollHeight > clientHeight, otherwise scrollTop won't move!
-  const loopedItems = isMobile ? items : Array.from({ length: 8 }).flatMap(() => items);
+  // Duplicate items once for seamless infinite scroll on desktop.
+  // We snap back when we've scrolled exactly one "copy" worth of height,
+  // which equals scrollHeight / 2. Only duplicate on desktop.
+  const loopedItems = isMobile ? items : [...items, ...items];
 
   return (
     <div className="risk-feed" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>

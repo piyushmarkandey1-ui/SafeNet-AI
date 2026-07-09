@@ -37,6 +37,11 @@ export function CrimeMap({ hotspots = [], loading, selectedEvent, userReports = 
 
   return (
     <div className="crime-map-container">
+      {/* Map title badge — top-left corner */}
+      <div className="crime-map-badge">
+        <span className="crime-map-badge__dot" />
+        Live Threat Heatmap
+      </div>
       <MapContainer
         center={center}
         zoom={5}
