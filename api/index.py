@@ -40,6 +40,23 @@ def health():
     return {"status": "ok", "message": "SafeNet AI backend is running."}
 
 
+# ── Provider Status (used by AMD status panel) ────────────────────────────────
+@app.get("/api/provider-status", summary="LLM provider and AMD inference status")
+def get_provider_status_endpoint():
+    """Returns LLM providers and AMD ROCm status. Used by dashboard status panel."""
+    try:
+        from app.fireworks_client import get_provider_status
+        return get_provider_status()
+    except Exception as e:
+        return {
+            "active_provider": "none",
+            "active_model": "template-fallback",
+            "amd_inference": False,
+            "error": str(e)
+        }
+
+
+
 # ── LLM Debug Endpoint ────────────────────────────────────────────────────────
 @app.get("/api/debug-llm")
 def debug_llm():
