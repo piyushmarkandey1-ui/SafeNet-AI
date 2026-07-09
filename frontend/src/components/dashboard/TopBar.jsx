@@ -1,40 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldAlert, Shield, Flag, Menu, Home, Search, Hash, Network, Map } from 'lucide-react';
+import { ShieldAlert, Shield, Flag, Menu, Home, Search, Hash } from 'lucide-react';
 import { AmdStatusPanel } from './AmdStatusPanel';
 import './TopBar.css';
-
-const MODULES = [
-  {
-    id: 'graph',
-    name: 'Fraud Graph',
-    icon: Network,
-    tooltip: 'Click any event in Risk Feed',
-    action: 'scroll',
-    target: 'risk-feed-panel',
-  },
-  {
-    id: 'geo',
-    name: 'Heatmap',
-    icon: Map,
-    tooltip: 'View Crime Map',
-    action: 'scroll',
-    target: 'crime-map-panel',
-  },
-  {
-    id: 'chat',
-    name: 'Citizen Shield',
-    icon: Shield,
-    tooltip: 'Open AI Chat',
-    action: 'event',
-    target: 'open-citizen-shield',
-  },
-];
 
 export function TopBar({ onSimulate, onReport }) {
   const navigate = useNavigate();
   const [isSimulating, setIsSimulating] = useState(false);
-  const [activeModule, setActiveModule] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -55,44 +27,12 @@ export function TopBar({ onSimulate, onReport }) {
     setTimeout(() => setIsSimulating(false), 5000);
   };
 
-  const handleModuleClick = (mod) => {
-    setActiveModule(mod.id);
-    setTimeout(() => setActiveModule(null), 1500);
-
-    if (mod.action === 'navigate') {
-      navigate(mod.target);
-    } else if (mod.action === 'scroll') {
-      const el = document.getElementById(mod.target);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else if (mod.action === 'event') {
-      window.dispatchEvent(new CustomEvent(mod.target));
-    }
-  };
-
   return (
     <header className="topbar">
       <div className="topbar__brand">
         <ShieldAlert className="topbar__logo" size={24} />
         <h1 className="topbar__title">SafeNet AI Command Center</h1>
       </div>
-
-      <nav className="topbar__modules">
-        {MODULES.map((mod) => {
-          const Icon = mod.icon;
-          return (
-            <button
-              key={mod.id}
-              className={`topbar__module-btn ${activeModule === mod.id ? 'active' : ''}`}
-              onClick={() => handleModuleClick(mod)}
-              title={mod.tooltip}
-            >
-              <span className="status-dot healthy" />
-              <Icon size={13} className="module-icon" />
-              <span className="status-name">{mod.name}</span>
-            </button>
-          );
-        })}
-      </nav>
 
       <div className="topbar__actions">
         <AmdStatusPanel />

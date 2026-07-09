@@ -2,7 +2,6 @@
  * SafeNet AI — Application Root
  */
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Navigation } from './components/ui';
 import TargetCursor from './components/ui/TargetCursor';
 import DesignSystemPage from './pages/DesignSystemPage/DesignSystemPage';
 import Dashboard from './components/dashboard/Dashboard';
@@ -24,7 +23,6 @@ function App() {
         cursorColorOnTarget="#ffffff"
         hoverDuration={0.15}
       />
-      <Navigation />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />

@@ -241,7 +241,19 @@
   }
   
   .topbar__modules {
-    display: none; /* Hide modules on mobile */
+    width: 100%;
+    gap: var(--space-xs);
+    justify-content: center;
+    order: 3;
+  }
+  
+  .topbar__module-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .status-name {
+    display: none; /* Hide labels on mobile, icons only */
   }
   
   .topbar__actions {
@@ -307,14 +319,8 @@
 
 .topbar__menu-container {
   position: relative;
-  display: none; /* Hidden on desktop */
+  display: flex;
   align-items: center;
-}
-
-@media (max-width: 768px) {
-  .topbar__menu-container {
-    display: flex; /* Show only on mobile */
-  }
 }
 
 .btn-kebab-menu {
