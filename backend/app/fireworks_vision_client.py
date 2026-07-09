@@ -42,7 +42,7 @@ def analyze_currency_image_fireworks(base64_image: str) -> Optional[str]:
     
     try:
         response = client.chat.completions.create(
-            model="accounts/fireworks/models/llama-v3p2-11b-vision-instruct",
+            model="accounts/fireworks/models/qwen3p7-plus",
             messages=[
                 {
                     "role": "user",

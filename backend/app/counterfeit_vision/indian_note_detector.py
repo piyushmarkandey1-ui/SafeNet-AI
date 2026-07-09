@@ -305,7 +305,7 @@ def check_indian_note(image_bytes: bytes) -> Dict:
                     "is_fake": fw_data.get("is_fake", False),
                     "confidence": float(fw_data.get("confidence", 0.0)),
                     "explanation": "\n".join(fw_data.get("detected_issues", [])),
-                    "verification_method": "fireworks-vision",
+                    "verification_method": "qwen3p7-plus-vision",
                     "no_note": fw_data.get("no_note", False)
                 }
                 if fw_data.get("denomination") and fw_data.get("denomination") != "None":

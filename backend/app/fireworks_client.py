@@ -37,7 +37,10 @@ logger = logging.getLogger(__name__)
 # ── Fireworks AI model catalogue (AMD-hosted) ──────────────────────────────────
 # Models available on AMD Developer Cloud via Fireworks AI
 FIREWORKS_MODELS = {
-    # Gemma models (Google DeepMind, AMD-hosted via Fireworks — bonus prize eligible)
+    # Qwen models (Primary)
+    "qwen": "accounts/fireworks/models/qwen3p7-plus",
+
+    # Gemma models (Google DeepMind, AMD-hosted via Fireworks)
     "gemma":        "accounts/fireworks/models/gemma2-9b-it",
     "gemma_large":  "accounts/fireworks/models/gemma2-27b-it",
 
@@ -45,21 +48,21 @@ FIREWORKS_MODELS = {
     "llama_small":  "accounts/fireworks/models/llama-v3p1-8b-instruct",
     "llama_medium": "accounts/fireworks/models/llama-v3p1-70b-instruct",
 
-    # Mixtral (fast, cheap — good for classification tasks)
+    # Mixtral
     "mixtral":      "accounts/fireworks/models/mixtral-8x7b-instruct",
 
-    # FireFunction (tool-use optimised)
+    # FireFunction
     "firefunction": "accounts/fireworks/models/firefunction-v2",
 }
 
 # Task → model mapping (cheapest sufficient model per task type)
 TASK_MODEL_MAP = {
-    "classification":   "llama_small",    # cheap, fast, accurate for pattern scoring
-    "chat":             "gemma",          # Gemma for citizen-facing chat (bonus prize)
-    "chat_complex":     "gemma_large",    # longer, multi-turn conversations
-    "verification":     "llama_medium",   # note / fraud verification needs more reasoning
-    "translation":      "mixtral",        # good multilingual, cost-efficient
-    "summarisation":    "llama_small",    # straightforward task
+    "classification":   "qwen",
+    "chat":             "qwen",
+    "chat_complex":     "qwen",
+    "verification":     "qwen",
+    "translation":      "qwen",
+    "summarisation":    "qwen",
 }
 
 FIREWORKS_BASE_URL = os.getenv(
@@ -93,8 +96,8 @@ def _call_fireworks(
     if not api_key:
         return None
 
-    model_key = TASK_MODEL_MAP.get(task, "gemma")
-    model_id = FIREWORKS_MODELS.get(model_key, FIREWORKS_MODELS["gemma"])
+    model_key = TASK_MODEL_MAP.get(task, "qwen")
+    model_id = FIREWORKS_MODELS.get(model_key, FIREWORKS_MODELS["qwen"])
 
     try:
         # Use openai SDK with Fireworks base URL (compatible API)
@@ -274,10 +277,10 @@ def get_provider_status() -> dict:
 
     if fireworks_key:
         active_provider = "fireworks-ai"
-        active_model = FIREWORKS_MODELS["gemma"]
+        active_model = FIREWORKS_MODELS["qwen"]
     elif gemini_key:
         active_provider = "gemini"
-        active_model = "gemini-2.0-flash"
+        active_model = "gemini-2.5-flash"
     elif openai_key:
         active_provider = "openai"
         active_model = os.getenv("OPENAI_MODEL", "gpt-4o")
