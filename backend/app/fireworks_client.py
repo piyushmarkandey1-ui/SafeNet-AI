@@ -305,3 +305,43 @@ def get_provider_status() -> dict:
             },
         },
     }
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Simple Helper Function (Qwen + Gemini Fallback)
+# ──────────────────────────────────────────────────────────────────────────────
+from openai import OpenAI
+import google.generativeai as genai
+
+# Setup dedicated clients for the helper function
+_fw_helper_client = OpenAI(
+    api_key=os.getenv("FIREWORKS_API_KEY"),
+    base_url="https://api.fireworks.ai/inference/v1",
+)
+
+try:
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY", ""))
+    _gemini_helper_model = genai.GenerativeModel("gemini-2.5-flash")
+except Exception:
+    _gemini_helper_model = None
+
+
+def get_ai_response(prompt: str) -> Optional[str]:
+    """
+    Helper function querying Qwen 3.7 Plus via Fireworks, falling back to Gemini 2.5 Flash.
+    """
+    try:
+        response = _fw_helper_client.chat.completions.create(
+            model="accounts/fireworks/models/qwen3p7-plus",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content
+
+    except Exception as e:
+        logger.warning(f"Fireworks failed for get_ai_response: {e}")
+        
+        if _gemini_helper_model:
+            gemini_resp = _gemini_helper_model.generate_content(prompt)
+            return gemini_resp.text
+        return None
