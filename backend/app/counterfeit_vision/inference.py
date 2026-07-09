@@ -323,14 +323,20 @@ def check_note(image_bytes: bytes) -> dict:
             "recommendation": "Mock response: Vercel serverless environment does not support PyTorch.",
         }
 
+    import contextlib
+
     model, device, label_map = get_model()
 
     input_tensor, pil_image = _bytes_to_tensor(image_bytes)
 
-    with torch.no_grad():
-        auth_logits, denom_logits = model(input_tensor.to(device))
-        auth_probs = F.softmax(auth_logits, dim=1)[0]
-        denom_probs = F.softmax(denom_logits, dim=1)[0]
+    # Use Automatic Mixed Precision (AMP) for faster AMD GPU execution & lower memory usage
+    autocast_ctx = torch.amp.autocast(device_type="cuda") if device.type == "cuda" else contextlib.nullcontext()
+
+    with autocast_ctx:
+        with torch.no_grad():
+            auth_logits, denom_logits = model(input_tensor.to(device))
+            auth_probs = F.softmax(auth_logits, dim=1)[0]
+            denom_probs = F.softmax(denom_logits, dim=1)[0]
 
     auth_idx = int(auth_probs.argmax().item())
     denom_idx = int(denom_probs.argmax().item())
