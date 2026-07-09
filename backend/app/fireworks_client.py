@@ -285,10 +285,34 @@ def get_provider_status() -> dict:
         active_provider = "openai"
         active_model = os.getenv("OPENAI_MODEL", "gpt-4o")
 
+    # Detect local PyTorch & GPU/ROCm hardware info
+    local_gpu = {
+        "torch_available": False,
+        "gpu_available": False,
+        "device_name": None,
+        "platform": None
+    }
+    try:
+        import torch
+        local_gpu["torch_available"] = True
+        local_gpu["gpu_available"] = torch.cuda.is_available()
+        if torch.cuda.is_available():
+            local_gpu["device_name"] = torch.cuda.get_device_name(0)
+            # Detect AMD HIP / ROCm platform
+            if hasattr(torch, "version") and hasattr(torch.version, "hip") and torch.version.hip is not None:
+                local_gpu["platform"] = f"ROCm ({torch.version.hip})"
+            else:
+                local_gpu["platform"] = "CUDA"
+        else:
+            local_gpu["platform"] = "CPU fallback"
+    except Exception:
+        pass
+
     return {
         "active_provider": active_provider,
         "active_model": active_model,
         "amd_inference": active_provider == "fireworks-ai",
+        "local_gpu": local_gpu,
         "providers": {
             "fireworks_ai": {
                 "configured": bool(fireworks_key),

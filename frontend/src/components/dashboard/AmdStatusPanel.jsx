@@ -15,13 +15,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Cpu, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 import './AmdStatusPanel.css';
 
-const API_BASE = (() => {
-  if (typeof window !== 'undefined') {
-    const h = window.location.hostname;
-    if (h !== 'localhost' && h !== '127.0.0.1') return window.location.origin;
-  }
-  return 'http://localhost:8000';
-})();
+const API_BASE = '';
 
 async function fetchProviderStatus() {
   try {
@@ -108,13 +102,42 @@ export function AmdStatusPanel() {
               <span className="amd-detail__val">{status.active_model ?? '—'}</span>
             </div>
             <div className="amd-detail__row">
-              <span className="amd-detail__key">AMD inference</span>
+              <span className="amd-detail__key">AMD LLM Inference</span>
               <span className={`amd-detail__val ${isAmd ? 'amd-detail__val--on' : 'amd-detail__val--off'}`}>
                 {isAmd ? '✓ Active' : '✗ Inactive'}
               </span>
             </div>
+
+            {status.local_gpu && (
+              <>
+                <div className="amd-detail__row" style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '8px', marginTop: '8px' }}>
+                  <span className="amd-detail__key">Local Vision GPU</span>
+                  <span className={`amd-detail__val ${status.local_gpu.gpu_available ? 'amd-detail__val--on' : 'amd-detail__val--off'}`}>
+                    {status.local_gpu.gpu_available ? '✓ Active' : '✗ Inactive'}
+                  </span>
+                </div>
+                {status.local_gpu.gpu_available ? (
+                  <>
+                    <div className="amd-detail__row">
+                      <span className="amd-detail__key">GPU Device</span>
+                      <span className="amd-detail__val">{status.local_gpu.device_name || 'AMD GPU'}</span>
+                    </div>
+                    <div className="amd-detail__row">
+                      <span className="amd-detail__key">Compute Stack</span>
+                      <span className="amd-detail__val">{status.local_gpu.platform}</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="amd-detail__row">
+                    <span className="amd-detail__key">Compute Stack</span>
+                    <span className="amd-detail__val">{status.local_gpu.platform || 'CPU Fallback'}</span>
+                  </div>
+                )}
+              </>
+            )}
+
             {status.providers?.fireworks_ai && (
-              <div className="amd-detail__routing">
+              <div className="amd-detail__routing" style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '8px', marginTop: '8px' }}>
                 <span className="amd-detail__key">Task routing</span>
                 <ul className="amd-detail__routes">
                   {Object.entries(status.providers.fireworks_ai.task_routing ?? {}).map(([task, model]) => (
@@ -128,12 +151,13 @@ export function AmdStatusPanel() {
             )}
             {!isAmd && (
               <p className="amd-detail__hint">
-                Set <code>FIREWORKS_API_KEY</code> to enable AMD GPU inference.
+                Set <code>FIREWORKS_API_KEY</code> to enable AMD GPU LLM inference.
               </p>
             )}
           </motion.div>
         )}
       </AnimatePresence>
+
     </div>
   );
 }
