@@ -266,19 +266,23 @@
   }
   
   .btn-note-check span,
-  .btn-simulate span,
-  .btn-report-incident span {
+  .btn-simulate span {
     display: none; /* Icon only on mobile */
   }
   
   .btn-note-check,
-  .btn-simulate,
-  .btn-report-incident {
+  .btn-simulate {
     padding: 10px;
     min-width: 44px;
     min-height: 44px;
     justify-content: center;
-    flex: 1;
+  }
+  
+  .btn-report-incident {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    font-size: 15px;
   }
 }
 
