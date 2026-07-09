@@ -223,16 +223,16 @@
 /* ── Mobile (< 768px) ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .topbar {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-md) var(--space-md); /* Increased top/bottom padding */
     min-height: auto;
     flex-wrap: wrap;
-    gap: var(--space-sm);
+    gap: 12px; /* Increased vertical gap between title and buttons */
   }
   
   .topbar__brand {
     width: 100%;
     justify-content: center;
-    padding-bottom: var(--space-xs);
+    padding-bottom: 12px; /* More breathing room */
     border-bottom: 1px solid var(--border-subtle);
   }
   
@@ -250,8 +250,8 @@
     display: flex;
     flex-wrap: nowrap; /* Prevent wrapping */
     order: 2;
-    padding-bottom: var(--space-xs);
-    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 0; /* Remove unnecessary bottom padding */
+    border-bottom: none; /* Remove unnecessary bottom border */
     gap: var(--space-md);
   }
   
