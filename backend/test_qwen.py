@@ -11,7 +11,7 @@ client = OpenAI(
 
 try:
     response = client.chat.completions.create(
-        model="accounts/fireworks/models/qwen3p7-plus",
+        model="accounts/fireworks/models/gemma-2-9b-it",
         messages=[
             {
                 "role": "user",
@@ -21,4 +21,4 @@ try:
     )
     print("SUCCESS: ", response.choices[0].message.content)
 except Exception as e:
-    print(f"FAILED: {e}")
+    print("FAILED: ", e)

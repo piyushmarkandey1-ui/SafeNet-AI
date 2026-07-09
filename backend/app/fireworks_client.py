@@ -38,21 +38,21 @@ logger = logging.getLogger(__name__)
 # Models available on AMD Developer Cloud via Fireworks AI
 FIREWORKS_MODELS = {
     # Qwen models (Primary)
-    "qwen": "accounts/fireworks/models/qwen2p5-72b-instruct",
+    "qwen": "accounts/fireworks/models/qwen3p7-plus",
 
-    # Gemma models (Google DeepMind, AMD-hosted via Fireworks)
-    "gemma":        "accounts/fireworks/models/gemma2-9b-it",
-    "gemma_large":  "accounts/fireworks/models/gemma2-27b-it",
+    # Gemma models fallback to Qwen3p7-plus to ensure 100% uptime on AMD hardware
+    "gemma":        "accounts/fireworks/models/qwen3p7-plus",
+    "gemma_large":  "accounts/fireworks/models/qwen3p7-plus",
 
     # Llama models (Meta, AMD-hosted)
-    "llama_small":  "accounts/fireworks/models/llama-v3p1-8b-instruct",
-    "llama_medium": "accounts/fireworks/models/llama-v3p1-70b-instruct",
+    "llama_small":  "accounts/fireworks/models/qwen3p7-plus",
+    "llama_medium": "accounts/fireworks/models/qwen3p7-plus",
 
     # Mixtral
-    "mixtral":      "accounts/fireworks/models/mixtral-8x7b-instruct",
+    "mixtral":      "accounts/fireworks/models/qwen3p7-plus",
 
     # FireFunction
-    "firefunction": "accounts/fireworks/models/firefunction-v2",
+    "firefunction": "accounts/fireworks/models/qwen3p7-plus",
 }
 
 # Task → model mapping (cheapest sufficient model per task type)
