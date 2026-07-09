@@ -367,7 +367,23 @@ def _grounded_template_response(user_message: str, facts: dict) -> str:
             "3. Stay informed: You can always report suspicious activity at cybercrime.gov.in."
         )
 
-    return "\n\n".join(parts) + "\n\n" + next_steps
+    # Check if any LLM API key is present in environment
+    has_keys = bool(
+        os.getenv("FIREWORKS_API_KEY") or 
+        os.getenv("GEMINI_API_KEY") or 
+        os.getenv("OPENAI_API_KEY") or 
+        os.getenv("LLM_API_KEY")
+    )
+    
+    alert = ""
+    if not has_keys:
+        alert = (
+            "\n\n⚠️ **Deployment Alert**: SafeNet AI is currently running in offline fallback mode because no active LLM API keys "
+            "(Fireworks AI, Gemini, or OpenAI) are configured in this environment. If this is deployed on Vercel, please add "
+            "`FIREWORKS_API_KEY` to your Vercel Project Settings to enable live AMD GPU intelligence."
+        )
+
+    return "\n\n".join(parts) + "\n\n" + next_steps + alert
 
 
 # ── Post-process: extract structured fields from LLM text ─────────────────────
