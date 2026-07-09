@@ -36,15 +36,15 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
     const loop = () => {
       // Only start scrolling once the content overflows the container
       if (!started) {
-        if (el.scrollHeight > el.clientHeight + 20) {
+        if (el.scrollHeight > el.clientHeight + 10) {
           started = true;
         }
       }
 
       if (started && !isHovered) {
         el.scrollTop += 0.6;
-        // When we've scrolled exactly half, snap back seamlessly
-        if (el.scrollTop >= el.scrollHeight / 2) {
+        // With 6x duplication, we snap back when we scroll past exactly 1 copy (scrollHeight / 6)
+        if (el.scrollTop >= el.scrollHeight / 6) {
           el.scrollTop = 0;
         }
       }
@@ -81,10 +81,8 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
     );
   }
 
-  // Duplicate items once for seamless infinite scroll on desktop.
-  // We snap back when we've scrolled exactly one "copy" worth of height,
-  // which equals scrollHeight / 2. Only duplicate on desktop.
-  const loopedItems = isMobile ? items : [...items, ...items];
+  // Duplicate items 6 times on desktop to guarantee scroll overflow, even with few items.
+  const loopedItems = isMobile ? items : Array.from({ length: 6 }).flatMap(() => items);
 
   return (
     <div className="risk-feed" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
