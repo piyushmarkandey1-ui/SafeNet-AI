@@ -86,7 +86,7 @@ def clean_thinking_process(text: str) -> str:
             if re.search(r'\bthinking\s+process\b', parts[0], re.IGNORECASE):
                 return "---".join(parts[1:]).strip()
         # Fallback: remove lines starting with 'Thinking Process' up to double newline
-        text = re.sub(r'(?i)^Thinking\s+Process:.*?(?=\n\n|\n[A-Za-z])', '', text, flags=re.DOTALL)
+        text = re.sub(r'(?i)\s*Thinking\s+Process:.*?(?=\n\n|\n[A-Za-z]|$)', '', text, flags=re.DOTALL)
     return text.strip()
 
 
