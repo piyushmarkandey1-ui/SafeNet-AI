@@ -10,6 +10,7 @@ Supports: ₹10, ₹20, ₹50, ₹100, ₹200, ₹500, ₹2000
 import io
 import json
 import base64
+import os
 from PIL import Image
 import numpy as np
 
@@ -298,8 +299,14 @@ def check_indian_note(image_bytes: bytes) -> Dict:
             b64_img = base64.b64encode(image_bytes).decode("utf-8")
             fw_res = analyze_currency_image_fireworks(b64_img)
             if fw_res:
-                # Cleanup potential markdown ticks from LLM output
-                fw_clean = fw_res.replace("```json", "").replace("```", "").strip()
+                # Robustly extract JSON block
+                start_idx = fw_res.find('{')
+                end_idx = fw_res.rfind('}')
+                if start_idx != -1 and end_idx != -1:
+                    fw_clean = fw_res[start_idx:end_idx+1]
+                else:
+                    fw_clean = fw_res.replace("```json", "").replace("```", "").strip()
+                
                 fw_data = json.loads(fw_clean)
                 gemini_result = {
                     "is_fake": fw_data.get("is_fake", False),

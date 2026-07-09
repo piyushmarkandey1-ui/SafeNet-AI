@@ -23,22 +23,15 @@ def analyze_currency_image_fireworks(base64_image: str) -> Optional[str]:
     if not os.getenv("FIREWORKS_API_KEY"):
         return None
         
-    prompt = """
-    You are an expert currency detector. Analyze this image of an Indian Rupee note.
-    Determine the following:
-    1. Is there actually a currency note in the image, or is it just a person's face / a random background?
-    2. If it is a note, what is its denomination (10, 20, 50, 100, 200, 500, 2000)?
-    3. Are there signs it is counterfeit or a poorly printed fake?
-    
-    Respond ONLY with a valid JSON object matching this schema exactly:
-    {
-        "no_note": true or false,
-        "is_fake": true or false,
-        "denomination": "500" (or other valid denomination, or "None"),
-        "confidence": 0.95,
-        "detected_issues": ["list", "of", "issues"]
-    }
-    """
+    prompt = """You are an expert currency detector. You MUST output ONLY raw JSON. Do not include any explanations, thoughts, or markdown formatting.
+
+Analyze the image and determine:
+1. Is there a currency note?
+2. What is its denomination?
+3. Are there counterfeit signs?
+
+Return ONLY this JSON structure:
+{"no_note": false, "is_fake": false, "denomination": "500", "confidence": 0.95, "detected_issues": []}"""
     
     try:
         response = client.chat.completions.create(
