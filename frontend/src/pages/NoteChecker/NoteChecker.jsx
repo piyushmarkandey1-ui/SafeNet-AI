@@ -270,7 +270,6 @@ export default function NoteChecker() {
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
-                onClick={() => fileInputRef.current?.click()}
               >
                 <input
                   ref={fileInputRef}
