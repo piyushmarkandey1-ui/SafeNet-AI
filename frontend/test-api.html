@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>SafeNet AI - Note Checker API Test</h1>
+    <input type="file" id="fileInput" accept="image/*">
+    <button onclick="testAPI()">Test API</button>
+    <pre id="result"></pre>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+        
+        async function testAPI() {
+            const fileInput = document.getElementById('fileInput');
+            const resultEl = document.getElementById('result');
+            
+            if (!fileInput.files[0]) {
+                resultEl.textContent = 'Please select an image first';
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            
+            resultEl.textContent = 'Sending request to: ' + API_BASE_URL + '/api/vision/check-note\n\nWaiting...';
+            
+            try {
+                const response = await fetch(API_BASE_URL + '/api/vision/check-note', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                resultEl.textContent = 'Status: ' + response.status + '\n\n';
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultEl.textContent += JSON.stringify(data, null, 2);
+                } else {
+                    const error = await response.text();
+                    resultEl.textContent += 'Error: ' + error;
+                }
+            } catch (err) {
+                resultEl.textContent = 'Request failed: ' + err.message;
+            }
+        }
+        
+        // Test if API is reachable
+        fetch(API_BASE_URL + '/')
+            .then(r => r.json())
+            .then(data => {
+                console.log('Backend status:', data);
+                document.getElementById('result').textContent = 'Backend is reachable: ' + JSON.stringify(data);
+            })
+            .catch(err => {
+                document.getElementById('result').textContent = 'Backend is NOT reachable: ' + err.message;
+            });
+    </script>
+</body>
+</html>

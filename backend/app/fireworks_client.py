@@ -312,16 +312,18 @@ def get_provider_status() -> dict:
 # ──────────────────────────────────────────────────────────────────────────────
 # Simple Helper Function (Qwen + Gemini Fallback)
 # ──────────────────────────────────────────────────────────────────────────────
-from openai import OpenAI
-import google.generativeai as genai
-
-# Setup dedicated clients for the helper function
-_fw_helper_client = OpenAI(
-    api_key=os.getenv("FIREWORKS_API_KEY"),
-    base_url="https://api.fireworks.ai/inference/v1",
-)
+try:
+    from openai import OpenAI
+    # Setup dedicated clients for the helper function
+    _fw_helper_client = OpenAI(
+        api_key=os.getenv("FIREWORKS_API_KEY"),
+        base_url="https://api.fireworks.ai/inference/v1",
+    )
+except Exception:
+    _fw_helper_client = None
 
 try:
+    import google.generativeai as genai
     genai.configure(api_key=os.getenv("GEMINI_API_KEY", ""))
     _gemini_helper_model = genai.GenerativeModel("gemini-2.5-flash")
 except Exception:

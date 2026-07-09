@@ -6,6 +6,7 @@ import { CrimeMap } from './CrimeMap';
 import { EvidencePanel } from './EvidencePanel';
 import { CitizenShieldChat } from './CitizenShieldChat';
 import ReportIncidentModal from './ReportIncidentModal';
+import { ChevronDown } from 'lucide-react';
 import { getDashboardFeed, getHotspots, getCaseEvidence, simulateScenario } from '../../lib/api';
 import './DashboardLayout.css';
 
@@ -21,6 +22,7 @@ export default function Dashboard() {
   const [evidenceData, setEvidenceData] = useState(null);
   const [loadingEvidence, setLoadingEvidence] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [feedOpen, setFeedOpen] = useState(false); // collapsed by default on mobile
 
   // User-submitted reports — persisted in localStorage
   const [userReports, setUserReports] = useState(() => {
@@ -113,15 +115,7 @@ export default function Dashboard() {
       <TopBar onSimulate={handleSimulate} onReport={() => setShowReportModal(true)} />
       
       <main className="dashboard-content">
-        <aside className="pane-left" id="risk-feed-panel">
-          <RiskFeed 
-            items={feedItems} 
-            loading={loadingFeed} 
-            selectedId={selectedEvent?.id}
-            onSelect={handleSelectEvent}
-          />
-        </aside>
-        
+        {/* Map — always visible and prominent on mobile */}
         <section className="pane-center" id="crime-map-panel">
           <CrimeMap 
             hotspots={hotspots} 
@@ -131,6 +125,39 @@ export default function Dashboard() {
           />
         </section>
 
+        {/* Risk Feed — collapsible accordion on mobile, always open on desktop */}
+        <aside className="pane-left" id="risk-feed-panel">
+          {/* Mobile accordion toggle (hidden on desktop via CSS) */}
+          <button
+            className="feed-accordion-toggle"
+            onClick={() => setFeedOpen(o => !o)}
+            aria-expanded={feedOpen}
+          >
+            <span className="feed-accordion-label">
+              <span className="feed-accordion-dot" />
+              Live Risk Feed
+              {feedItems.length > 0 && (
+                <span className="feed-accordion-count">{feedItems.length}</span>
+              )}
+            </span>
+            <ChevronDown
+              size={18}
+              className={`feed-accordion-chevron${feedOpen ? ' open' : ''}`}
+            />
+          </button>
+
+          {/* Body — always shown on desktop, toggles on mobile */}
+          <div className={`feed-accordion-body${feedOpen ? ' feed-accordion-body--open' : ''}`}>
+            <RiskFeed 
+              items={feedItems} 
+              loading={loadingFeed} 
+              selectedId={selectedEvent?.id}
+              onSelect={handleSelectEvent}
+              hideMobileHeader
+            />
+          </div>
+        </aside>
+        
         <AnimatePresence>
           {selectedEvent && (
             <aside className="pane-right" key="evidence-panel">

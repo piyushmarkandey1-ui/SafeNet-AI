@@ -12,7 +12,7 @@ const TYPE_ICONS = {
   SAFE_EVENT: CheckCircle,
 };
 
-export function RiskFeed({ items, loading, selectedId, onSelect }) {
+export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeader }) {
   const scrollRef = useRef(null);
   const isMobile = useIsMobile();
 
@@ -78,7 +78,9 @@ export function RiskFeed({ items, loading, selectedId, onSelect }) {
 
   return (
     <div className="risk-feed" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-      <h2 className="feed-header">Live Risk Feed</h2>
+      {!(hideMobileHeader && isMobile) && (
+        <h2 className="feed-header">Live Risk Feed</h2>
+      )}
       <div 
         ref={scrollRef}
         className="hide-scrollbar" 

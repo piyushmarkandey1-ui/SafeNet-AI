@@ -82,24 +82,27 @@
     flex-direction: column;
     overflow-y: visible;
     height: auto;
-    padding-bottom: 80px; /* space for chat toggle */
+    padding-bottom: 80px;
   }
   
+  /* Map takes majority of the screen */
+  .pane-center {
+    width: 100%;
+    height: 65vh;
+    min-height: 400px;
+    order: 1;
+    flex-shrink: 0;
+  }
+  
+  /* Risk feed — accordion/collapsible, underneath the map */
   .pane-left {
     width: 100%;
     height: auto;
-    min-height: 350px;
+    min-height: 0;
     max-height: none;
     box-shadow: none;
     border-top: 1px solid var(--border-subtle);
     order: 2;
-  }
-  
-  .pane-center {
-    width: 100%;
-    height: 50vh;
-    min-height: 350px;
-    order: 1; /* Map first on mobile */
   }
   
   .pane-right {
@@ -115,12 +118,8 @@
 /* ── Small Mobile (< 640px) ────────────────────────────────────────── */
 @media (max-width: 640px) {
   .pane-center {
-    height: 45vh;
-    min-height: 300px;
-  }
-  
-  .pane-left {
-    min-height: 250px;
+    height: 62vh;
+    min-height: 380px;
   }
 }
 
@@ -145,3 +144,104 @@
 .pane-right::-webkit-scrollbar-thumb:hover {
   background: var(--border-accent);
 }
+
+/* ── Risk Feed Accordion (Mobile) ───────────────────────────────────── */
+
+/* The toggle button — hidden on desktop */
+.feed-accordion-toggle {
+  display: none;
+}
+
+/* Accordion body — always visible on desktop */
+.feed-accordion-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  /* Show toggle button on mobile */
+  .feed-accordion-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg-surface);
+    border: none;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .feed-accordion-toggle:active {
+    background: var(--bg-elevated);
+  }
+
+  .feed-accordion-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .feed-accordion-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-risk);
+    box-shadow: 0 0 8px var(--accent-risk-glow);
+    animation: breathe 2s ease-in-out infinite alternate;
+    flex-shrink: 0;
+  }
+
+  @keyframes breathe {
+    from { opacity: 0.5; box-shadow: 0 0 4px var(--accent-risk-glow); }
+    to   { opacity: 1;   box-shadow: 0 0 12px var(--accent-risk-glow); }
+  }
+
+  .feed-accordion-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    background: rgba(224, 90, 51, 0.15);
+    border: 1px solid rgba(224, 90, 51, 0.3);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent-risk);
+  }
+
+  .feed-accordion-chevron {
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .feed-accordion-chevron.open {
+    transform: rotate(180deg);
+  }
+
+  /* Body — collapsed by default, expands when .feed-accordion-body--open */
+  .feed-accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .feed-accordion-body--open {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+}
+

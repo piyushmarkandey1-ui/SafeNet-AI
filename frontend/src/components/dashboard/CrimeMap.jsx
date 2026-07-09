@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { GlassPanel } from '../ui';
@@ -14,6 +14,13 @@ const SEVERITY = {
 
 const USER_REPORT_SEV = { color: '#c084fc', glow: 'rgba(192,132,252,0.4)', dotR: 6, ringR: 14 };
 
+const LEGEND_ITEMS = [
+  { color: SEVERITY.CRITICAL.color, label: 'Critical' },
+  { color: SEVERITY.HIGH.color,     label: 'High' },
+  { color: SEVERITY.MEDIUM.color,   label: 'Medium' },
+  { color: '#c084fc',               label: 'Citizen Report' },
+];
+
 function MapController({ selectedEvent }) {
   const map = useMap();
   useEffect(() => {
@@ -26,6 +33,7 @@ function MapController({ selectedEvent }) {
 
 export function CrimeMap({ hotspots = [], loading, selectedEvent, userReports = [] }) {
   const center = [22.9734, 78.6569];
+  const [legendExpanded, setLegendExpanded] = useState(false);
 
   return (
     <div className="crime-map-container">
@@ -134,16 +142,19 @@ export function CrimeMap({ hotspots = [], loading, selectedEvent, userReports = 
         })}
       </MapContainer>
 
-      {/* Legend */}
+      {/* Legend — collapsible on mobile (tap to expand), always open on desktop */}
       <div className="crime-map-overlay">
-        <GlassPanel hoverable={false} className="map-legend">
-          <span className="legend-title">Live Grid Status</span>
-          {[
-            { color: SEVERITY.CRITICAL.color, label: 'Critical' },
-            { color: SEVERITY.HIGH.color,     label: 'High' },
-            { color: SEVERITY.MEDIUM.color,   label: 'Medium' },
-            { color: '#c084fc',               label: 'Citizen Report' },
-          ].map(({ color, label }) => (
+        <GlassPanel
+          hoverable={false}
+          className={`map-legend${legendExpanded ? ' expanded' : ''}`}
+          onClick={() => setLegendExpanded(e => !e)}
+          style={{ cursor: 'pointer' }}
+        >
+          <span className="legend-title">
+            Live Grid Status
+            <span className="legend-toggle-arrow">{legendExpanded ? ' ▲' : ' ▼'}</span>
+          </span>
+          {LEGEND_ITEMS.map(({ color, label }) => (
             <div className="legend-item" key={label}>
               <span className="legend-dot" style={{ background: color, boxShadow: `0 0 6px ${color}` }} />
               {label}

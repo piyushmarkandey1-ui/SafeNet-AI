@@ -63,39 +63,10 @@
   color: var(--text-primary);
 }
 
-/* ── TargetCursor: auto-assign to all interactive elements ──
-   Rather than manually adding cursor-target to every JSX element,
-   we inject it via a universal attribute selector here.           */
-button:not([disabled]),
-a[href],
-[role="button"],
-.hero-btn,
-.cta-button,
-.topbar__module-btn,
-.btn-simulate,
-.btn-note-check,
-.btn-report-incident,
-.glass-panel[data-hoverable="true"],
-.module-card,
-.risk-item,
-.nav-link,
-.note-checker__nav-back,
-.mode-btn,
-.drop-zone,
-.btn-report,
-.feature-card,
-.rim-type-btn,
-.rim-severity-btn,
-.rim-btn-primary,
-.rim-btn-secondary,
-.rim-btn-submit {
-  /* Using attribute trick — the component picks up .cursor-target class */
-}
-
-/* Simpler: just mark all buttons and links globally */
-button:not([disabled]),
-a[href]:not([href="#"]) {
-  /* TargetCursor uses a JS selector — we add the class at the CSS layer
-     by registering the elements as cursor-target via a dataset attribute.
-     The actual TargetCursor targetSelector is updated to include these. */
+/* ── PillNav clearance — push page content below the fixed nav ── */
+/* Dashboard has its own TopBar, so it's excluded                   */
+.note-checker-page,
+.number-checker-page,
+.design-system-page {
+  padding-top: 80px;
 }
