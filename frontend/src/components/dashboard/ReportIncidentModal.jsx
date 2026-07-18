@@ -248,16 +248,19 @@ export default function ReportIncidentModal({ onClose, onSubmit }) {
                 <MapPin size={14} style={{ display: 'inline', marginRight: 4 }} />
                 City / Area <span className="rim-required">*</span>
               </label>
-              <select
-                className={`rim-select ${errors.city ? 'error' : ''}`}
+              <input
+                list="indian-cities"
+                className={`rim-input ${errors.city ? 'error' : ''}`}
+                placeholder="Type or select a city..."
                 value={form.city}
                 onChange={e => set('city', e.target.value)}
-              >
-                <option value="">— Select city —</option>
+                autoComplete="off"
+              />
+              <datalist id="indian-cities">
                 {INDIAN_CITIES.map(c => (
                   <option key={c.name} value={c.name}>{c.name}</option>
                 ))}
-              </select>
+              </datalist>
               {errors.city && <span className="rim-error">{errors.city}</span>}
             </div>
 
