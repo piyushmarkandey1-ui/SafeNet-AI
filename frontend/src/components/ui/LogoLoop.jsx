@@ -56,7 +56,7 @@ const useImageLoader = (seqRef, onLoad, dependencies) => {
   }, [onLoad, seqRef, dependencies]);
 };
 
-const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical) => {
+const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical, isDragging) => {
   const rafRef = useRef(null);
   const lastTimestampRef = useRef(null);
   const offsetRef = useRef(0);
@@ -84,12 +84,13 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
       const deltaTime = Math.max(0, timestamp - lastTimestampRef.current) / 1000;
       lastTimestampRef.current = timestamp;
 
-      const target = isHovered && hoverSpeed !== undefined ? hoverSpeed : targetVelocity;
+      // If dragging, we don't apply automatic animation here
+      const target = (isHovered && hoverSpeed !== undefined) || isDragging ? (hoverSpeed || 0) : targetVelocity;
 
       const easingFactor = 1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
       velocityRef.current += (target - velocityRef.current) * easingFactor;
 
-      if (seqSize > 0) {
+      if (seqSize > 0 && !isDragging) {
         let nextOffset = offsetRef.current + velocityRef.current * deltaTime;
         nextOffset = ((nextOffset % seqSize) + seqSize) % seqSize;
         offsetRef.current = nextOffset;
@@ -112,7 +113,24 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
       }
       lastTimestampRef.current = null;
     };
-  }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical, trackRef]);
+  }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical, trackRef, isDragging]);
+  
+  // Expose offset modifying function for manual scroll/drag
+  const adjustOffset = useCallback((delta) => {
+    const seqSize = isVertical ? seqHeight : seqWidth;
+    if (seqSize > 0 && trackRef.current) {
+        let nextOffset = offsetRef.current + delta;
+        nextOffset = ((nextOffset % seqSize) + seqSize) % seqSize;
+        offsetRef.current = nextOffset;
+        
+        const transformValue = isVertical
+          ? `translate3d(0, ${-offsetRef.current}px, 0)`
+          : `translate3d(${-offsetRef.current}px, 0, 0)`;
+        trackRef.current.style.transform = transformValue;
+    }
+  }, [isVertical, seqHeight, seqWidth]);
+  
+  return { adjustOffset };
 };
 
 export const LogoLoop = memo(
@@ -131,7 +149,8 @@ export const LogoLoop = memo(
     renderItem,
     ariaLabel = 'Partner logos',
     className,
-    style
+    style,
+    allowMouseScroll = false
   }) => {
     const containerRef = useRef(null);
     const trackRef = useRef(null);
@@ -141,6 +160,7 @@ export const LogoLoop = memo(
     const [seqHeight, setSeqHeight] = useState(0);
     const [copyCount, setCopyCount] = useState(ANIMATION_CONFIG.MIN_COPIES);
     const [isHovered, setIsHovered] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
 
     const effectiveHoverSpeed = useMemo(() => {
       if (hoverSpeed !== undefined) return hoverSpeed;
@@ -189,15 +209,14 @@ export const LogoLoop = memo(
     }, [isVertical]);
 
     useResizeObserver(updateDimensions, [containerRef, seqRef], [logos, gap, logoHeight, isVertical]);
-
     useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight, isVertical]);
-
-    useAnimationLoop(trackRef, targetVelocity, seqWidth, seqHeight, isHovered, effectiveHoverSpeed, isVertical);
+    
+    const { adjustOffset } = useAnimationLoop(trackRef, targetVelocity, seqWidth, seqHeight, isHovered, effectiveHoverSpeed, isVertical, isDragging);
 
     const cssVariables = useMemo(
       () => ({
         '--logoloop-gap': `${gap}px`,
-        '--logoloop-logoHeight': `${logoHeight}px`,
+        '--logoloop-logoHeight': typeof logoHeight === 'number' ? `${logoHeight}px` : logoHeight,
         ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor })
       }),
       [gap, logoHeight, fadeOutColor]
@@ -222,13 +241,29 @@ export const LogoLoop = memo(
     }, [effectiveHoverSpeed]);
     const handleMouseLeave = useCallback(() => {
       if (effectiveHoverSpeed !== undefined) setIsHovered(false);
+      setIsDragging(false);
     }, [effectiveHoverSpeed]);
+    
+    // Mouse scroll functionality
+    const handleWheel = useCallback((e) => {
+        if (!allowMouseScroll) return;
+        
+        setIsDragging(true); // Temporarily pause auto-animation
+        const delta = isVertical ? e.deltaY : e.deltaX;
+        adjustOffset(delta);
+        
+        // Reset dragging state after scrolling stops
+        clearTimeout(trackRef.current.wheelTimeout);
+        trackRef.current.wheelTimeout = setTimeout(() => {
+            setIsDragging(false);
+        }, 150);
+    }, [allowMouseScroll, isVertical, adjustOffset]);
 
     const renderLogoItem = useCallback(
       (item, key) => {
         if (renderItem) {
           return (
-            <li className="logoloop__item" key={key} role="listitem">
+            <li className="logoloop__item" key={key} role="listitem" style={{ height: 'auto', overflow: 'visible' }}>
               {renderItem(item, key)}
             </li>
           );
@@ -305,7 +340,14 @@ export const LogoLoop = memo(
     );
 
     return (
-      <div ref={containerRef} className={rootClassName} style={containerStyle} role="region" aria-label={ariaLabel}>
+      <div 
+        ref={containerRef} 
+        className={rootClassName} 
+        style={containerStyle} 
+        role="region" 
+        aria-label={ariaLabel}
+        onWheel={handleWheel}
+      >
         <div className="logoloop__track" ref={trackRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           {logoLists}
         </div>
