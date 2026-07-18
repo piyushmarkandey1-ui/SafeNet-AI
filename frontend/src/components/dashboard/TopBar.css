@@ -258,13 +258,14 @@
   
   .topbar__actions {
     width: 100%;
-    justify-content: space-between; /* Space out items */
     display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
     order: 2;
-    padding-bottom: 0; /* Remove unnecessary bottom padding */
-    border-bottom: none; /* Remove unnecessary bottom border */
-    gap: var(--space-md);
+    padding-bottom: 0;
+    border-bottom: none;
+    gap: 8px; /* Smaller gap on mobile */
   }
   
   .btn-note-check span,
@@ -274,17 +275,21 @@
   
   .btn-note-check,
   .btn-simulate {
-    padding: 10px;
-    min-width: 44px;
-    min-height: 44px;
+    padding: 8px;
+    min-width: 36px;
+    min-height: 36px;
     justify-content: center;
   }
   
   .btn-report-incident {
     flex: 1; /* Take up available space */
     justify-content: center;
-    padding: 12px;
-    font-size: 15px;
+    padding: 8px 12px;
+    font-size: 13px;
+    min-width: 0; /* Allow shrinking below content size if necessary */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 
@@ -312,6 +317,20 @@
   .module-icon {
     width: 14px;
     height: 14px;
+  }
+
+  .btn-kebab-menu {
+    width: 36px;
+    height: 36px;
+  }
+
+  .btn-report-incident {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  
+  .btn-report-incident span {
+    display: none; /* Icon only on extra small mobile to guarantee no overflow */
   }
 }
 
