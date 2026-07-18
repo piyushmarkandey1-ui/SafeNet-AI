@@ -110,6 +110,19 @@ export default function Dashboard() {
     }, 1500);
   };
 
+  const handleDeleteReport = (id) => {
+    setUserReports(prev => {
+      const updated = prev.filter(r => r.id !== id);
+      localStorage.setItem(USER_REPORTS_KEY, JSON.stringify(updated));
+      return updated;
+    });
+    setFeedItems(prev => prev.filter(r => r.id !== id));
+    if (selectedEvent?.id === id) {
+      setSelectedEvent(null);
+      setEvidenceData(null);
+    }
+  };
+
   return (
     <div className="dashboard-layout">
       <TopBar onSimulate={handleSimulate} onReport={() => setShowReportModal(true)} />
@@ -165,6 +178,7 @@ export default function Dashboard() {
                 event={selectedEvent} 
                 evidence={evidenceData} 
                 loading={loadingEvidence} 
+                onDeleteReport={selectedEvent.isUserReport ? () => handleDeleteReport(selectedEvent.id) : undefined}
               />
             </aside>
           )}

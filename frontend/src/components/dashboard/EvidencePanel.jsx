@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GlassPanel, AnimatedCounter, RiskBadge, Skeleton, SkeletonGroup } from '../ui';
-import { FileText, Network, CheckCircle2, AlertCircle } from 'lucide-react';
+import { FileText, Network, CheckCircle2, AlertCircle, Trash2 } from 'lucide-react';
 import { slideInLeft, staggerChildren, staggerItem } from '../../lib/motion';
 import { generateIncidentReport } from '../../lib/api';
 import './EvidencePanel.css';
 
-export function EvidencePanel({ event, evidence, loading }) {
+export function EvidencePanel({ event, evidence, loading, onDeleteReport }) {
   const [reportState, setReportState] = useState('idle'); // idle | loading | success
 
   if (!event) return null;
@@ -92,25 +92,39 @@ export function EvidencePanel({ event, evidence, loading }) {
             <motion.div className="ev-action" variants={staggerItem}>
               <p className="action-rec"><AlertCircle size={14}/> {evidence.recommendedAction}</p>
               
-              <button 
-                className={`btn-report ${reportState}`}
-                onClick={handleGenerateReport}
-                disabled={reportState !== 'idle'}
-              >
-                {reportState === 'idle' && 'Generate Incident Report'}
-                {reportState === 'loading' && <span className="shimmer-text">Generating...</span>}
-                {reportState === 'success' && (
-                  <>
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                    >
-                      <CheckCircle2 size={18} />
-                    </motion.div>
-                    Report Saved
-                  </>
+              <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+                <button 
+                  className={`btn-report ${reportState}`}
+                  style={{ flex: 1 }}
+                  onClick={handleGenerateReport}
+                  disabled={reportState !== 'idle'}
+                >
+                  {reportState === 'idle' && 'Generate Incident Report'}
+                  {reportState === 'loading' && <span className="shimmer-text">Generating...</span>}
+                  {reportState === 'success' && (
+                    <>
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                      >
+                        <CheckCircle2 size={18} />
+                      </motion.div>
+                      Report Saved
+                    </>
+                  )}
+                </button>
+
+                {onDeleteReport && (
+                  <button 
+                    className="btn-report"
+                    style={{ flex: 1, backgroundColor: 'rgba(255, 59, 59, 0.1)', color: '#ff3b3b', border: '1px solid rgba(255, 59, 59, 0.3)' }}
+                    onClick={onDeleteReport}
+                  >
+                    <Trash2 size={16} style={{ marginRight: 6 }} />
+                    Remove Report
+                  </button>
                 )}
-              </button>
+              </div>
             </motion.div>
 
           </motion.div>
