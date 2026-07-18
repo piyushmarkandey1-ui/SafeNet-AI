@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ShieldAlert, Shield, Flag, Menu, Home, Search, Hash } from 'lucide-react';
 import { AmdStatusPanel } from './AmdStatusPanel';
+import LineSidebar from '../ui/LineSidebar';
 import './TopBar.css';
 
 export function TopBar({ onSimulate, onReport }) {
@@ -57,28 +58,28 @@ export function TopBar({ onSimulate, onReport }) {
           
           {isMenuOpen && (
             <div className="topbar__dropdown">
-              <Link to="/" className="dropdown-item" onClick={() => setIsMenuOpen(false)}>
-                <Home size={16} />
-                <span>Home</span>
-              </Link>
-              <Link to="/note-checker" className="dropdown-item" onClick={() => setIsMenuOpen(false)}>
-                <Search size={16} />
-                <span>Note Checker</span>
-              </Link>
-              <Link to="/number-checker" className="dropdown-item" onClick={() => setIsMenuOpen(false)}>
-                <Hash size={16} />
-                <span>Number Checker</span>
-              </Link>
-              <button 
-                className="dropdown-item" 
-                onClick={() => {
+              <LineSidebar
+                items={['Home', 'Note Checker', 'Number Checker', 'Citizen Help Bot']}
+                accentColor="#ff6b35" // SafeNet-AI brand color (risk accent)
+                textColor="#c4c4c4"
+                markerColor="#3a4049" // border-accent
+                showIndex={false}
+                showMarker={true}
+                proximityRadius={60}
+                maxShift={10}
+                markerLength={15}
+                markerGap={10}
+                tickScale={0}
+                itemGap={14}
+                fontSize={0.9}
+                onItemClick={(index, label) => {
                   setIsMenuOpen(false);
-                  window.dispatchEvent(new CustomEvent('open-citizen-shield'));
+                  if (label === 'Home') navigate('/');
+                  else if (label === 'Note Checker') navigate('/note-checker');
+                  else if (label === 'Number Checker') navigate('/number-checker');
+                  else if (label === 'Citizen Help Bot') window.dispatchEvent(new CustomEvent('open-citizen-shield'));
                 }}
-              >
-                <Shield size={16} />
-                <span>Citizen Help Bot</span>
-              </button>
+              />
             </div>
           )}
         </div>
