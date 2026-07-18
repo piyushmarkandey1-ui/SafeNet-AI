@@ -72,9 +72,13 @@ FIREWORKS_BASE_URL = os.getenv(
 
 
 def clean_thinking_process(text: str) -> str:
-    """Strips internal 'Thinking Process' blocks or '<think>' tags from the LLM output."""
+    """Strips internal 'Thinking Process' blocks or '<think>' tags from the LLM output.
+    
+    Returns the cleaned text. If cleaning produces an empty string, returns a
+    safe fallback message so nothing blank reaches the user UI.
+    """
     if not text:
-        return text
+        return "I'm here to help protect you from fraud. Could you tell me more about your situation?"
     import re
     # 1. Strip XML-style <think>...</think> blocks
     text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL | re.IGNORECASE)
@@ -84,22 +88,36 @@ def clean_thinking_process(text: str) -> str:
         if "---" in text:
             parts = text.split("---")
             if re.search(r'\bthinking\s+process\b', parts[0], re.IGNORECASE):
-                return "---".join(parts[1:]).strip()
+                text = "---".join(parts[1:]).strip()
+        if not text:
+            return "I understand your concern. Please share more details so I can give you the best advice."
         # Fallback: remove lines starting with 'Thinking Process' up to double newline
         text = re.sub(r'(?i)\s*Thinking\s+Process:.*?(?=\n\n|\n[A-Za-z]|$)', '', text, flags=re.DOTALL)
 
     # 3. Fallback: Strip system prompt leaks and draft steps (e.g. "* Grounding facts", "3. **Formulate the Response:**")
-    if any(k in text for k in ["Grounding facts", "Formulate the Response", "Draft 1:", "Draft 2:", "Draft 3:"]):
+    _DRAFT_MARKERS = ["Grounding facts", "Formulate the Response", "Draft 1:", "Draft 2:", "Draft 3:", "Persona:", "Do not lecture"]
+    if any(k in text for k in _DRAFT_MARKERS):
         # Split by double newlines and find the final paragraph that is not a draft label/description
         blocks = [b.strip() for b in text.split("\n\n") if b.strip()]
         if blocks:
             for block in reversed(blocks):
-                # If this block doesn't look like a draft guide or system prompt leak, it's the real answer
+                # Skip blocks that look like system prompt leaks or draft labels
                 if not any(k in block for k in ["Thinking Process", "Formulate the", "Draft 1", "Draft 2", "Draft 3", "Grounding facts", "Persona:", "Do not lecture"]):
-                    return block
-            return blocks[-1] # fallback to last block if all matched
+                    cleaned = block.strip()
+                    if cleaned:  # Only return if non-empty
+                        return cleaned
+            # All blocks were contaminated — return last block stripped of known markers
+            last = blocks[-1].strip()
+            for marker in _DRAFT_MARKERS:
+                last = last.replace(marker, "").strip()
+            if last:
+                return last
 
-    return text.strip()
+    result = text.strip()
+    # Hard fallback: if cleaning produced empty string, return a safe message
+    if not result:
+        return "I'm here to help. Please describe your situation and I'll advise you on how to stay safe."
+    return result
 
 
 def _call_fireworks(

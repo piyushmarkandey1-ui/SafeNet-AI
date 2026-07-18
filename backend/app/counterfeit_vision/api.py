@@ -114,6 +114,12 @@ async def check_note_endpoint(file: UploadFile = File(...)) -> NoteCheckResponse
             detail=f"Expected an image file, got: {content_type}",
         )
 
+    if file.size and file.size > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(
+            status_code=400,
+            detail=f"File too large. Maximum size is {MAX_FILE_SIZE_BYTES // (1024*1024)} MB.",
+        )
+
     image_bytes = await file.read()
 
     if len(image_bytes) > MAX_FILE_SIZE_BYTES:

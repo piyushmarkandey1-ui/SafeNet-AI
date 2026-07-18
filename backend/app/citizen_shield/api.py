@@ -18,12 +18,14 @@ Module contract (safenet.md §3):
   Route handlers are thin wrappers around agent.ask() / respond_to_user().
 """
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, List, Dict
+import logging
 
 from app.citizen_shield.agent import respond_to_user, SUPPORTED_LANGUAGES
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/shield", tags=["Citizen Shield"])
 
 
@@ -152,9 +154,16 @@ async def ask_endpoint(body: AskRequest) -> AskResponse:
         AskResponse matching the CitizenShieldChat widget schema.
     """
     language = body.language if body.language in SUPPORTED_LANGUAGES else "en"
-    result = respond_to_user(
-        user_message=body.query,
-        conversation_history=body.conversation_history or [],
-        language=language,
-    )
-    return AskResponse(**result)
+    try:
+        result = respond_to_user(
+            user_message=body.query,
+            conversation_history=body.conversation_history or [],
+            language=language,
+        )
+        return AskResponse(**result)
+    except Exception as e:
+        logger.error(f"[shield/ask] Unexpected error: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=503,
+            detail="The Citizen Shield AI is temporarily unavailable. Please try again shortly.",
+        )

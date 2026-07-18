@@ -12,6 +12,7 @@ Module contract (safenet.md §3):
 """
 
 from fastapi import APIRouter, Query
+import logging
 
 from app.geospatial.hotspots import (
     load_raw_complaints,
@@ -19,6 +20,7 @@ from app.geospatial.hotspots import (
     compute_risk_forecast,
 )
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/geo", tags=["Geospatial"])
 
 
@@ -55,8 +57,12 @@ async def get_hotspots(
     Returns:
         List of hotspot dicts, sorted by point_count descending.
     """
-    complaints = load_raw_complaints()
-    return detect_hotspots(complaints, eps_km=eps_km, min_samples=min_samples)
+    try:
+        complaints = load_raw_complaints()
+        return detect_hotspots(complaints, eps_km=eps_km, min_samples=min_samples)
+    except Exception as e:
+        logger.error(f"[geo/hotspots] DBSCAN computation failed: {e}", exc_info=True)
+        return []  # Return empty list instead of propagating 500
 
 
 @router.get(
@@ -77,9 +83,13 @@ async def get_risk_forecast(
     Returns:
         List of forecast dicts, sorted by forecast_lambda descending.
     """
-    complaints = load_raw_complaints()
-    hotspots = detect_hotspots(complaints, eps_km=eps_km, min_samples=min_samples)
-    return compute_risk_forecast(hotspots=hotspots, raw_complaints=complaints)
+    try:
+        complaints = load_raw_complaints()
+        hotspots = detect_hotspots(complaints, eps_km=eps_km, min_samples=min_samples)
+        return compute_risk_forecast(hotspots=hotspots, raw_complaints=complaints)
+    except Exception as e:
+        logger.error(f"[geo/risk-forecast] Forecast computation failed: {e}", exc_info=True)
+        return []
 
 
 @router.get(

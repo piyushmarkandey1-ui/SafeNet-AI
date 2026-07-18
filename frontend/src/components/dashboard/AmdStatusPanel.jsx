@@ -41,19 +41,26 @@ export function AmdStatusPanel() {
 
   useEffect(() => {
     let cancelled = false;
+    let timeoutId;
 
     async function load() {
       const data = await fetchProviderStatus();
       if (!cancelled) {
         setStatus(data);
         setPulse(true);
-        setTimeout(() => setPulse(false), 800);
+        timeoutId = setTimeout(() => {
+          if (!cancelled) setPulse(false);
+        }, 800);
       }
     }
 
     load();
     const id = setInterval(load, 30_000);
-    return () => { cancelled = true; clearInterval(id); };
+    return () => { 
+      cancelled = true; 
+      clearInterval(id); 
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
 
   if (!status) return null;

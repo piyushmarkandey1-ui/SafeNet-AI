@@ -9,7 +9,7 @@
  * Calls checkNote() from lib/api.js → POST /vision/check-note (real backend)
  * Falls back to a mock response automatically when backend is offline.
  */
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -156,9 +156,15 @@ export default function NoteChecker() {
     }
     setError(null);
     setResult(null);
+    
+    // Cleanup previous URL if it exists
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    
     setSelectedFile(file);
     setPreviewUrl(URL.createObjectURL(file));
-  }, []);
+  }, [previewUrl]);
 
   const handleFileInput = (e) => {
     const file = e.target.files?.[0];
@@ -175,13 +181,26 @@ export default function NoteChecker() {
   const handleDragOver = (e) => { e.preventDefault(); setIsDragging(true); };
   const handleDragLeave = () => setIsDragging(false);
 
-  const clearFile = () => {
+  const clearFile = useCallback(() => {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
     setSelectedFile(null);
     setPreviewUrl(null);
     setResult(null);
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
-  };
+  }, [previewUrl]);
+
+  // Cleanup object URL on unmount
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
 
   // ── Submission ─────────────────────────────────────────────────────────────
   const handleSubmit = async (fileToSubmit = selectedFile) => {

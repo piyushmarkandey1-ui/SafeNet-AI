@@ -40,6 +40,10 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
   const renderFeedItem = (item) => {
     const Icon = TYPE_ICONS[item.type] || AlertTriangle;
     const isSelected = selectedId === item.id;
+    
+    // Safe accessors to prevent crashes
+    const scoreVal = typeof item.score === 'number' ? item.score.toFixed(1) : 'N/A';
+    const locName = item.location?.name || 'Unknown Location';
 
     return (
       <GlassPanel
@@ -67,10 +71,10 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
         <div className="feed-item__footer">
           <div className="feed-item__location">
             <MapPin size={12} />
-            <span>{item.location.name}</span>
+            <span>{locName}</span>
           </div>
           <div className="feed-item__score">
-            Score: {item.score.toFixed(1)}
+            Score: {scoreVal}
           </div>
         </div>
       </GlassPanel>
@@ -86,8 +90,8 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
         {items.length > 0 ? (
           isMobile ? (
              <div className="hide-scrollbar" style={{ overflowY: 'auto', height: '100%', display: 'flex', flexDirection: 'column', gap: '12px', paddingBottom: '20px' }}>
-                {items.map((item, index) => (
-                   <div key={`${item.id}-${index}`}>
+                {items.map((item) => (
+                   <div key={item.id}>
                       {renderFeedItem(item)}
                    </div>
                 ))}
@@ -105,7 +109,13 @@ export function RiskFeed({ items, loading, selectedId, onSelect, hideMobileHeade
               className="feed-logoloop"
             />
           )
-        ) : null}
+        ) : (
+          <div className="feed-empty-state">
+             <AlertTriangle size={32} opacity={0.3} />
+             <p>No risk events detected yet.</p>
+             <span>Feed will update automatically.</span>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import uuid4
+import traceback
 
 from .classifier import score_call
 
@@ -28,7 +29,12 @@ async def process_call(event: CallEvent):
         "duration_sec": event.duration_sec,
         "video_requested": event.video_requested
     }
-    result = score_call(event.transcript_window, metadata)
+    
+    try:
+        result = score_call(event.transcript_window, metadata)
+    except Exception as e:
+        print(f"Error scoring call: {e}\n{traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail="Failed to score call")
     
     # Create feed item if it's suspicious enough
     if result["risk_score"] > 20:
@@ -36,7 +42,7 @@ async def process_call(event: CallEvent):
             "id": f"evt-{str(uuid4())[:8]}",
             "type": "SCAM_CALL",
             "severity": result["severity"],
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "title": "Suspicious Call Detected",
             "description": f"Match on: {', '.join(result['triggered_patterns'])}",
             "location": event.location,

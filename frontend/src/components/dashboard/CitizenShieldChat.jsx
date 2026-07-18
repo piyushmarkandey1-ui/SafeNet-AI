@@ -41,10 +41,21 @@ export function CitizenShieldChat() {
     setInput('');
     setIsTyping(true);
 
-    const botResponse = await askCitizenShield(input);
-    
-    setIsTyping(false);
-    setMessages(prev => [...prev, botResponse]);
+    try {
+      const botResponse = await askCitizenShield(input);
+      setMessages(prev => [...prev, botResponse]);
+    } catch (err) {
+      // If api.js fails (and mock fallback also fails), show error in chat
+      setMessages(prev => [...prev, {
+        id: `err-${Date.now()}`,
+        sender: 'bot',
+        text: 'I am currently offline or experiencing network issues. Please try again later.',
+        timestamp: new Date().toISOString(),
+        isError: true
+      }]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -57,19 +68,21 @@ export function CitizenShieldChat() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className="chat-window-wrapper"
+            role="dialog"
+            aria-label="Citizen Shield AI Assistant"
           >
             <GlassPanel hoverable={false} className="chat-window">
               <div className="chat-header">
                 <div>
                   <h3 className="chat-title">Citizen Shield AI</h3>
-                  <span className="chat-status"><span className="status-dot healthy"/> Online</span>
+                  <span className="chat-status" aria-label="Status: Online"><span className="status-dot healthy"/> Online</span>
                 </div>
-                <button className="icon-btn" onClick={() => setIsOpen(false)}>
+                <button className="icon-btn" onClick={() => setIsOpen(false)} aria-label="Close chat">
                   <X size={18} />
                 </button>
               </div>
 
-              <div className="chat-messages" ref={scrollRef}>
+              <div className="chat-messages" ref={scrollRef} aria-live="polite">
                 {messages.length === 0 && (
                   <p className="chat-empty">How can I assist you with fraud prevention today?</p>
                 )}
@@ -79,7 +92,7 @@ export function CitizenShieldChat() {
                     key={msg.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`chat-bubble-wrapper ${msg.sender === 'user' ? 'is-user' : 'is-bot'}`}
+                    className={`chat-bubble-wrapper ${msg.sender === 'user' ? 'is-user' : 'is-bot'} ${msg.isError ? 'is-error' : ''}`}
                   >
                     <div className={`chat-bubble ${msg.isActionable ? 'is-actionable' : ''}`}>
                       {msg.text}
@@ -95,6 +108,8 @@ export function CitizenShieldChat() {
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }} 
                     className="chat-typing"
+                    role="status"
+                    aria-label="Bot is typing..."
                   >
                     <span className="dot"></span><span className="dot"></span><span className="dot"></span>
                   </motion.div>
@@ -108,8 +123,9 @@ export function CitizenShieldChat() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   className="chat-input"
+                  aria-label="Chat input"
                 />
-                <button type="submit" className="chat-send-btn" disabled={!input.trim() || isTyping}>
+                <button type="submit" className="chat-send-btn" disabled={!input.trim() || isTyping} aria-label="Send message">
                   <Send size={16} />
                 </button>
               </form>
@@ -123,6 +139,7 @@ export function CitizenShieldChat() {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        aria-label={isOpen ? "Close Citizen Shield AI" : "Open Citizen Shield AI"}
       >
         <MessageSquare size={24} />
       </motion.button>

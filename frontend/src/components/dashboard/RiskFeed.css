@@ -125,3 +125,27 @@
     max-height: 45vh;
   }
 }
+
+.feed-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  gap: 12px;
+  color: var(--text-muted);
+  padding: 32px 24px;
+}
+
+.feed-empty-state p {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.feed-empty-state span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

@@ -96,26 +96,91 @@
 }
 
 .legend-title {
-  font-size: var(--text-caption);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  font-weight: var(--weight-semi);
-  margin-bottom: 4px;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .legend-items-container {
+    display: none;
+  }
+  .map-legend.expanded .legend-items-container {
+    display: flex;
+    margin-top: 12px;
+  }
+  .legend-title {
+    margin-bottom: 0;
+  }
+  .map-legend.expanded .legend-title {
+    margin-bottom: 8px;
+  }
+}
+
+.legend-toggle-arrow {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .legend-toggle-arrow {
+    display: inline-block;
+    margin-left: auto;
+    font-size: 10px;
+  }
 }
 
 .legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: var(--text-sm);
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
 .legend-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
+}
+
+/* Map Loading Overlay */
+.map-loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 12, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  gap: 16px;
+}
+
+.map-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--accent-trust);
+  border-radius: 50%;
+  animation: map-spin 1s linear infinite;
+}
+
+@keyframes map-spin {
+  to { transform: rotate(360deg); }
 }
 .legend-dot.critical { background: var(--accent-risk); box-shadow: 0 0 6px var(--accent-risk-glow); }
 .legend-dot.warning { background: var(--accent-warning); }

@@ -47,7 +47,10 @@ export default function NumberChecker() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!phone.trim()) return;
+    if (!phone.trim()) {
+      setError('Please enter a phone number to analyze.');
+      return;
+    }
     setError('');
     setResult(null);
     setLoading(true);

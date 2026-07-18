@@ -42,6 +42,15 @@ export function CrimeMap({ hotspots = [], loading, selectedEvent, userReports = 
         <span className="crime-map-badge__dot" />
         Live Threat Heatmap
       </div>
+      
+      {/* Loading Overlay */}
+      {loading && (
+        <div className="map-loading-overlay">
+          <div className="map-spinner" />
+          <span>Syncing grid data...</span>
+        </div>
+      )}
+
       <MapContainer
         center={center}
         zoom={5}
@@ -152,19 +161,43 @@ export function CrimeMap({ hotspots = [], loading, selectedEvent, userReports = 
         <GlassPanel
           hoverable={false}
           className={`map-legend${legendExpanded ? ' expanded' : ''}`}
-          onClick={() => setLegendExpanded(e => !e)}
-          style={{ cursor: 'pointer' }}
         >
-          <span className="legend-title">
+          <button 
+            className="legend-title"
+            onClick={() => setLegendExpanded(e => !e)}
+            aria-expanded={legendExpanded}
+            aria-controls="legend-items"
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              padding: 0, 
+              width: '100%', 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              color: 'inherit',
+              font: 'inherit',
+              cursor: 'pointer'
+            }}
+          >
             Live Grid Status
-            <span className="legend-toggle-arrow">{legendExpanded ? ' ▲' : ' ▼'}</span>
-          </span>
-          {LEGEND_ITEMS.map(({ color, label }) => (
-            <div className="legend-item" key={label}>
-              <span className="legend-dot" style={{ background: color, boxShadow: `0 0 6px ${color}` }} />
-              {label}
-            </div>
-          ))}
+            <span className="legend-toggle-arrow">
+              {legendExpanded ? (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              )}
+            </span>
+          </button>
+          
+          <div id="legend-items" className="legend-items-container">
+            {LEGEND_ITEMS.map(({ color, label }) => (
+              <div className="legend-item" key={label}>
+                <span className="legend-dot" style={{ background: color, boxShadow: `0 0 6px ${color}` }} />
+                {label}
+              </div>
+            ))}
+          </div>
         </GlassPanel>
       </div>
     </div>

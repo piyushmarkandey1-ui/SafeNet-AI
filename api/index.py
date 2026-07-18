@@ -7,12 +7,34 @@ top level (not inside try/except). Routes are added gracefully below.
 
 import os
 import sys
+import time
+from collections import defaultdict
 from pathlib import Path
 
 # ── Python path & env setup ───────────────────────────────────────────────────
 backend_dir = Path(__file__).parent.parent / "backend"
 sys.path.insert(0, str(backend_dir))
 os.environ.setdefault("VERCEL_ENV", "production")
+
+# ── Simple in-memory rate limiter (token bucket, per-IP) ─────────────────────
+# Limits shield/ask and vision/check-note to protect paid LLM APIs.
+_rate_buckets: dict = defaultdict(lambda: {"tokens": 10, "last_refill": time.time()})
+_RATE_LIMIT_CALLS = 10      # max requests per window
+_RATE_LIMIT_WINDOW = 60     # seconds
+
+def _check_rate_limit(request_ip: str, endpoint: str) -> bool:
+    """Returns True if request is allowed, False if rate-limited."""
+    key = f"{request_ip}:{endpoint}"
+    now = time.time()
+    bucket = _rate_buckets[key]
+    elapsed = now - bucket["last_refill"]
+    if elapsed >= _RATE_LIMIT_WINDOW:
+        bucket["tokens"] = _RATE_LIMIT_CALLS
+        bucket["last_refill"] = now
+    if bucket["tokens"] > 0:
+        bucket["tokens"] -= 1
+        return True
+    return False
 
 # ── TOP-LEVEL app definition (required by Vercel's Python runtime) ────────────
 from fastapi import FastAPI, File, UploadFile, HTTPException
@@ -24,10 +46,12 @@ app = FastAPI(
     version="0.1.0",
 )
 
+# NOTE: When allow_origins=["*"], allow_credentials MUST be False per CORS spec.
+# Browsers reject credentialed requests with wildcard origin.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -57,48 +81,48 @@ def get_provider_status_endpoint():
 
 
 
-# ── LLM Debug Endpoint ────────────────────────────────────────────────────────
-@app.get("/api/debug-llm")
-def debug_llm():
-    """Temporary diagnostic endpoint to debug Fireworks API failures in production."""
-    import os
-    from openai import OpenAI
-    
-    fw_key = os.getenv("FIREWORKS_API_KEY", "")
-    masked_key = f"{fw_key[:6]}...{fw_key[-4:]}" if len(fw_key) > 10 else "not set or too short"
-    
-    diagnostic = {
-        "env_keys_present": {
-            "FIREWORKS_API_KEY": bool(fw_key),
-            "GEMINI_API_KEY": bool(os.getenv("GEMINI_API_KEY")),
-            "OPENAI_API_KEY": bool(os.getenv("OPENAI_API_KEY")),
-            "LLM_API_KEY": bool(os.getenv("LLM_API_KEY")),
-        },
-        "masked_fireworks_key": masked_key,
-        "test_call_result": None,
-        "test_call_error": None
-    }
-    
-    if not fw_key:
-        diagnostic["test_call_error"] = "FIREWORKS_API_KEY is missing from environment variables."
+# ── LLM Debug Endpoint (DEVELOPMENT / DEMO ONLY — disabled in production) ────
+# Gated by APP_ENV env var: only accessible when APP_ENV != "production".
+_IS_PRODUCTION = os.getenv("APP_ENV", "").lower() == "production" or \
+                 os.getenv("VERCEL_ENV", "").lower() == "production"
+
+if not _IS_PRODUCTION:
+    @app.get("/api/debug-llm")
+    def debug_llm():
+        """Diagnostic endpoint — disabled in production. Enabled only when APP_ENV!=production."""
+        from openai import OpenAI
+        fw_key = os.getenv("FIREWORKS_API_KEY", "")
+        masked_key = f"{fw_key[:6]}...{fw_key[-4:]}" if len(fw_key) > 10 else "not set or too short"
+        diagnostic = {
+            "env_keys_present": {
+                "FIREWORKS_API_KEY": bool(fw_key),
+                "GEMINI_API_KEY": bool(os.getenv("GEMINI_API_KEY")),
+                "OPENAI_API_KEY": bool(os.getenv("OPENAI_API_KEY")),
+                "LLM_API_KEY": bool(os.getenv("LLM_API_KEY")),
+            },
+            "masked_fireworks_key": masked_key,
+            "test_call_result": None,
+            "test_call_error": None
+        }
+        if not fw_key:
+            diagnostic["test_call_error"] = "FIREWORKS_API_KEY is missing from environment variables."
+            return diagnostic
+        try:
+            client = OpenAI(api_key=fw_key, base_url="https://api.fireworks.ai/inference/v1")
+            response = client.chat.completions.create(
+                model="accounts/fireworks/models/glm-5p1",
+                messages=[{"role": "user", "content": "Say 'Active'"}],
+                temperature=0.1, max_tokens=10
+            )
+            diagnostic["test_call_result"] = response.choices[0].message.content.strip()
+        except Exception as e:
+            diagnostic["test_call_error"] = f"{type(e).__name__}: {str(e)}"
         return diagnostic
-        
-    try:
-        client = OpenAI(
-            api_key=fw_key,
-            base_url="https://api.fireworks.ai/inference/v1",
-        )
-        response = client.chat.completions.create(
-            model="accounts/fireworks/models/glm-5p1",
-            messages=[{"role": "user", "content": "Say 'Active'"}],
-            temperature=0.1,
-            max_tokens=10
-        )
-        diagnostic["test_call_result"] = response.choices[0].message.content.strip()
-    except Exception as e:
-        diagnostic["test_call_error"] = f"{type(e).__name__}: {str(e)}"
-        
-    return diagnostic
+else:
+    @app.get("/api/debug-llm")
+    def debug_llm_disabled():
+        """This diagnostic endpoint is disabled in production."""
+        raise HTTPException(status_code=403, detail="Debug endpoint is disabled in production.")
 
 
 
@@ -143,8 +167,15 @@ except Exception as _vision_err:
 try:
     from app.scam_detector.api import router as scam_router
     app.include_router(scam_router, prefix="/api")
-except Exception:
-    pass
+except Exception as _scam_err:
+    import logging
+    logging.warning(f"[SafeNet] Scam detector router failed to load: {_scam_err}")
+    @app.post("/api/scam/score-call")
+    async def scam_fallback(body: dict = None):
+        return {"error": "Scam detector unavailable.", "risk_score": 0, "severity": "unknown"}
+    @app.get("/api/scam/feed")
+    async def scam_feed_fallback():
+        return []
 
 
 # ── Fraud Graph ───────────────────────────────────────────────────────────────

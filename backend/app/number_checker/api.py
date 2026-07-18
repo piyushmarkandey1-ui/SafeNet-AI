@@ -8,12 +8,15 @@ POST /api/check-number
 
 from __future__ import annotations
 
-from fastapi import APIRouter
-from pydantic import BaseModel, Field
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional
+import logging
+import re
 
 from app.number_checker.checker import check_number, NumberRiskResult
 
+logger = logging.getLogger(__name__)
 router = APIRouter(tags=["number_checker"])
 
 
@@ -21,16 +24,27 @@ class CheckNumberRequest(BaseModel):
     phone_number: str = Field(
         ...,
         description="The phone number to check (any format, e.g. +91XXXXXXXXXX)",
+        min_length=7,
+        max_length=20,
         examples=["+916511361582"],
     )
     pasted_text: Optional[str] = Field(
         None,
+        max_length=5000,
         description=(
             "Optional: paste the SMS message or call transcript text you received. "
             "This is analysed for scam-language patterns."
         ),
         examples=["Your account will be frozen. Call immediately to avoid legal action."],
     )
+
+    @field_validator("phone_number")
+    @classmethod
+    def validate_phone(cls, v: str) -> str:
+        cleaned = re.sub(r"[\s\-()]", "", v)  # strip whitespace/dashes/parens
+        if not re.match(r"^\+?[0-9]{7,15}$", cleaned):
+            raise ValueError("Invalid phone number format. Use digits, optional leading +.")
+        return v
 
 
 class CheckNumberResponse(BaseModel):
@@ -57,11 +71,18 @@ class CheckNumberResponse(BaseModel):
         "⚠️ SYNTHETIC DATA — no real call interception."
     ),
 )
-def check_number_endpoint(body: CheckNumberRequest) -> CheckNumberResponse:
-    result: NumberRiskResult = check_number(
-        phone_number=body.phone_number,
-        pasted_text=body.pasted_text or None,
-    )
+async def check_number_endpoint(body: CheckNumberRequest) -> CheckNumberResponse:
+    try:
+        result: NumberRiskResult = check_number(
+            phone_number=body.phone_number,
+            pasted_text=body.pasted_text or None,
+        )
+    except Exception as e:
+        logger.error(f"[check-number] Error checking {body.phone_number}: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=503,
+            detail="Number check service is temporarily unavailable. Please try again.",
+        )
 
     graph_case_id      = None
     graph_risk_score   = None
