@@ -325,12 +325,8 @@
   }
 
   .btn-report-incident {
-    font-size: 12px;
-    padding: 6px 8px;
-  }
-  
-  .btn-report-incident span {
-    display: none; /* Icon only on extra small mobile to guarantee no overflow */
+    font-size: 13px;
+    padding: 8px 12px;
   }
 }
 

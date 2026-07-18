@@ -196,20 +196,6 @@
 /* ── Mobile Layout (< 768px) ────────────────────────────────── */
 @media (max-width: 768px) {
   .amd-panel {
-    min-width: auto;
-    flex: 1;
-  }
-  .amd-panel__badge,
-  .amd-panel__model {
-    display: none; /* Hide to save space on mobile */
-  }
-  .amd-panel__label {
-    font-size: 9px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .amd-panel__bar {
-    padding: 6px 8px;
+    display: none; /* Hide entirely on mobile to free up TopBar space */
   }
 }
