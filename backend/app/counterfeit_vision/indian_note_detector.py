@@ -179,7 +179,7 @@ Please examine for:
 4. Denomination-specific features
 5. Any signs of tampering or reproduction
 
-IMPORTANT: If the image is clearly NOT a currency note (e.g. a person's face, random object, background), respond with:
+IMPORTANT: If the image is clearly NOT a currency note (e.g. a person's face, an ID card like Aadhaar or PAN, a random object, a document, or a blank background), you MUST respond with:
 AUTHENTICITY: NO_NOTE
 CONFIDENCE: 0
 EXPLANATION: No currency note detected in the image.
@@ -332,6 +332,11 @@ def check_indian_note(image_bytes: bytes) -> Dict:
     is_fake = gemini_result["is_fake"]
     confidence = gemini_result["confidence"]
     denom = basic_analysis["denomination"]
+    explanation = gemini_result.get("explanation", "").lower()
+    
+    # Heuristic override: if VLM missed the no_note flag but described an ID card
+    if any(kw in explanation for kw in ["aadhaar", "adhar", "pan card", "id card", "identity card", "passport", "driving license"]):
+        gemini_result["no_note"] = True
     
     # Generate recommendation
     if gemini_result.get("no_note") or confidence < 0.50:
@@ -352,7 +357,11 @@ def check_indian_note(image_bytes: bytes) -> Dict:
     else:
         if confidence > 0.80:
             severity = "safe"
-            recommendation = f"Note appears genuine. Standard security features detected."
+            if gemini_result.get("verification_method") == "rule-based-fallback":
+                recommendation = f"Basic color matching passed, but AI verification is offline. Cannot definitively confirm authenticity."
+                severity = "low"
+            else:
+                recommendation = f"Note appears genuine. Standard security features detected."
         else:
             severity = "low"
             recommendation = f"Note likely genuine but image quality affects confidence. Use better lighting for verification."
